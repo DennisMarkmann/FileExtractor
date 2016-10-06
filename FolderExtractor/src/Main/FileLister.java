@@ -21,7 +21,6 @@ class FileLister {
     }
 
     ArrayList<File> listFilesInFolderList(final ArrayList<File> folderList, boolean includeSubfolder) {
-
         final ArrayList<File> fileList = new ArrayList<>();
         for (final File folder : folderList) {
             this.listFilesForFolder(folder, fileList, includeSubfolder);
@@ -30,7 +29,6 @@ class FileLister {
     }
 
     ArrayList<File> listFolderAtPath(final File path) {
-
         final ArrayList<File> fileList = new ArrayList<>();
         for (final File file : path.listFiles()) {
             if (file.isDirectory()) {

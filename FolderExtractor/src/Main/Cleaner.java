@@ -6,7 +6,6 @@ import java.util.ArrayList;
 class Cleaner {
 
     void cleanFiles(ArrayList<File> fileList) {
-
         for (File file : fileList) {
             this.deleteDir(file);
         }

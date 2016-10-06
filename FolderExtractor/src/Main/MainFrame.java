@@ -24,15 +24,14 @@ class MainFrame extends JFrame implements DefaultFrame {
     }
 
     public MainFrame() {
-
-        BUILDER.setDefaultFrameSettings(this, "FileLister");
+        BUILDER.setDefaultFrameSettings(this, "FileExtractor");
         this.addWindowListener(new MyWindowAdapter(this));
-        this.setSize(555, 370);
+        this.setSize(360, 120);
         this.setResizable(false);
 
         final JCheckBox seriesCB = BUILDER.createCheckBox(this, "seriesCB", "Series", 0, 0);
-        final JCheckBox moviesCB = BUILDER.createCheckBox(this, "moviesCB", "Movies", 0, 1);
-        final JButton bestaetigenButton = BUILDER.createButton(this, "bestaetigenButton", "Okay", 0, 2);
+        final JCheckBox moviesCB = BUILDER.createCheckBox(this, "moviesCB", "Movies", 1, 0);
+        final JButton bestaetigenButton = BUILDER.createButton(this, "bestaetigenButton", "Okay", 2, 0);
 
         final FrameListener listener = new FrameListener(this, seriesCB, moviesCB);
         bestaetigenButton.addActionListener(listener);

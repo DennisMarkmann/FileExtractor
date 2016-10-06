@@ -24,11 +24,9 @@ class FrameListener implements ActionListener {
     private boolean moviesChecked = false;
 
     FrameListener(final MainFrame frame, final JCheckBox seriesCB, final JCheckBox moviesCB) {
-
         this.frame = frame;
         this.seriesCB = seriesCB;
         this.moviesCB = moviesCB;
-
     }
 
     @Override
