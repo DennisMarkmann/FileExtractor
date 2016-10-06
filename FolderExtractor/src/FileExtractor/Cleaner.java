@@ -1,4 +1,4 @@
-package Main;
+package FileExtractor;
 
 import java.io.File;
 import java.util.ArrayList;

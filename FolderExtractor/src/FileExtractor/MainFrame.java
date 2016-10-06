@@ -1,4 +1,4 @@
-package Main;
+package FileExtractor;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
