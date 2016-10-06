@@ -5,17 +5,26 @@ import java.util.ArrayList;
 
 class FileLister {
 
-    ArrayList<File> listFilesInFolderList(final ArrayList<File> folderList) {
-
-        final ArrayList<File> fileList = new ArrayList<>();
-        for (final File folder : folderList) {
-            for (File file : folder.listFiles()) {
+    private ArrayList<File> listFilesForFolder(File folder, ArrayList<File> fileList, boolean includeSubfolder) {
+        for (File file : folder.listFiles()) {
+            if (includeSubfolder && file.isDirectory()) {
+                this.listFilesForFolder(file, fileList, true);
+            }
+            else if (!file.isDirectory()) {
                 final String fileName = file.getName();
-                if (!file.isDirectory()
-                        && (fileName.endsWith(".mkv") || fileName.endsWith(".mp4") || fileName.endsWith(".avi"))) {
+                if (fileName.endsWith(".mkv") || fileName.endsWith(".mp4") || fileName.endsWith(".avi")) {
                     fileList.add(file);
                 }
             }
+        }
+        return fileList;
+    }
+
+    ArrayList<File> listFilesInFolderList(final ArrayList<File> folderList, boolean includeSubfolder) {
+
+        final ArrayList<File> fileList = new ArrayList<>();
+        for (final File folder : folderList) {
+            this.listFilesForFolder(folder, fileList, includeSubfolder);
         }
         return fileList;
     }

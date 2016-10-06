@@ -49,7 +49,7 @@ class FrameListener implements ActionListener {
     private void startExtraction(File path) {
         FileLister fl = new FileLister();
         ArrayList<File> folderList = fl.listFolderAtPath(path);
-        new Extractor().extractFile(fl.listFilesInFolderList(folderList), path);
+        new Extractor().extractFile(fl.listFilesInFolderList(folderList, true), path);
         new Cleaner().cleanFiles(folderList);
     }
 }
