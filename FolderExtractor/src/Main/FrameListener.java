@@ -7,6 +7,9 @@ import java.util.ArrayList;
 
 import javax.swing.JCheckBox;
 
+import dennis.markmann.MyLibraries.DefaultJobs.File.FileFilter;
+import dennis.markmann.MyLibraries.DefaultJobs.File.FileLister;
+
 /**
  * Listener for the settings frame. Used to fill the different values and to close the window.
  *
@@ -47,7 +50,9 @@ class FrameListener implements ActionListener {
     private void startExtraction(File path) {
         FileLister fl = new FileLister();
         ArrayList<File> folderList = fl.listFolderAtPath(path);
-        new Extractor().extractFile(fl.listFilesInFolderList(folderList, true), path);
+        ArrayList<File> fileList = fl.listFilesInFolderList(folderList, true);
+        fileList = new FileFilter().addMovies().filter(fileList);
+        new Extractor().extractFile(fileList, path);
         new Cleaner().cleanFiles(folderList);
     }
 }
