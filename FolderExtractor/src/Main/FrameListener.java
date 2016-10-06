@@ -2,6 +2,8 @@ package Main;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.util.ArrayList;
 
 import javax.swing.JCheckBox;
 
@@ -34,23 +36,20 @@ class FrameListener implements ActionListener {
         this.seriesChecked = this.seriesCB.isSelected();
         this.moviesChecked = this.moviesCB.isSelected();
         this.frame.closeWindow();
-        this.startApplication();
-    }
 
-    private void startApplication() {
         final Settings settings = new Settings();
         if (this.seriesChecked) {
-            new Extractor().extractFile(
-                    new FileLister().listFilesInSubFolder(settings.getSeriesPath(), false),
-                    settings.getSeriesPath());
-            new Cleaner().cleanFiles(new FileLister().listFolderAtPath(settings.getSeriesPath()));
-
+            this.startExtraction(settings.getSeriesPath());
         }
         if (this.moviesChecked) {
-            new Extractor().extractFile(
-                    new FileLister().listFilesInSubFolder(settings.getMoviePath(), false),
-                    settings.getSeriesPath());
-            new Cleaner().cleanFiles(new FileLister().listFolderAtPath(settings.getMoviePath()));
+            this.startExtraction(settings.getMoviePath());
         }
+    }
+
+    private void startExtraction(File path) {
+        FileLister fl = new FileLister();
+        ArrayList<File> folderList = fl.listFolderAtPath(path);
+        new Extractor().extractFile(fl.listFilesInFolderList(folderList), path);
+        new Cleaner().cleanFiles(folderList);
     }
 }

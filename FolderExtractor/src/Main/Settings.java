@@ -15,12 +15,4 @@ class Settings {
         return this.seriesPath;
     }
 
-    protected void setMoviePath(File moviePath) {
-        this.moviePath = moviePath;
-    }
-
-    protected void setSeriesPath(File seriesPath) {
-        this.seriesPath = seriesPath;
-    }
-
 }
