@@ -2,13 +2,8 @@ package FileExtractor;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.util.ArrayList;
 
 import javax.swing.JCheckBox;
-
-import dennis.markmann.MyLibraries.DefaultJobs.File.FileFilter;
-import dennis.markmann.MyLibraries.DefaultJobs.File.FileLister;
 
 /**
  * Listener for the settings frame. Used to fill the different values and to close the window.
@@ -39,20 +34,13 @@ class FrameListener implements ActionListener {
         this.frame.closeWindow();
 
         final Settings settings = new Settings();
+        Extractor extractor = new Extractor();
         if (this.seriesChecked) {
-            this.startExtraction(settings.getSeriesPath());
+            extractor.startExtraction(settings.getSeriesPath());
         }
         if (this.moviesChecked) {
-            this.startExtraction(settings.getMoviePath());
+            extractor.startExtraction(settings.getMoviePath());
         }
     }
 
-    private void startExtraction(File path) {
-        FileLister fl = new FileLister();
-        ArrayList<File> folderList = fl.listFolderAtPath(path);
-        ArrayList<File> fileList = fl.listFilesInFolderList(folderList, true);
-        fileList = new FileFilter().addMovies().filter(fileList);
-        new Extractor().extractFile(fileList, path);
-        new Cleaner().cleanFiles(folderList);
-    }
 }
