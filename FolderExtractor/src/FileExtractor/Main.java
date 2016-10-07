@@ -11,9 +11,8 @@ public class Main {
         }
         else {
             final Settings settings = new Settings();
-            Extractor extractor = new Extractor();
-            extractor.startExtraction(settings.getSeriesPath());
+            Controller controller = new Controller();
+            controller.startProcess(settings.getExtractionPath(), settings.getSeriesPath());
         }
-
     }
 }

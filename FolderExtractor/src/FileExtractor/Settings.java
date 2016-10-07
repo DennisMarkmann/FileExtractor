@@ -4,15 +4,14 @@ import java.io.File;
 
 class Settings {
 
-    private File seriesPath = new File("M:\\Processing\\Completed\\Series");
-    private File moviePath = new File("M:\\Processing\\Completed\\Movies");
+    private File extractionPath = new File("M:\\Processing\\Completed\\Series");
+    private File seriesPath = new File("M:\\Series");
 
-    protected File getMoviePath() {
-        return this.moviePath;
+    public File getExtractionPath() {
+        return this.extractionPath;
     }
 
     protected File getSeriesPath() {
         return this.seriesPath;
     }
-
 }

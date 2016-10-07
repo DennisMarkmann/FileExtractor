@@ -34,12 +34,9 @@ class FrameListener implements ActionListener {
         this.frame.closeWindow();
 
         final Settings settings = new Settings();
-        Extractor extractor = new Extractor();
+        Controller controller = new Controller();
         if (this.seriesChecked) {
-            extractor.startExtraction(settings.getSeriesPath());
-        }
-        if (this.moviesChecked) {
-            extractor.startExtraction(settings.getMoviePath());
+            controller.startProcess(settings.getExtractionPath(), settings.getSeriesPath());
         }
     }
 
