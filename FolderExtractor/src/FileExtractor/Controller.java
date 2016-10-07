@@ -12,6 +12,7 @@ public class Controller {
         FileLister fl = new FileLister();
         ArrayList<File> folderList = fl.listFolderAtPath(extractionPath);
         ArrayList<File> fileList = fl.listFilesInFolderList(folderList, true);
+        fileList = fl.listFilesForFolder(extractionPath, fileList, false);
         fileList = new FileFilter().addMovies().filter(fileList);
 
         new FileMover().moveFiles(fileList, completionPath);

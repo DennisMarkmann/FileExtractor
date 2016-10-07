@@ -4,11 +4,21 @@ import java.io.File;
 
 class Settings {
 
-    private File extractionPath = new File("M:\\Processing\\Completed\\Series");
+    private File seriesExtractionPath = new File("M:\\Processing\\Completed\\Series");
     private File seriesPath = new File("M:\\Series");
+    private File animeExtractionPath = new File("M:\\Processing\\Completed\\Anime");
+    private File animePath = new File("M:\\MyAnime");
 
-    public File getExtractionPath() {
-        return this.extractionPath;
+    protected File getAnimeExtractionPath() {
+        return this.animeExtractionPath;
+    }
+
+    protected File getAnimePath() {
+        return this.animePath;
+    }
+
+    public File getSeriesExtractionPath() {
+        return this.seriesExtractionPath;
     }
 
     protected File getSeriesPath() {

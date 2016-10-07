@@ -12,7 +12,8 @@ public class Main {
         else {
             final Settings settings = new Settings();
             Controller controller = new Controller();
-            controller.startProcess(settings.getExtractionPath(), settings.getSeriesPath());
+            controller.startProcess(settings.getSeriesExtractionPath(), settings.getSeriesPath());
+            controller.startProcess(settings.getAnimeExtractionPath(), settings.getAnimePath());
         }
     }
 }
