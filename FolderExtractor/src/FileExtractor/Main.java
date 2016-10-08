@@ -1,5 +1,10 @@
 package FileExtractor;
 
+import java.util.ArrayList;
+
+import FileExtractor.Settings.FileWriteHelper;
+import FileExtractor.Settings.Settings;
+
 public class Main {
 
     public static void main(final String[] args) {
@@ -10,10 +15,26 @@ public class Main {
             MainFrame.getInstance();
         }
         else {
-            final Settings settings = new Settings();
+            // final SettingsOld settings = new SettingsOld();
+            ArrayList<Settings> settingList = new ArrayList<>();
+            Settings settings = new Settings();
+            settings.setType("Anime");
+            settings.setExtractionPath("M:\\Processing\\Completed\\Anime");
+            settings.setPath("M:\\MyAnime\\ToTest");
+            settingList.add(settings);
+
+            settings = new Settings();
+            settings.setType("Series");
+            settings.setExtractionPath("M:\\Processing\\Completed\\Series");
+            settings.setPath("M:\\Series");
+            settingList.add(settings);
+
+            new FileWriteHelper().createXMLFiles(settingList);
+
             Controller controller = new Controller();
-            controller.startProcess(settings.getSeriesExtractionPath(), settings.getSeriesPath());
-            controller.startProcess(settings.getAnimeExtractionPath(), settings.getAnimePath());
+            for (Settings st : settingList) {
+                controller.startProcess(st.getExtractionPath(), st.getPath());
+            }
         }
     }
 }
