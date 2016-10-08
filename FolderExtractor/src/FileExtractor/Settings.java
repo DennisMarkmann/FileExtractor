@@ -7,7 +7,7 @@ class Settings {
     private File seriesExtractionPath = new File("M:\\Processing\\Completed\\Series");
     private File seriesPath = new File("M:\\Series");
     private File animeExtractionPath = new File("M:\\Processing\\Completed\\Anime");
-    private File animePath = new File("M:\\MyAnime");
+    private File animePath = new File("M:\\MyAnime\\ToTest");
 
     protected File getAnimeExtractionPath() {
         return this.animeExtractionPath;
