@@ -7,14 +7,27 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 
+import FileExtractor.Settings.ExceptionPath;
+
 class FileMover {
 
-    void moveFiles(final ArrayList<File> fileList, final File destinationDirectory) {
+    private String checkForException(Path sourcePath, ArrayList<ExceptionPath> exceptions) {
+        for (ExceptionPath exceptionPath : exceptions) {
+            if (sourcePath.toString().contains(exceptionPath.getName())) {
+                return exceptionPath.getPath();
+            }
+        }
+        return "";
+    }
+
+    void moveFiles(final ArrayList<File> fileList, final File destinationDirectory, ArrayList<ExceptionPath> exceptions) {
 
         for (final File file : fileList) {
             try {
                 Path sourcePath = file.toPath();
-                Path destinationPath = new File(destinationDirectory.getPath() + "\\" + file.getName()).toPath();
+                String exceptionPath = this.checkForException(sourcePath, exceptions);
+                Path destinationPath = new File(destinationDirectory.getPath() + exceptionPath + "\\" + file.getName())
+                        .toPath();
                 Files.move(sourcePath, destinationPath, StandardCopyOption.REPLACE_EXISTING);
             }
             catch (IOException e) {

@@ -33,7 +33,6 @@ class FrameListener implements ActionListener {
         this.moviesChecked = this.moviesCB.isSelected();
         this.frame.closeWindow();
 
-        // final SettingsOld settings = new SettingsOld();
         Controller controller = new Controller();
         if (this.seriesChecked) {
             // TODO

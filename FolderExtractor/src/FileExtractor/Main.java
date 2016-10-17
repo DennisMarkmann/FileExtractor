@@ -2,7 +2,7 @@ package FileExtractor;
 
 import java.util.ArrayList;
 
-import FileExtractor.Settings.FileWriteHelper;
+import FileExtractor.Settings.ExceptionPath;
 import FileExtractor.Settings.Settings;
 
 public class Main {
@@ -15,25 +15,27 @@ public class Main {
             MainFrame.getInstance();
         }
         else {
-            // final SettingsOld settings = new SettingsOld();
             ArrayList<Settings> settingList = new ArrayList<>();
             Settings settings = new Settings();
             settings.setType("Anime");
             settings.setExtractionPath("M:\\Processing\\Completed\\Anime");
-            settings.setPath("M:\\MyAnime\\ToTest");
+            settings.setCompletionPath("M:\\MyAnime");
+            settings.addException(new ExceptionPath("Naruto Shippuuden", "\\Other\\Naruto"));
             settingList.add(settings);
 
             settings = new Settings();
             settings.setType("Series");
             settings.setExtractionPath("M:\\Processing\\Completed\\Series");
-            settings.setPath("M:\\Series");
+            settings.setCompletionPath("M:\\Series");
+            settings.addException(new ExceptionPath("Ash.vs.Evil.Dead.", "\\Later\\Ash vs Evil Dead"));
+            settings.addException(new ExceptionPath("Once.Upon.a.Time.", "\\Later\\Once Upon A Time\\Season 6"));
             settingList.add(settings);
 
-            new FileWriteHelper().createXMLFiles(settingList);
+            // new FileWriteHelper().createXMLFiles(settingList);
 
             Controller controller = new Controller();
             for (Settings st : settingList) {
-                controller.startProcess(st.getExtractionPath(), st.getPath());
+                controller.startProcess(st);
             }
         }
     }

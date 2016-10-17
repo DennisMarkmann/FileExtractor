@@ -17,7 +17,7 @@ class SettingsWriter {
 
         helper.createElement(doc, groupsElement, "Type", settings.getType());
         helper.createElement(doc, groupsElement, "ExtractionPath", settings.getExtractionPath());
-        helper.createElement(doc, groupsElement, "Path", settings.getPath());
+        helper.createElement(doc, groupsElement, "Path", settings.getCompletionPath());
 
         helper.writeFile(this.path, "Settings", doc);
         helper.writeFile("Settings//", settings.getType(), doc);
