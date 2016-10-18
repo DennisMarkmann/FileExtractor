@@ -6,9 +6,8 @@
 2.1.	SeriesFolder
 2.2.	SeasonFolder
 2.3.	Change interval for scan
-2.4.	Change path
-2.5.	Logging
-2.6.	Unzip
+2.4.	Logging
+2.5.	Unzip
 
 3. Cleanup
 3.1		Implement observable
