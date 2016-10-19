@@ -4,7 +4,6 @@ public class GeneralSettings {
 
     private int timerInterval;
     private boolean useRenaming;
-    private boolean useLogging;
     private boolean useUnzipping;
     private boolean useGui;
     private boolean useTimer;
@@ -32,10 +31,6 @@ public class GeneralSettings {
         this.useGui = useGui;
     }
 
-    public void setUseLogging(boolean useLogging) {
-        this.useLogging = useLogging;
-    }
-
     public void setUseNotificationWhileWorking(boolean useNotificationWhileWorking) {
         this.useNotificationWhileWorking = useNotificationWhileWorking;
     }
@@ -60,11 +55,7 @@ public class GeneralSettings {
         return this.useGui;
     }
 
-    public boolean useLogging() {
-        return this.useLogging;
-    }
-
-    public boolean useNotificationWhileWorking() {
+    boolean useNotificationWhileWorking() {
         return this.useNotificationWhileWorking;
     }
 
@@ -72,7 +63,7 @@ public class GeneralSettings {
         return this.useRenaming;
     }
 
-    public boolean useTaskbarEntry() {
+    boolean useTaskbarEntry() {
         return this.useTaskbarEntry;
     }
 
@@ -80,7 +71,7 @@ public class GeneralSettings {
         return this.useTimer;
     }
 
-    public boolean useUnzipping() {
+    boolean useUnzipping() {
         return this.useUnzipping;
     }
 

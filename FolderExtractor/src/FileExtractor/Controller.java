@@ -61,7 +61,9 @@ class Controller {
         else {
             LOGGER.info("Number of entries to process: '" + fileList.size() + "'.");
         }
-        fileList = new Renamer().renameFiles(fileList, settings.getType());
+        if (this.generalSettings.useRenaming()) {
+            fileList = new Renamer().renameFiles(fileList, settings.getType());
+        }
         new FileMover().moveFiles(fileList, new File(settings.getCompletionPath()), settings.getExceptions());
         new Cleaner().cleanFiles(folderList);
     }

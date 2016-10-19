@@ -13,7 +13,6 @@ class GeneralSettingsWriter {
 
         helper.createElement(doc, element, "TimerInterval", settings.getTimerInterval() + "");
         helper.createElement(doc, element, "UseRenaming", settings.useRenaming() + "");
-        helper.createElement(doc, element, "UseLogging", settings.useLogging() + "");
         helper.createElement(doc, element, "UseUnzipping", settings.useUnzipping() + "");
         helper.createElement(doc, element, "UseGui", settings.useGui() + "");
         helper.createElement(doc, element, "UseTimer", settings.useTimer() + "");
