@@ -9,24 +9,24 @@ class SettingsWriter {
 
     private String path = "";
 
-    private void createXmlFile(final Settings settings) {
+    private void createXmlFile(final TypeSettings settings) {
 
         final FileWriteHelper helper = new FileWriteHelper();
         final Document doc = helper.createDocument();
         final Element groupsElement = helper.createMainElement(doc, "Settings");
 
-        helper.createElement(doc, groupsElement, "Type", settings.getType());
+        helper.createElement(doc, groupsElement, "Name", settings.getName());
         helper.createElement(doc, groupsElement, "ExtractionPath", settings.getExtractionPath());
         helper.createElement(doc, groupsElement, "Path", settings.getCompletionPath());
 
         helper.writeFile(this.path, "Settings", doc);
-        helper.writeFile("Settings//", settings.getType(), doc);
+        helper.writeFile("Settings//", settings.getName(), doc);
 
     }
 
-    final void initializeXMLPrint(final ArrayList<Settings> settingList) {
+    final void initializeXMLPrint(final ArrayList<TypeSettings> settingList) {
 
-        for (final Settings settings : settingList) {
+        for (final TypeSettings settings : settingList) {
             this.createXmlFile(settings);
         }
     }

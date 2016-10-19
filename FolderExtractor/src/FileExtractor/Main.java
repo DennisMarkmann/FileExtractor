@@ -3,7 +3,8 @@ package FileExtractor;
 import java.util.ArrayList;
 
 import FileExtractor.Settings.ExceptionPath;
-import FileExtractor.Settings.Settings;
+import FileExtractor.Settings.MediaType;
+import FileExtractor.Settings.TypeSettings;
 
 public class Main {
 
@@ -15,16 +16,18 @@ public class Main {
             MainFrame.getInstance();
         }
         else {
-            ArrayList<Settings> settingList = new ArrayList<>();
-            Settings settings = new Settings();
-            settings.setType("Anime");
+            ArrayList<TypeSettings> settingList = new ArrayList<>();
+            TypeSettings settings = new TypeSettings();
+            settings.setName("Anime");
+            settings.setType(MediaType.Anime);
             settings.setExtractionPath("M:\\Processing\\Completed\\Anime");
             settings.setCompletionPath("M:\\MyAnime");
             settings.addException(new ExceptionPath("Naruto Shippuuden", "\\Other\\Naruto"));
             settingList.add(settings);
 
-            settings = new Settings();
-            settings.setType("Series");
+            settings = new TypeSettings();
+            settings.setName("Series");
+            settings.setType(MediaType.Series);
             settings.setExtractionPath("M:\\Processing\\Completed\\Series");
             settings.setCompletionPath("M:\\Series");
             settings.addException(new ExceptionPath("Ash.vs.Evil.Dead.", "\\Later\\Ash vs Evil Dead"));
@@ -34,7 +37,7 @@ public class Main {
             // new FileWriteHelper().createXMLFiles(settingList);
 
             Controller controller = new Controller();
-            for (Settings st : settingList) {
+            for (TypeSettings st : settingList) {
                 controller.startProcess(st);
             }
         }

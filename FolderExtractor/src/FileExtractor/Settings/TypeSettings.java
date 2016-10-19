@@ -2,14 +2,15 @@ package FileExtractor.Settings;
 
 import java.util.ArrayList;
 
-public class Settings {
+public class TypeSettings {
 
-    private String type;
+    private String name;
     private String extractionPath;
     private String completionPath;
     private ArrayList<ExceptionPath> exceptions = new ArrayList<>();
     private boolean seriesFolder;
     private boolean seasonFolder;
+    private MediaType type;
 
     public void addException(ExceptionPath exception) {
         this.exceptions.add(exception);
@@ -27,8 +28,8 @@ public class Settings {
         return this.extractionPath;
     }
 
-    public String getType() {
-        return this.type;
+    public String getName() {
+        return this.name;
     }
 
     public boolean isSeasonFolder() {
@@ -47,6 +48,10 @@ public class Settings {
         this.extractionPath = extractionPath;
     }
 
+    public void setName(String type) {
+        this.name = type;
+    }
+
     public void setSeasonFolder(boolean seasonFolder) {
         this.seasonFolder = seasonFolder;
     }
@@ -55,7 +60,11 @@ public class Settings {
         this.seriesFolder = seriesFolder;
     }
 
-    public void setType(String type) {
+    public MediaType getType() {
+        return type;
+    }
+
+    public void setType(MediaType type) {
         this.type = type;
     }
 
