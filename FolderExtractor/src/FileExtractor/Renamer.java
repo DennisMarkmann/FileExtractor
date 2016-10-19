@@ -10,7 +10,7 @@ import org.apache.log4j.Logger;
 import FileExtractor.Logging.LogHandler;
 import FileExtractor.Settings.MediaType;
 
-public class Renamer {
+class Renamer {
 
     private static final Logger LOGGER = LogHandler.getLogger("./logs/FileExtractor.log");
 
@@ -63,7 +63,7 @@ public class Renamer {
         return fileName;
     }
 
-    public ArrayList<File> renameFiles(ArrayList<File> fileList, MediaType mediaType) {
+    ArrayList<File> renameFiles(ArrayList<File> fileList, MediaType mediaType) {
         ArrayList<File> renamedFiles = new ArrayList<>();
         for (final File file : fileList) {
             String fileName = file.getName().substring(0, file.getName().lastIndexOf("."));

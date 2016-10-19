@@ -6,7 +6,7 @@ public enum MediaType {
 
         @Override
         public String toString() {
-            return "anime";
+            return "Anime";
         }
     },
 
@@ -14,7 +14,7 @@ public enum MediaType {
 
         @Override
         public String toString() {
-            return "series";
+            return "Series";
         }
     },
 
@@ -22,7 +22,7 @@ public enum MediaType {
 
         @Override
         public String toString() {
-            return "movie";
+            return "Movie";
         }
     }
 }

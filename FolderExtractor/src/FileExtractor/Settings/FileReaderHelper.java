@@ -11,7 +11,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 
-public class FileReaderHelper {
+class FileReaderHelper {
 
     final Document createDocument(final File file) {
         Document doc = null;
@@ -35,7 +35,6 @@ public class FileReaderHelper {
     }
 
     public final void readXMLFiles(String path) {
-
         new SettingsReader().readXmlFile(path);
     }
 }

@@ -10,13 +10,13 @@ import FileExtractor.Settings.TypeSettings;
 import dennis.markmann.MyLibraries.DefaultJobs.File.FileFilter;
 import dennis.markmann.MyLibraries.DefaultJobs.File.FileLister;
 
-public class Controller {
+class Controller {
 
     private static final Logger LOGGER = LogHandler.getLogger("./logs/FileExtractor.log");
 
-    public void startProcess(TypeSettings settings) {
+    void startProcess(TypeSettings settings) {
         LOGGER.info(
-                "Checking for " + settings.getName() + "settings: " + "' Type: '" + settings.getType() + "', ExtractionPath: '"
+                "Checking for " + settings.getName() + " Settings: " + "' Type: '" + settings.getType() + "', ExtractionPath: '"
                         + settings.getExtractionPath() + "', CompletionPath: '" + settings.getCompletionPath() + "'.");
 
         FileLister fl = new FileLister();
