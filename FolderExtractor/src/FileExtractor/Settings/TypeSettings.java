@@ -8,8 +8,8 @@ public class TypeSettings {
     private MediaType type;
     private String extractionPath;
     private String completionPath;
-    private boolean seriesFolder;
-    private boolean seasonFolder;
+    private boolean useSeriesFolder;
+    private boolean useSeasonFolder;
     private ArrayList<ExceptionPath> exceptions = new ArrayList<>();
 
     public void addException(ExceptionPath exception) {
@@ -36,14 +36,6 @@ public class TypeSettings {
         return this.type;
     }
 
-    public boolean isSeasonFolder() {
-        return this.seasonFolder;
-    }
-
-    public boolean isSeriesFolder() {
-        return this.seriesFolder;
-    }
-
     public void setCompletionPath(String path) {
         this.completionPath = path;
     }
@@ -56,16 +48,24 @@ public class TypeSettings {
         this.name = type;
     }
 
-    public void setSeasonFolder(boolean seasonFolder) {
-        this.seasonFolder = seasonFolder;
-    }
-
-    public void setSeriesFolder(boolean seriesFolder) {
-        this.seriesFolder = seriesFolder;
-    }
-
     public void setType(MediaType type) {
         this.type = type;
+    }
+
+    public void setUseSeasonFolder(boolean useSeasonFolder) {
+        this.useSeasonFolder = useSeasonFolder;
+    }
+
+    public void setUseSeriesFolder(boolean useSeriesFolder) {
+        this.useSeriesFolder = useSeriesFolder;
+    }
+
+    public boolean useSeasonFolder() {
+        return this.useSeasonFolder;
+    }
+
+    public boolean useSeriesFolder() {
+        return this.useSeriesFolder;
     }
 
 }

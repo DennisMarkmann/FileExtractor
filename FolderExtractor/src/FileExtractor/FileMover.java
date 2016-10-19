@@ -11,10 +11,22 @@ import org.apache.log4j.Logger;
 
 import FileExtractor.Logging.LogHandler;
 import FileExtractor.Settings.ExceptionPath;
+import FileExtractor.Settings.TypeSettings;
 
 class FileMover {
 
     private static final Logger LOGGER = LogHandler.getLogger("./logs/FileExtractor.log");
+
+    private String checkForAdditionalFolder(String name, TypeSettings settings) {
+        String additionalFolder = "";
+        if (settings.useSeriesFolder()) {
+            // TODO
+        }
+        if (settings.useSeasonFolder()) {
+            // TODO
+        }
+        return additionalFolder;
+    }
 
     private String checkForException(String fileName, ArrayList<ExceptionPath> exceptions) {
         for (ExceptionPath exceptionPath : exceptions) {
@@ -25,14 +37,15 @@ class FileMover {
         return "";
     }
 
-    void moveFiles(final ArrayList<File> fileList, final File destinationDirectory, ArrayList<ExceptionPath> exceptions) {
+    void moveFiles(final ArrayList<File> fileList, final File destinationDirectory, TypeSettings settings) {
 
         for (final File file : fileList) {
             try {
                 Path sourcePath = file.toPath();
-                String exceptionPath = this.checkForException(file.getName(), exceptions);
-                Path destinationPath = new File(destinationDirectory.getPath() + exceptionPath + "\\" + file.getName())
-                        .toPath();
+                String exceptionPath = this.checkForException(file.getName(), settings.getExceptions());
+                String additionalFolder = this.checkForAdditionalFolder(file.getName(), settings);
+                Path destinationPath = new File(
+                        destinationDirectory.getPath() + exceptionPath + "\\" + additionalFolder + file.getName()).toPath();
                 Files.move(sourcePath, destinationPath, StandardCopyOption.REPLACE_EXISTING);
                 LOGGER.info("Moving '" + sourcePath + "' to '" + destinationPath + "'.");
             }

@@ -3,12 +3,12 @@ package FileExtractor.Settings;
 public class GeneralSettings {
 
     private int timerInterval;
-    private boolean useRenaming;
     private boolean useUnzipping;
     private boolean useGui;
     private boolean useTimer;
     private boolean useTaskbarEntry;
     private boolean useNotificationWhileWorking;
+    private boolean useRenaming;
     private boolean useCleanup;
     private boolean useFileMoving;
     private String language;

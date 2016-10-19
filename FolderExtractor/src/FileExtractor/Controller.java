@@ -69,7 +69,7 @@ class Controller {
             fileList = new Renamer().renameFiles(fileList, settings.getType());
         }
         if (this.generalSettings.useFileMoving()) {
-            new FileMover().moveFiles(fileList, new File(settings.getCompletionPath()), settings.getExceptions());
+            new FileMover().moveFiles(fileList, new File(settings.getCompletionPath()), settings);
         }
         if (this.generalSettings.useCleanup()) {
             new Cleaner().cleanFiles(folderList);
