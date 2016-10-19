@@ -37,6 +37,7 @@ public class Renamer {
         checkList.add("H264");
         checkList.add("bluray");
         checkList.add("x264");
+        checkList.add("HDTV");
         for (String checkString : checkList) {
             fileName = this.replaceCheckString(fileName, checkString);
         }

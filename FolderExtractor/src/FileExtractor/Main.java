@@ -40,6 +40,7 @@ public class Main {
             // new FileWriteHelper().createXMLFiles(settingList);
             Controller controller = new Controller();
             if (useTimer) {
+                int intervalInMinutes = 30;
                 Timer timer = new Timer();
                 for (TypeSettings st : settingList) {
                     timer.schedule(new TimerTask() {
@@ -49,7 +50,7 @@ public class Main {
                             controller.startProcess(st);
                         }
 
-                    }, 1000, 1800000);
+                    }, 1000, intervalInMinutes * 60000);
                 }
             }
             else {

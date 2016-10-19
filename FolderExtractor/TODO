@@ -1,7 +1,10 @@
 1. Essential
-1.1.	Add movie functionality
-1.1.1.	Cleanup unneeded files
-1.2.	File Rename & episode names etc from Online DB
+1.1.	File Rename & episode names etc from Online DB
+1.2.	Add movie functionality
+1.2.1.	Get correct movie name --> rename
+1.2.2.	Check if not existing in movie folder --> move
+1.2.3.	Remove from download directory
+1.2.1.	Cleanup unneeded files from movie folder (this movie only)
 
 2.	Additional functionality
 2.1.	SeriesFolder

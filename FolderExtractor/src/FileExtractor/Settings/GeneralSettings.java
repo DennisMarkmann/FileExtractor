@@ -3,11 +3,11 @@ package FileExtractor.Settings;
 public class GeneralSettings {
 
     boolean useRenaming;
-    int chronJobInterval;
+    int timerInterval;
     boolean useLogging;
     boolean useUnzipping;
     boolean useGui;
-    boolean useChronJob;
+    boolean useTimer;
     boolean useTaskbarEntry;
     String language;
     boolean useNotificationWhileWorking;
