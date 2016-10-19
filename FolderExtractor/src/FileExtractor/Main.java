@@ -21,7 +21,7 @@ public class Main {
         LOGGER.info("Application starting.");
 
         boolean useGui = false;
-        boolean useTimer = false;
+        boolean useTimer = true;
 
         if (useGui) {
             MainFrame.getInstance();
@@ -34,6 +34,7 @@ public class Main {
             settings.setExtractionPath("M:\\Processing\\Completed\\Anime");
             settings.setCompletionPath("M:\\MyAnime");
             settings.addException(new ExceptionPath("Naruto Shippuuden", "\\Other\\Naruto"));
+            settings.addException(new ExceptionPath("Bubuki Buranki", "\\Bubuki Buranki"));
             settingList.add(settings);
 
             settings = new TypeSettings();
@@ -48,7 +49,9 @@ public class Main {
             new FileWriteHelper().createXMLFiles(settingList);
             final Controller controller = new Controller();
             if (useTimer) {
-                int intervalInMinutes = 30;
+                int intervalInMinutes = 15;
+                LOGGER.info("Timer activated. Interval: '" + intervalInMinutes + "' minutes.");
+
                 Timer timer = new Timer();
                 for (final TypeSettings st : settingList) {
                     timer.schedule(new TimerTask() {
