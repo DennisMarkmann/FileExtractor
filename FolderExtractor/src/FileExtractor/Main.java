@@ -21,7 +21,7 @@ public class Main {
 
         LOGGER.info("Application starting.");
 
-        boolean useTimer = true;
+        // TODO clean stuff up
         ArrayList<TypeSettings> settingList = new ArrayList<>();
         TypeSettings settings = new TypeSettings();
         settings.setName("Anime");
@@ -43,10 +43,12 @@ public class Main {
 
         GeneralSettings generalSettings = new GeneralSettings();
         generalSettings.setTimerInterval(15);
+        generalSettings.setUseTimer(true);
 
-        new FileWriteHelper().createXMLFiles(settingList);
+        new FileWriteHelper().createXMLFiles(settingList, generalSettings);
+
         final Controller controller = new Controller();
-        if (useTimer) {
+        if (generalSettings.isUseTimer()) {
             LOGGER.info("Timer activated. Interval: '" + generalSettings.getTimerInterval() + "' minutes.");
 
             Timer timer = new Timer();

@@ -2,15 +2,15 @@ package FileExtractor.Settings;
 
 public class GeneralSettings {
 
-    private boolean useRenaming;
     private int timerInterval;
+    private boolean useRenaming;
     private boolean useLogging;
     private boolean useUnzipping;
     private boolean useGui;
     private boolean useTimer;
     private boolean useTaskbarEntry;
-    private String language;
     private boolean useNotificationWhileWorking;
+    private String language;
 
     public String getLanguage() {
         return this.language;

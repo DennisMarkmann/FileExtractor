@@ -47,9 +47,11 @@ public class FileWriteHelper {
         return element;
     }
 
-    public final void createXMLFiles(final ArrayList<TypeSettings> settingList) {
+    public final void createXMLFiles(final ArrayList<TypeSettings> settingList, GeneralSettings generalSettings) {
 
-        new SettingsWriter().initializeXMLPrint(settingList);
+        new TypeSettingsWriter().initializeXMLPrint(settingList);
+        new GeneralSettingsWriter().initializeXMLPrint(generalSettings);
+
     }
 
     // write the content into xml file

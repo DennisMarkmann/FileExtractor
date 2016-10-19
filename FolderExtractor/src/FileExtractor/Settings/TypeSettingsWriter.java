@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-class SettingsWriter {
+public class TypeSettingsWriter {
 
     private void createXmlFile(final TypeSettings settings) {
 
@@ -25,13 +25,10 @@ class SettingsWriter {
             helper.createElement(doc, exceptionElement, "ExceptionName", exceptionPath.getName());
             helper.createElement(doc, exceptionElement, "ExceptionPath", exceptionPath.getPath());
         }
-
-        // helper.writeFile(this.path, "Settings", doc);
         helper.writeFile("Settings//", settings.getName(), doc);
-
     }
 
-    final void initializeXMLPrint(final ArrayList<TypeSettings> settingList) {
+    public final void initializeXMLPrint(final ArrayList<TypeSettings> settingList) {
 
         for (final TypeSettings settings : settingList) {
             this.createXmlFile(settings);
