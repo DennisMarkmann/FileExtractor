@@ -20,10 +20,8 @@ class FileMover {
     private String checkForAdditionalFolder(String name, TypeSettings settings) {
         String additionalFolder = "";
         if (settings.useSeriesFolder()) {
-            // TODO
         }
         if (settings.useSeasonFolder()) {
-            // TODO
         }
         return additionalFolder;
     }
