@@ -43,6 +43,9 @@ class Controller {
 
         this.generalSettings.setTimerInterval(15);
         this.generalSettings.setUseTimer(true);
+        this.generalSettings.setUseRenaming(true);
+        this.generalSettings.setUseFileMoving(true);
+        this.generalSettings.setUseCleanup(true);
     }
 
     private void extract(TypeSettings settings) {
@@ -55,6 +58,7 @@ class Controller {
         ArrayList<File> fileList = fl.listFilesInFolderList(folderList, true);
         fileList = fl.listFilesForFolder(new File(settings.getExtractionPath()), fileList, false);
         fileList = new FileFilter().addMovies().filter(fileList);
+
         if (fileList.isEmpty()) {
             LOGGER.info("Nothing to process.");
         }
@@ -64,8 +68,12 @@ class Controller {
         if (this.generalSettings.useRenaming()) {
             fileList = new Renamer().renameFiles(fileList, settings.getType());
         }
-        new FileMover().moveFiles(fileList, new File(settings.getCompletionPath()), settings.getExceptions());
-        new Cleaner().cleanFiles(folderList);
+        if (this.generalSettings.useFileMoving()) {
+            new FileMover().moveFiles(fileList, new File(settings.getCompletionPath()), settings.getExceptions());
+        }
+        if (this.generalSettings.useCleanup()) {
+            new Cleaner().cleanFiles(folderList);
+        }
     }
 
     void process() {

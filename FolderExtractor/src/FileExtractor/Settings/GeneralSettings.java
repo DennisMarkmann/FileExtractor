@@ -9,6 +9,8 @@ public class GeneralSettings {
     private boolean useTimer;
     private boolean useTaskbarEntry;
     private boolean useNotificationWhileWorking;
+    private boolean useCleanup;
+    private boolean useFileMoving;
     private String language;
 
     public String getLanguage() {
@@ -25,6 +27,14 @@ public class GeneralSettings {
 
     public void setTimerInterval(int timerInterval) {
         this.timerInterval = timerInterval;
+    }
+
+    public void setUseCleanup(boolean useCleanup) {
+        this.useCleanup = useCleanup;
+    }
+
+    public void setUseFileMoving(boolean useFileMoving) {
+        this.useFileMoving = useFileMoving;
     }
 
     public void setUseGui(boolean useGui) {
@@ -49,6 +59,14 @@ public class GeneralSettings {
 
     public void setUseUnzipping(boolean useUnzipping) {
         this.useUnzipping = useUnzipping;
+    }
+
+    public boolean useCleanup() {
+        return this.useCleanup;
+    }
+
+    public boolean useFileMoving() {
+        return this.useFileMoving;
     }
 
     boolean useGui() {

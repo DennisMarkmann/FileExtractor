@@ -18,6 +18,8 @@ class GeneralSettingsWriter {
         helper.createElement(doc, element, "UseTimer", settings.useTimer() + "");
         helper.createElement(doc, element, "UseTaskbarEntry", settings.useTaskbarEntry() + "");
         helper.createElement(doc, element, "UseNotificationWhileWorking", settings.useNotificationWhileWorking() + "");
+        helper.createElement(doc, element, "UseCleanup", settings.useCleanup() + "");
+        helper.createElement(doc, element, "UseFileMoving", settings.useFileMoving() + "");
         helper.createElement(doc, element, "Language", settings.getLanguage());
         helper.writeFile("Settings//", "General", doc);
     }
