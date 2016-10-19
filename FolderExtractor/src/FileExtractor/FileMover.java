@@ -34,7 +34,7 @@ class FileMover {
                 Path destinationPath = new File(destinationDirectory.getPath() + exceptionPath + "\\" + file.getName())
                         .toPath();
                 Files.move(sourcePath, destinationPath, StandardCopyOption.REPLACE_EXISTING);
-                LOGGER.info("Moving from '" + sourcePath + "' to '" + destinationPath + "'.");
+                LOGGER.info("Moving '" + sourcePath + "' to '" + destinationPath + "'.");
             }
             catch (IOException e) {
                 e.printStackTrace();

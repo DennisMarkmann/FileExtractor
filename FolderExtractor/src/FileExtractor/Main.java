@@ -53,23 +53,24 @@ public class Main {
                 LOGGER.info("Timer activated. Interval: '" + intervalInMinutes + "' minutes.");
 
                 Timer timer = new Timer();
-                for (final TypeSettings st : settingList) {
-                    timer.schedule(new TimerTask() {
+                timer.schedule(new TimerTask() {
 
-                        @Override
-                        public void run() {
+                    @Override
+                    public void run() {
+                        for (final TypeSettings st : settingList) {
                             controller.startProcess(st);
                         }
+                        LOGGER.info("-----------------------------------");
+                    }
 
-                    }, 1000, intervalInMinutes * 60000);
-                }
+                }, 1000, intervalInMinutes * 60000);
             }
             else {
                 for (TypeSettings st : settingList) {
                     controller.startProcess(st);
                 }
+                LOGGER.info("-----------------------------------");
             }
-            LOGGER.info("-----------------------------");
         }
     }
 }

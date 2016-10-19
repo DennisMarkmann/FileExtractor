@@ -83,7 +83,7 @@ public class Renamer {
             File newFile = new File(filePath + "\\" + fileName + extention);
             if (file.renameTo(newFile)) {
                 renamedFiles.add(newFile);
-                LOGGER.info("Renaming of '" + file.getName() + "' to '" + newFile.getName() + "'.");
+                LOGGER.info("Renaming '" + file.getName() + "' to '" + newFile.getName() + "'.");
             }
         }
         return renamedFiles;

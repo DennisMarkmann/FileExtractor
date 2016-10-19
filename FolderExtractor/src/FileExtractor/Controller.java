@@ -16,9 +16,8 @@ public class Controller {
 
     public void startProcess(TypeSettings settings) {
         LOGGER.info(
-                "Start checking with settings:" + System.lineSeparator() + "Name: '" + settings.getName() + "', Type: '"
-                        + settings.getType() + "', ExtractionPath: '" + settings.getExtractionPath() + "', CompletionPath: '"
-                        + settings.getCompletionPath() + "'.");
+                "Checking for " + settings.getName() + "settings: " + "' Type: '" + settings.getType() + "', ExtractionPath: '"
+                        + settings.getExtractionPath() + "', CompletionPath: '" + settings.getCompletionPath() + "'.");
 
         FileLister fl = new FileLister();
         ArrayList<File> folderList = fl.listFolderAtPath(new File(settings.getExtractionPath()));
@@ -29,7 +28,7 @@ public class Controller {
             LOGGER.info("Nothing to process.");
         }
         else {
-            LOGGER.info(fileList.size() + " entries to process.");
+            LOGGER.info("Number of entries to process: '" + fileList.size() + "'.");
         }
         fileList = new Renamer().renameFiles(fileList, settings.getType());
         new FileMover().moveFiles(fileList, new File(settings.getCompletionPath()), settings.getExceptions());
