@@ -22,7 +22,7 @@ public class Main {
             settings.setType(MediaType.Anime);
             settings.setExtractionPath("M:\\Processing\\Completed\\Anime");
             settings.setCompletionPath("M:\\MyAnime");
-            settings.addException(new ExceptionPath("Naruto Shippuuden", "\\Other\\Naruto"));
+            settings.addException(new ExceptionPath("naruto shippuuden", "\\Other\\Naruto"));
             settingList.add(settings);
 
             settings = new TypeSettings();
@@ -30,8 +30,8 @@ public class Main {
             settings.setType(MediaType.Series);
             settings.setExtractionPath("M:\\Processing\\Completed\\Series");
             settings.setCompletionPath("M:\\Series");
-            settings.addException(new ExceptionPath("Ash.vs.Evil.Dead.", "\\Later\\Ash vs Evil Dead"));
-            settings.addException(new ExceptionPath("Once.Upon.a.Time.", "\\Later\\Once Upon A Time\\Season 6"));
+            settings.addException(new ExceptionPath("Ash vs Evil Dead", "\\Later\\Ash vs Evil Dead"));
+            settings.addException(new ExceptionPath("Once Upon A Time", "\\Later\\Once Upon A Time\\Season 6"));
             settingList.add(settings);
 
             // new FileWriteHelper().createXMLFiles(settingList);

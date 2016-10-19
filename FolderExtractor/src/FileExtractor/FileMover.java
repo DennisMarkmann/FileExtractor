@@ -11,9 +11,9 @@ import FileExtractor.Settings.ExceptionPath;
 
 class FileMover {
 
-    private String checkForException(Path sourcePath, ArrayList<ExceptionPath> exceptions) {
+    private String checkForException(String fileName, ArrayList<ExceptionPath> exceptions) {
         for (ExceptionPath exceptionPath : exceptions) {
-            if (sourcePath.toString().contains(exceptionPath.getName())) {
+            if (fileName.toLowerCase().startsWith(exceptionPath.getName().toLowerCase())) {
                 return exceptionPath.getPath();
             }
         }
@@ -25,7 +25,7 @@ class FileMover {
         for (final File file : fileList) {
             try {
                 Path sourcePath = file.toPath();
-                String exceptionPath = this.checkForException(sourcePath, exceptions);
+                String exceptionPath = this.checkForException(file.getName(), exceptions);
                 Path destinationPath = new File(destinationDirectory.getPath() + exceptionPath + "\\" + file.getName())
                         .toPath();
                 Files.move(sourcePath, destinationPath, StandardCopyOption.REPLACE_EXISTING);

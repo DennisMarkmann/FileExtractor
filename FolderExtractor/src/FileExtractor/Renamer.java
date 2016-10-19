@@ -2,43 +2,23 @@ package FileExtractor;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import FileExtractor.Settings.MediaType;
 
 public class Renamer {
 
-    private String addSeparators(String fileName) {
-        // TODO
-        return fileName;
-    }
-
-    private String handleAnimeHoster(String fileName) {
-        ArrayList<String> checkList = new ArrayList<>();
-        checkList.add("HorribleSubs");
-        checkList.add("Harunatsu");
-        checkList.add("Coalgirls");
-        checkList.add("Vivid");
-        checkList.add("Hiryuu");
-        checkList.add("DeadFish");
-        checkList.add("InsaneSubs");
-        checkList.add("Mori");
-        checkList.add("Final8");
-        checkList.add("tlacatlc6");
-        checkList.add("Tsundere");
-        checkList.add("Doki");
-        checkList.add("FFF");
-        checkList.add("CBM");
-        checkList.add("AE");
-        checkList.add("Anime-Koi");
-        for (String checkString : checkList) {
-            fileName = this.replaceCheckString(fileName, checkString);
-        }
-        return fileName;
-    }
-
     private String handleAnimeRenaming(String fileName) {
-        fileName = this.handleAnimeHoster(fileName);
-        fileName = this.handleQualityInformation(fileName);
+        final Pattern pattern = Pattern.compile("(?i)(\\[.*\\])(.*)(S\\d*)?( *- \\d*)(.*)");
+        Matcher m = pattern.matcher(fileName);
+        if (m.matches()) {
+            String name = m.group(2).trim();
+            String seasonNumber = m.group(3);
+            String episodeNumber = m.group(4).trim();
+
+            fileName = name + (seasonNumber != null ? " " + seasonNumber.toUpperCase() : "") + " " + episodeNumber;
+        }
         return fileName;
     }
 
@@ -54,18 +34,9 @@ public class Renamer {
         checkList.add("WEB-DL");
         checkList.add("DD5.1");
         checkList.add("H.264");
-
-        for (String checkString : checkList) {
-            fileName = this.replaceCheckString(fileName, checkString);
-        }
-        return fileName;
-    }
-
-    private String handleSeriesHoster(String fileName) {
-        ArrayList<String> checkList = new ArrayList<>();
-        checkList.add("AG");
-        checkList.add("DIMENSION");
-        checkList.add("BATV");
+        checkList.add("H264");
+        checkList.add("bluray");
+        checkList.add("x264");
         for (String checkString : checkList) {
             fileName = this.replaceCheckString(fileName, checkString);
         }
@@ -74,9 +45,15 @@ public class Renamer {
 
     private String handleSeriesRenaming(String fileName) {
         fileName = this.handleQualityInformation(fileName);
-        fileName = this.handleSeriesHoster(fileName);
         fileName = this.replaceDots(fileName);
-        fileName = this.addSeparators(fileName);
+        final Pattern pattern = Pattern.compile("(?i)(.*)(S\\d*E\\d*)(.*)(-.*)");
+        Matcher m = pattern.matcher(fileName);
+        if (m.matches()) {
+            String name = m.group(1).trim();
+            String episodeNumber = m.group(2).toUpperCase();
+            String episodeTitle = m.group(3).trim();
+            fileName = name + " - " + episodeNumber + (episodeTitle.length() > 0 ? " - " + episodeTitle : "");
+        }
         return fileName;
     }
 
