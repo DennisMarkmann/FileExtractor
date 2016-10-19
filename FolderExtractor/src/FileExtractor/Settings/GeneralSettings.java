@@ -20,34 +20,6 @@ public class GeneralSettings {
         return this.timerInterval;
     }
 
-    public boolean isUseGui() {
-        return this.useGui;
-    }
-
-    public boolean isUseLogging() {
-        return this.useLogging;
-    }
-
-    public boolean isUseNotificationWhileWorking() {
-        return this.useNotificationWhileWorking;
-    }
-
-    public boolean isUseRenaming() {
-        return this.useRenaming;
-    }
-
-    public boolean isUseTaskbarEntry() {
-        return this.useTaskbarEntry;
-    }
-
-    public boolean isUseTimer() {
-        return this.useTimer;
-    }
-
-    public boolean isUseUnzipping() {
-        return this.useUnzipping;
-    }
-
     public void setLanguage(String language) {
         this.language = language;
     }
@@ -82,6 +54,34 @@ public class GeneralSettings {
 
     public void setUseUnzipping(boolean useUnzipping) {
         this.useUnzipping = useUnzipping;
+    }
+
+    boolean useGui() {
+        return this.useGui;
+    }
+
+    public boolean useLogging() {
+        return this.useLogging;
+    }
+
+    public boolean useNotificationWhileWorking() {
+        return this.useNotificationWhileWorking;
+    }
+
+    public boolean useRenaming() {
+        return this.useRenaming;
+    }
+
+    public boolean useTaskbarEntry() {
+        return this.useTaskbarEntry;
+    }
+
+    public boolean useTimer() {
+        return this.useTimer;
+    }
+
+    public boolean useUnzipping() {
+        return this.useUnzipping;
     }
 
 }
