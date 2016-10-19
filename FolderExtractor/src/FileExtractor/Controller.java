@@ -29,7 +29,7 @@ class Controller {
         settings.setExtractionPath("M:\\Processing\\Completed\\Anime");
         settings.setCompletionPath("M:\\MyAnime");
         settings.addException(new ExceptionPath("Naruto Shippuuden", "\\Other\\Naruto"));
-        settings.addException(new ExceptionPath("Bubuki Buranki", "\\Bubuki Buranki"));
+        settings.addException(new ExceptionPath("Bubuki Buranki", "\\Other\\Bubuki Buranki"));
         this.settingList.add(settings);
 
         settings = new TypeSettings();
