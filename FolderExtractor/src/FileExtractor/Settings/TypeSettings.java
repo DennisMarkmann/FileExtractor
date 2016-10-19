@@ -5,12 +5,12 @@ import java.util.ArrayList;
 public class TypeSettings {
 
     private String name;
+    private MediaType type;
     private String extractionPath;
     private String completionPath;
-    private ArrayList<ExceptionPath> exceptions = new ArrayList<>();
     private boolean seriesFolder;
     private boolean seasonFolder;
-    private MediaType type;
+    private ArrayList<ExceptionPath> exceptions = new ArrayList<>();
 
     public void addException(ExceptionPath exception) {
         this.exceptions.add(exception);
@@ -30,6 +30,10 @@ public class TypeSettings {
 
     public String getName() {
         return this.name;
+    }
+
+    public MediaType getType() {
+        return this.type;
     }
 
     public boolean isSeasonFolder() {
@@ -58,10 +62,6 @@ public class TypeSettings {
 
     public void setSeriesFolder(boolean seriesFolder) {
         this.seriesFolder = seriesFolder;
-    }
-
-    public MediaType getType() {
-        return type;
     }
 
     public void setType(MediaType type) {

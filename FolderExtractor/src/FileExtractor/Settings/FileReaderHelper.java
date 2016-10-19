@@ -36,6 +36,6 @@ public class FileReaderHelper {
 
     public final void readXMLFiles(String path) {
 
-        new Settingsreader().readXmlFile(path);
+        new SettingsReader().readXmlFile(path);
     }
 }

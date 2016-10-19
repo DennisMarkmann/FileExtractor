@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 
 import FileExtractor.Logging.LogHandler;
 import FileExtractor.Settings.ExceptionPath;
+import FileExtractor.Settings.FileWriteHelper;
 import FileExtractor.Settings.MediaType;
 import FileExtractor.Settings.TypeSettings;
 
@@ -32,7 +33,7 @@ public class Main {
             settings.setType(MediaType.Anime);
             settings.setExtractionPath("M:\\Processing\\Completed\\Anime");
             settings.setCompletionPath("M:\\MyAnime");
-            settings.addException(new ExceptionPath("naruto shippuuden", "\\Other\\Naruto"));
+            settings.addException(new ExceptionPath("Naruto Shippuuden", "\\Other\\Naruto"));
             settingList.add(settings);
 
             settings = new TypeSettings();
@@ -44,7 +45,7 @@ public class Main {
             settings.addException(new ExceptionPath("Once Upon A Time", "\\Later\\Once Upon A Time\\Season 6"));
             settingList.add(settings);
 
-            // new FileWriteHelper().createXMLFiles(settingList);
+            new FileWriteHelper().createXMLFiles(settingList);
             final Controller controller = new Controller();
             if (useTimer) {
                 int intervalInMinutes = 30;

@@ -7,7 +7,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-class Settingsreader {
+class SettingsReader {
 
     final void readXmlFile(String path) {
 
@@ -26,9 +26,13 @@ class Settingsreader {
             if (nNode.getNodeType() == Node.ELEMENT_NODE) {
                 final Element element = (Element) nNode;
 
-                final String type = helper.getElementValue(element, "Type");
+                final String name = helper.getElementValue(element, "Name");
+                // private MediaType type;
                 final String extractionPath = helper.getElementValue(element, "Extractionpath");
-                final String Path = helper.getElementValue(element, "Path");
+                final String completionPath = helper.getElementValue(element, "CompletionPath");
+                // final boolean seriesFolder = helper.getElementValue(element, "SeriesFolder");
+                // final boolean seasonFolder = helper.getElementValue(element, "SeasonFolder");
+                // private ArrayList<ExceptionPath> exceptions = new ArrayList<>();
 
                 // creator.createGroup(groupName, description, fixSize);
 
