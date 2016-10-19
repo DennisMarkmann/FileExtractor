@@ -5,9 +5,14 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.log4j.Logger;
+
+import FileExtractor.Logging.LogHandler;
 import FileExtractor.Settings.MediaType;
 
 public class Renamer {
+
+    private static final Logger LOGGER = LogHandler.getLogger("./logs/FileExtractor.log");
 
     private String handleAnimeRenaming(String fileName) {
         final Pattern pattern = Pattern.compile("(?i)(\\[.*\\])(.*)(S\\d*)?( *- (OVA|\\d*))(.*)");
@@ -78,6 +83,7 @@ public class Renamer {
             File newFile = new File(filePath + "\\" + fileName + extention);
             if (file.renameTo(newFile)) {
                 renamedFiles.add(newFile);
+                LOGGER.info("Renaming of '" + file.getName() + "' to '" + newFile.getName() + "'.");
             }
         }
         return renamedFiles;

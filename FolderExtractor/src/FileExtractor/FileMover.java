@@ -7,9 +7,14 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 
+import org.apache.log4j.Logger;
+
+import FileExtractor.Logging.LogHandler;
 import FileExtractor.Settings.ExceptionPath;
 
 class FileMover {
+
+    private static final Logger LOGGER = LogHandler.getLogger("./logs/FileExtractor.log");
 
     private String checkForException(String fileName, ArrayList<ExceptionPath> exceptions) {
         for (ExceptionPath exceptionPath : exceptions) {
@@ -29,6 +34,7 @@ class FileMover {
                 Path destinationPath = new File(destinationDirectory.getPath() + exceptionPath + "\\" + file.getName())
                         .toPath();
                 Files.move(sourcePath, destinationPath, StandardCopyOption.REPLACE_EXISTING);
+                LOGGER.info("Moving from '" + sourcePath + "' to '" + destinationPath + "'.");
             }
             catch (IOException e) {
                 e.printStackTrace();

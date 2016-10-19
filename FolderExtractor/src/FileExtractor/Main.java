@@ -4,13 +4,20 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import org.apache.log4j.Logger;
+
+import FileExtractor.Logging.LogHandler;
 import FileExtractor.Settings.ExceptionPath;
 import FileExtractor.Settings.MediaType;
 import FileExtractor.Settings.TypeSettings;
 
 public class Main {
 
+    private static final Logger LOGGER = LogHandler.getLogger("./logs/FileExtractor.log");
+
     public static void main(final String[] args) {
+
+        LOGGER.info("Application starting.");
 
         boolean useGui = false;
         boolean useTimer = false;
@@ -38,11 +45,11 @@ public class Main {
             settingList.add(settings);
 
             // new FileWriteHelper().createXMLFiles(settingList);
-            Controller controller = new Controller();
+            final Controller controller = new Controller();
             if (useTimer) {
                 int intervalInMinutes = 30;
                 Timer timer = new Timer();
-                for (TypeSettings st : settingList) {
+                for (final TypeSettings st : settingList) {
                     timer.schedule(new TimerTask() {
 
                         @Override
@@ -58,6 +65,7 @@ public class Main {
                     controller.startProcess(st);
                 }
             }
+            LOGGER.info("-----------------------------");
         }
     }
 }
