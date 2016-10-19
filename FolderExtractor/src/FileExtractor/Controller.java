@@ -58,13 +58,8 @@ class Controller {
         ArrayList<File> fileList = fl.listFilesInFolderList(folderList, true);
         fileList = fl.listFilesForFolder(new File(settings.getExtractionPath()), fileList, false);
         fileList = new FileFilter().addMovies().filter(fileList);
+        LOGGER.info("Number of entries to process: '" + fileList.size() + "'.");
 
-        if (fileList.isEmpty()) {
-            LOGGER.info("Nothing to process.");
-        }
-        else {
-            LOGGER.info("Number of entries to process: '" + fileList.size() + "'.");
-        }
         if (this.generalSettings.useRenaming()) {
             fileList = new Renamer().renameFiles(fileList, settings.getType());
         }
@@ -79,7 +74,7 @@ class Controller {
     void process() {
         this.createDefaultSettings();
         new FileWriteHelper().createXMLFiles(this.settingList, this.generalSettings);
-
+        
         if (this.generalSettings.useTimer()) {
             LOGGER.info("Timer activated. Interval: '" + this.generalSettings.getTimerInterval() + "' minutes.");
 

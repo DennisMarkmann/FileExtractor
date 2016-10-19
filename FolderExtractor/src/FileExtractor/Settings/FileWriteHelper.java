@@ -10,17 +10,10 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 public class FileWriteHelper {
-
-    final Attr createAttribute(final Document doc, final Element superiorElement, final String name, final String value) {
-        final Attr attr = doc.createAttribute(name);
-        attr.setValue(value);
-        return superiorElement.setAttributeNode(attr);
-    }
 
     final Document createDocument() {
         try {

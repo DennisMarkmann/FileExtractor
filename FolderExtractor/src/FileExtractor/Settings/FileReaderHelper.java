@@ -8,10 +8,9 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 
-class FileReaderHelper {
+public class FileReaderHelper {
 
     final Document createDocument(final File file) {
         Document doc = null;
@@ -30,11 +29,11 @@ class FileReaderHelper {
 
     }
 
-    final String getElementValue(final Element element, final String name) {
-        return element.getElementsByTagName(name).item(0).getTextContent();
-    }
+    // final String getElementValue(final Element element, final String name) {
+    // return element.getElementsByTagName(name).item(0).getTextContent();
+    // }
 
-    public final void readXMLFiles(String path) {
-        new SettingsReader().readXmlFile(path);
-    }
+    // public final void readXMLFiles(String path) {
+    // new SettingsReader().readXmlFile(path);
+    // }
 }
