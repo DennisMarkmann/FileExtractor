@@ -35,7 +35,6 @@ class FrameListener implements ActionListener {
 
         Controller controller = new Controller();
         if (this.seriesChecked) {
-            // TODO
             // controller.startProcess(settings.getSeriesExtractionPath(), settings.getSeriesPath());
         }
     }
