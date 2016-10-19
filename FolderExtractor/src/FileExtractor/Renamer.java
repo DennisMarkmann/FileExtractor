@@ -10,7 +10,7 @@ import FileExtractor.Settings.MediaType;
 public class Renamer {
 
     private String handleAnimeRenaming(String fileName) {
-        final Pattern pattern = Pattern.compile("(?i)(\\[.*\\])(.*)(S\\d*)?( *- \\d*)(.*)");
+        final Pattern pattern = Pattern.compile("(?i)(\\[.*\\])(.*)(S\\d*)?( *- (OVA|\\d*))(.*)");
         Matcher m = pattern.matcher(fileName);
         if (m.matches()) {
             String name = m.group(2).trim();

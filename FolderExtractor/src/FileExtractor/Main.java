@@ -1,6 +1,8 @@
 package FileExtractor;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import FileExtractor.Settings.ExceptionPath;
 import FileExtractor.Settings.MediaType;
@@ -11,6 +13,7 @@ public class Main {
     public static void main(final String[] args) {
 
         boolean useGui = false;
+        boolean useTimer = false;
 
         if (useGui) {
             MainFrame.getInstance();
@@ -35,10 +38,24 @@ public class Main {
             settingList.add(settings);
 
             // new FileWriteHelper().createXMLFiles(settingList);
-
             Controller controller = new Controller();
-            for (TypeSettings st : settingList) {
-                controller.startProcess(st);
+            if (useTimer) {
+                Timer timer = new Timer();
+                for (TypeSettings st : settingList) {
+                    timer.schedule(new TimerTask() {
+
+                        @Override
+                        public void run() {
+                            controller.startProcess(st);
+                        }
+
+                    }, 1000, 1800000);
+                }
+            }
+            else {
+                for (TypeSettings st : settingList) {
+                    controller.startProcess(st);
+                }
             }
         }
     }
