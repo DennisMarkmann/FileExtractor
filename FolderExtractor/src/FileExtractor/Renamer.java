@@ -59,8 +59,8 @@ class Renamer {
             String name = m.group(1).trim();
             String episodeNumber = m.group(2).toUpperCase();
             String episodeTitle = m.group(3).trim();
-            // TODO bugfix: keine "-" wenn schon vorhanden z.B. bereits verarbeitete Serien
-            fileName = name + " - " + episodeNumber + (episodeTitle.length() > 0 ? " - " + episodeTitle : "");
+            fileName = name + (episodeNumber != null ? " - " + episodeNumber : "")
+                    + (episodeTitle.length() > 0 ? " - " + episodeTitle : "");
         }
         return fileName;
     }
@@ -68,24 +68,30 @@ class Renamer {
     ArrayList<File> renameFiles(ArrayList<File> fileList, MediaType mediaType) {
         ArrayList<File> renamedFiles = new ArrayList<>();
         for (final File file : fileList) {
-            String fileName = file.getName().substring(0, file.getName().lastIndexOf("."));
+            String originalFileName = file.getName();
+            String newFileName = file.getName().substring(0, file.getName().lastIndexOf("."));
             String extention = file.getName().substring(file.getName().lastIndexOf("."));
 
             if (mediaType == MediaType.Anime) {
-                fileName = this.handleAnimeRenaming(fileName);
+                newFileName = this.handleAnimeRenaming(newFileName);
             }
             else if (mediaType == MediaType.Series) {
-                fileName = this.handleSeriesRenaming(fileName);
+                newFileName = this.handleSeriesRenaming(newFileName);
             }
             else if (mediaType == MediaType.Movie) {
-                fileName = this.handleMovieRenaming(fileName);
+                newFileName = this.handleMovieRenaming(newFileName);
             }
-            fileName = fileName.trim();
             String filePath = file.getAbsolutePath().substring(0, file.getAbsolutePath().lastIndexOf(File.separator));
-            File newFile = new File(filePath + "\\" + fileName + extention);
-            if (file.renameTo(newFile)) {
-                renamedFiles.add(newFile);
-                LOGGER.info("Renaming '" + file.getName() + "' to '" + newFile.getName() + "'.");
+            newFileName = newFileName.trim() + extention;
+            if (newFileName.equals(originalFileName)) {
+                renamedFiles.add(file);
+            }
+            else {
+                File newFile = new File(filePath + "\\" + newFileName);
+                if (file.renameTo(newFile)) {
+                    renamedFiles.add(newFile);
+                    LOGGER.info("Renaming '" + file.getName() + "' to '" + newFile.getName() + "'.");
+                }
             }
         }
         return renamedFiles;
