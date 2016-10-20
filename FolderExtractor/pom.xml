@@ -37,7 +37,7 @@
 					<archive>
 						<manifest>
 							<addClasspath>true</addClasspath>
-							<mainClass>FileExtractor.Main</mainClass>
+							<mainClass>FileExtractor.StartUp</mainClass>
 							<classpathPrefix>lib/</classpathPrefix>
 						</manifest>
 					</archive>
