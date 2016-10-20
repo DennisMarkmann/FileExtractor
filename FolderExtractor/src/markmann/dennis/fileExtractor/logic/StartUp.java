@@ -1,8 +1,8 @@
-package FileExtractor;
+package markmann.dennis.fileExtractor.logic;
 
 import org.apache.log4j.Logger;
 
-import FileExtractor.Logging.LogHandler;
+import markmann.dennis.fileExtractor.logging.LogHandler;
 
 public class StartUp {
 

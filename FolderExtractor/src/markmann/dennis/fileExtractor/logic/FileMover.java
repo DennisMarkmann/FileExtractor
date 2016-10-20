@@ -1,4 +1,4 @@
-package FileExtractor;
+package markmann.dennis.fileExtractor.logic;
 
 import java.io.File;
 import java.io.IOException;
@@ -9,9 +9,9 @@ import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
 
-import FileExtractor.Logging.LogHandler;
-import FileExtractor.Settings.ExceptionPath;
-import FileExtractor.Settings.TypeSettings;
+import markmann.dennis.fileExtractor.logging.LogHandler;
+import markmann.dennis.fileExtractor.settings.ExceptionPath;
+import markmann.dennis.fileExtractor.settings.TypeSettings;
 
 class FileMover {
 

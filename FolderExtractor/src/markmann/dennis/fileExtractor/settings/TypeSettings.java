@@ -1,4 +1,4 @@
-package FileExtractor.Settings;
+package markmann.dennis.fileExtractor.settings;
 
 import java.util.ArrayList;
 

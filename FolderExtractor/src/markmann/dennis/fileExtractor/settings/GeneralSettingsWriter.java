@@ -1,4 +1,4 @@
-package FileExtractor.Settings;
+package markmann.dennis.fileExtractor.settings;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;

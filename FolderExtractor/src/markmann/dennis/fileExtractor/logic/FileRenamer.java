@@ -1,4 +1,4 @@
-package FileExtractor;
+package markmann.dennis.fileExtractor.logic;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -7,8 +7,8 @@ import java.util.regex.Pattern;
 
 import org.apache.log4j.Logger;
 
-import FileExtractor.Logging.LogHandler;
-import FileExtractor.Settings.MediaType;
+import markmann.dennis.fileExtractor.logging.LogHandler;
+import markmann.dennis.fileExtractor.settings.MediaType;
 
 class FileRenamer {
 

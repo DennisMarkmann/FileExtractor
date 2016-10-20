@@ -1,11 +1,11 @@
-package FileExtractor;
+package markmann.dennis.fileExtractor.logic;
 
 import java.io.File;
 import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
 
-import FileExtractor.Logging.LogHandler;
+import markmann.dennis.fileExtractor.logging.LogHandler;
 
 class FileCleaner {
 

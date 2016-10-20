@@ -1,4 +1,4 @@
-package FileExtractor.Logging;
+package markmann.dennis.fileExtractor.logging;
 
 import java.io.IOException;
 import java.io.OutputStream;
