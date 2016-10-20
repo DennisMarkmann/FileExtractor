@@ -10,7 +10,7 @@ import org.apache.log4j.Logger;
 import FileExtractor.Logging.LogHandler;
 import FileExtractor.Settings.MediaType;
 
-class Renamer {
+class FileRenamer {
 
     private static final Logger LOGGER = LogHandler.getLogger("./Logs/FileExtractor.log");
 

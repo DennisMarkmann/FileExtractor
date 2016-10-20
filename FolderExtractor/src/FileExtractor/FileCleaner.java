@@ -7,7 +7,7 @@ import org.apache.log4j.Logger;
 
 import FileExtractor.Logging.LogHandler;
 
-class Cleaner {
+class FileCleaner {
 
     private static final Logger LOGGER = LogHandler.getLogger("./Logs/FileExtractor.log");
 

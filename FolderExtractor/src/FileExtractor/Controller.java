@@ -66,13 +66,13 @@ class Controller {
         LOGGER.info("Number of entries to process: '" + fileList.size() + "'.");
 
         if (this.generalSettings.useRenaming()) {
-            fileList = new Renamer().renameFiles(fileList, settings.getType());
+            fileList = new FileRenamer().renameFiles(fileList, settings.getType());
         }
         if (this.generalSettings.useFileMoving()) {
             new FileMover().moveFiles(fileList, new File(settings.getCompletionPath()), settings);
         }
         if (this.generalSettings.useCleanup()) {
-            new Cleaner().cleanFiles(folderList);
+            new FileCleaner().cleanFiles(folderList);
         }
     }
 
