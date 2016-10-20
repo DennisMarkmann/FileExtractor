@@ -41,7 +41,7 @@ class Controller {
         settings.addException(new ExceptionPath("Once Upon A Time", "\\Later\\Once Upon A Time\\Season 6"));
         this.settingList.add(settings);
 
-        this.generalSettings.setTimerInterval(15);
+        this.generalSettings.setTimerInterval(60);
         this.generalSettings.setUseTimer(true);
         this.generalSettings.setUseRenaming(true);
         this.generalSettings.setUseFileMoving(true);
@@ -74,7 +74,7 @@ class Controller {
     void process() {
         this.createDefaultSettings();
         new FileWriteHelper().createXMLFiles(this.settingList, this.generalSettings);
-        
+
         if (this.generalSettings.useTimer()) {
             LOGGER.info("Timer activated. Interval: '" + this.generalSettings.getTimerInterval() + "' minutes.");
 

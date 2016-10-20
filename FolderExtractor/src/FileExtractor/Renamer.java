@@ -42,6 +42,7 @@ class Renamer {
         checkList.add("H264");
         checkList.add("bluray");
         checkList.add("x264");
+        checkList.add("X264");
         checkList.add("HDTV");
         for (String checkString : checkList) {
             fileName = this.replaceCheckString(fileName, checkString);
@@ -58,6 +59,7 @@ class Renamer {
             String name = m.group(1).trim();
             String episodeNumber = m.group(2).toUpperCase();
             String episodeTitle = m.group(3).trim();
+            // TODO bugfix: keine "-" wenn schon vorhanden z.B. bereits verarbeitete Serien
             fileName = name + " - " + episodeNumber + (episodeTitle.length() > 0 ? " - " + episodeTitle : "");
         }
         return fileName;
