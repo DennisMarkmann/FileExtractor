@@ -12,7 +12,7 @@ import FileExtractor.Settings.MediaType;
 
 class Renamer {
 
-    private static final Logger LOGGER = LogHandler.getLogger("./logs/FileExtractor.log");
+    private static final Logger LOGGER = LogHandler.getLogger("./Logs/FileExtractor.log");
 
     private String handleAnimeRenaming(String fileName) {
         final Pattern pattern = Pattern.compile("(?i)(\\[.*\\])(.*)(S\\d*)?( *- (OVA|\\d*))(.*)");

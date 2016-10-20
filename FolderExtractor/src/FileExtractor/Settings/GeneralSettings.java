@@ -11,6 +11,7 @@ public class GeneralSettings {
     private boolean useRenaming;
     private boolean useCleanup;
     private boolean useFileMoving;
+    private boolean useExtendedLogging;
     private String language;
 
     public String getLanguage() {
@@ -91,6 +92,14 @@ public class GeneralSettings {
 
     boolean useUnzipping() {
         return this.useUnzipping;
+    }
+
+    public boolean useExtendedLogging() {
+        return useExtendedLogging;
+    }
+
+    public void setUseExtendedLogging(boolean useExtendedLogging) {
+        this.useExtendedLogging = useExtendedLogging;
     }
 
 }

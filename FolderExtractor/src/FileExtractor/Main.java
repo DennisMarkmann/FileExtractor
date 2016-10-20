@@ -6,7 +6,7 @@ import FileExtractor.Logging.LogHandler;
 
 public class Main {
 
-    private static final Logger LOGGER = LogHandler.getLogger("./logs/FileExtractor.log");
+    private static final Logger LOGGER = LogHandler.getLogger("./Logs/FileExtractor.log");
 
     public static void main(final String[] args) {
         LOGGER.info("Application starting.");

@@ -18,7 +18,7 @@ import dennis.markmann.MyLibraries.DefaultJobs.File.FileLister;
 
 class Controller {
 
-    private static final Logger LOGGER = LogHandler.getLogger("./logs/FileExtractor.log");
+    private static final Logger LOGGER = LogHandler.getLogger("./Logs/FileExtractor.log");
     private ArrayList<TypeSettings> settingList = new ArrayList<>();
     private GeneralSettings generalSettings = new GeneralSettings();
 
@@ -46,12 +46,17 @@ class Controller {
         this.generalSettings.setUseRenaming(true);
         this.generalSettings.setUseFileMoving(true);
         this.generalSettings.setUseCleanup(true);
+        this.generalSettings.setUseExtendedLogging(false);
     }
 
     private void extract(TypeSettings settings) {
-        LOGGER.info(
-                "Checking for " + settings.getName() + " Settings: " + "' Type: '" + settings.getType() + "', ExtractionPath: '"
-                        + settings.getExtractionPath() + "', CompletionPath: '" + settings.getCompletionPath() + "'.");
+        LOGGER.info("Checking for " + settings.getName() + ":");
+        if (this.generalSettings.useExtendedLogging()) {
+            LOGGER.info(
+                    "Type: '" + settings.getType() + "', ExtractionPath: '" + settings.getExtractionPath()
+                            + "', CompletionPath: '" + settings.getCompletionPath() + "', SeriesFolder: '"
+                            + settings.useSeriesFolder() + "', SeasonFolder: '" + settings.useSeasonFolder() + "'.");
+        }
 
         FileLister fl = new FileLister();
         ArrayList<File> folderList = fl.listFolderAtPath(new File(settings.getExtractionPath()));

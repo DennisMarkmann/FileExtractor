@@ -15,7 +15,7 @@ import FileExtractor.Settings.TypeSettings;
 
 class FileMover {
 
-    private static final Logger LOGGER = LogHandler.getLogger("./logs/FileExtractor.log");
+    private static final Logger LOGGER = LogHandler.getLogger("./Logs/FileExtractor.log");
 
     private String checkForAdditionalFolder(String name, TypeSettings settings) {
         String additionalFolder = "";

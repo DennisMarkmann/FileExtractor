@@ -3,11 +3,18 @@ package FileExtractor;
 import java.io.File;
 import java.util.ArrayList;
 
+import org.apache.log4j.Logger;
+
+import FileExtractor.Logging.LogHandler;
+
 class Cleaner {
+
+    private static final Logger LOGGER = LogHandler.getLogger("./Logs/FileExtractor.log");
 
     void cleanFiles(ArrayList<File> fileList) {
         for (File file : fileList) {
             this.deleteDir(file);
+            LOGGER.info("Deleting folder: '" + file.getName() + "'.");
         }
     }
 
