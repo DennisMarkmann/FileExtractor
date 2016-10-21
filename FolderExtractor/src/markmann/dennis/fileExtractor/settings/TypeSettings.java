@@ -1,4 +1,4 @@
-package FileExtractor.Settings;
+package markmann.dennis.fileExtractor.settings;
 
 import java.util.ArrayList;
 
@@ -37,12 +37,10 @@ public class TypeSettings {
     }
 
     public void setCompletionPath(String path) {
-        // TODO check if path is available
         this.completionPath = path;
     }
 
     public void setExtractionPath(String extractionPath) {
-        // TODO check if path is available
         this.extractionPath = extractionPath;
     }
 

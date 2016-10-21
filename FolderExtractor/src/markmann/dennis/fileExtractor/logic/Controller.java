@@ -1,4 +1,4 @@
-package FileExtractor;
+package markmann.dennis.fileExtractor.logic;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -7,18 +7,18 @@ import java.util.TimerTask;
 
 import org.apache.log4j.Logger;
 
-import FileExtractor.Logging.LogHandler;
-import FileExtractor.Settings.ExceptionPath;
-import FileExtractor.Settings.FileWriteHelper;
-import FileExtractor.Settings.GeneralSettings;
-import FileExtractor.Settings.MediaType;
-import FileExtractor.Settings.TypeSettings;
 import dennis.markmann.MyLibraries.DefaultJobs.File.FileFilter;
 import dennis.markmann.MyLibraries.DefaultJobs.File.FileLister;
+import markmann.dennis.fileExtractor.logging.LogHandler;
+import markmann.dennis.fileExtractor.settings.ExceptionPath;
+import markmann.dennis.fileExtractor.settings.FileWriteHelper;
+import markmann.dennis.fileExtractor.settings.GeneralSettings;
+import markmann.dennis.fileExtractor.settings.MediaType;
+import markmann.dennis.fileExtractor.settings.TypeSettings;
 
 class Controller {
 
-    private static final Logger LOGGER = LogHandler.getLogger("./logs/FileExtractor.log");
+    private static final Logger LOGGER = LogHandler.getLogger("./Logs/FileExtractor.log");
     private ArrayList<TypeSettings> settingList = new ArrayList<>();
     private GeneralSettings generalSettings = new GeneralSettings();
 
@@ -46,12 +46,17 @@ class Controller {
         this.generalSettings.setUseRenaming(true);
         this.generalSettings.setUseFileMoving(true);
         this.generalSettings.setUseCleanup(true);
+        this.generalSettings.setUseExtendedLogging(false);
     }
 
     private void extract(TypeSettings settings) {
-        LOGGER.info(
-                "Checking for " + settings.getName() + " Settings: " + "' Type: '" + settings.getType() + "', ExtractionPath: '"
-                        + settings.getExtractionPath() + "', CompletionPath: '" + settings.getCompletionPath() + "'.");
+        LOGGER.info("Checking for " + settings.getName() + ":");
+        if (this.generalSettings.useExtendedLogging()) {
+            LOGGER.info(
+                    "Type: '" + settings.getType() + "', ExtractionPath: '" + settings.getExtractionPath()
+                            + "', CompletionPath: '" + settings.getCompletionPath() + "', SeriesFolder: '"
+                            + settings.useSeriesFolder() + "', SeasonFolder: '" + settings.useSeasonFolder() + "'.");
+        }
 
         FileLister fl = new FileLister();
         ArrayList<File> folderList = fl.listFolderAtPath(new File(settings.getExtractionPath()));
@@ -61,13 +66,13 @@ class Controller {
         LOGGER.info("Number of entries to process: '" + fileList.size() + "'.");
 
         if (this.generalSettings.useRenaming()) {
-            fileList = new Renamer().renameFiles(fileList, settings.getType());
+            fileList = new FileRenamer().renameFiles(fileList, settings.getType());
         }
         if (this.generalSettings.useFileMoving()) {
             new FileMover().moveFiles(fileList, new File(settings.getCompletionPath()), settings);
         }
         if (this.generalSettings.useCleanup()) {
-            new Cleaner().cleanFiles(folderList);
+            new FileCleaner().cleanFiles(folderList);
         }
     }
 
