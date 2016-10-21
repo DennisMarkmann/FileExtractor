@@ -37,10 +37,12 @@ public class TypeSettings {
     }
 
     public void setCompletionPath(String path) {
+        // TODO valid path + not equals extractionPath
         this.completionPath = path;
     }
 
     public void setExtractionPath(String extractionPath) {
+        // TODO valid path + not equals completionPath
         this.extractionPath = extractionPath;
     }
 
