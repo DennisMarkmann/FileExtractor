@@ -28,39 +28,17 @@ class FileRenamer {
     }
 
     private String handleMovieRenaming(String fileName) {
-        fileName = this.handleQualityInformation(fileName);
-        return fileName;
-    }
-
-    private String handleQualityInformation(String fileName) {
-        ArrayList<String> checkList = new ArrayList<>();
-        checkList.add("1080p");
-        checkList.add("720p");
-        checkList.add("WEB-DL");
-        checkList.add("DD5.1");
-        checkList.add("H.264");
-        checkList.add("H264");
-        checkList.add("bluray");
-        checkList.add("x264");
-        checkList.add("X264");
-        checkList.add("HDTV");
-        for (String checkString : checkList) {
-            fileName = this.replaceCheckString(fileName, checkString);
-        }
         return fileName;
     }
 
     private String handleSeriesRenaming(String fileName) {
-        fileName = this.handleQualityInformation(fileName);
         fileName = this.replaceDots(fileName);
-        final Pattern pattern = Pattern.compile("(?i)(.*)(S\\d*E\\d*)(.*)(-.*)");
+        final Pattern pattern = Pattern.compile("(?i)(.*)(S\\d*E\\d*)(.*)");
         Matcher m = pattern.matcher(fileName);
         if (m.matches()) {
             String name = m.group(1).trim();
             String episodeNumber = m.group(2).toUpperCase();
-            String episodeTitle = m.group(3).trim();
-            fileName = name + (episodeNumber != null ? " - " + episodeNumber : "")
-                    + (episodeTitle.length() > 0 ? " - " + episodeTitle : "");
+            fileName = name + (episodeNumber != null ? " - " + episodeNumber : "");
         }
         return fileName;
     }
@@ -95,22 +73,6 @@ class FileRenamer {
             }
         }
         return renamedFiles;
-    }
-
-    private String replaceCheckString(String fileName, String checkString) {
-        if (fileName.contains("[" + checkString + "]")) {
-            fileName = fileName.replace("[" + checkString + "]", "");
-        }
-        if (fileName.contains("-" + checkString)) {
-            fileName = fileName.replace("-" + checkString, "");
-        }
-        else if (fileName.contains(" " + checkString)) {
-            fileName = fileName.replace(" " + checkString, "");
-        }
-        else if (fileName.contains(checkString)) {
-            fileName = fileName.replace(checkString, "");
-        }
-        return fileName;
     }
 
     private String replaceDots(String fileName) {
