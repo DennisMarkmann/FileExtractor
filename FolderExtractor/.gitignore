@@ -6,4 +6,4 @@
 *.war
 *.ear
 /target
-/logs
+/Logs
