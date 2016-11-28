@@ -38,7 +38,7 @@ class Controller {
         settings.setExtractionPath("M:\\Processing\\Completed\\Series");
         settings.setCompletionPath("M:\\Series");
         settings.addException(new ExceptionPath("Ash vs Evil Dead", "\\Later\\Ash vs Evil Dead"));
-        settings.addException(new ExceptionPath("Once Upon A Time", "\\Later\\Once Upon A Time\\Season 6"));
+        settings.addException(new ExceptionPath("Westworld", "\\Later\\Westworld"));
         this.settingList.add(settings);
 
         this.generalSettings.setTimerInterval(60);
