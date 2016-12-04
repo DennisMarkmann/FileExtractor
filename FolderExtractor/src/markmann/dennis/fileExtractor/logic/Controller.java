@@ -39,6 +39,7 @@ class Controller {
         settings.setCompletionPath("M:\\Series");
         settings.addException(new ExceptionPath("Ash vs Evil Dead", "\\Later\\Ash vs Evil Dead"));
         settings.addException(new ExceptionPath("Westworld", "\\Later\\Westworld"));
+        settings.addException(new ExceptionPath("RARBG", "Delete"));
         this.settingList.add(settings);
 
         this.generalSettings.setTimerInterval(60);

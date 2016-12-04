@@ -42,6 +42,10 @@ class FileMover {
                 Path sourcePath = file.toPath();
                 String exceptionPath = this.checkForException(file.getName(), settings.getExceptions());
                 String additionalFolder = this.checkForAdditionalFolder(file.getName(), settings);
+                if (exceptionPath.equals("Delete")) {
+                    LOGGER.info("Removing '" + file.getName() + "'.");
+                    continue;
+                }
                 Path destinationPath = new File(
                         destinationDirectory.getPath() + exceptionPath + "\\" + additionalFolder + file.getName()).toPath();
                 Files.move(sourcePath, destinationPath, StandardCopyOption.REPLACE_EXISTING);
