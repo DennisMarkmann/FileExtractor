@@ -26,7 +26,7 @@ class FileMover {
         if (exceptionPath.equals("") && settings.useCurrentlyWatchingCheck()) {
             String mediaName = name.substring(0, name.indexOf("-") - 1);
             if (!new File(settings.getCompletionPath() + "\\" + mediaName).exists()) {
-                additionalFolder = additionalFolder + "\\Later\\";
+                additionalFolder = additionalFolder + "\\Later\\" + mediaName + "\\";
             }
         }
         return additionalFolder;

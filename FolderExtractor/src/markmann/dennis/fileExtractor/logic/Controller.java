@@ -40,8 +40,6 @@ class Controller {
         settings.setExtractionPath("M:\\Processing\\Completed\\Series");
         settings.setCompletionPath("M:\\Series");
         settings.setUseCurrentlyWatchingCheck(true);
-        settings.addException(new ExceptionPath("Ash vs Evil Dead", "\\Later\\Ash vs Evil Dead"));
-        settings.addException(new ExceptionPath("Westworld", "\\Later\\Westworld"));
         settings.addException(new ExceptionPath("RARBG", "Delete"));
         this.settingList.add(settings);
 
