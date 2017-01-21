@@ -28,8 +28,10 @@ class Controller {
         settings.setType(MediaType.Anime);
         settings.setExtractionPath("M:\\Processing\\Completed\\Anime");
         settings.setCompletionPath("M:\\MyAnime");
+        settings.setUseCurrentlyWatchingCheck(true);
         settings.addException(new ExceptionPath("Naruto Shippuuden", "\\Other\\Naruto"));
-        settings.addException(new ExceptionPath("Bubuki Buranki", "\\Other\\Bubuki Buranki"));
+        settings.addException(new ExceptionPath("Monster Hunter Stories Ride On", "\\Other\\Monster Hunter Stories Ride On"));
+        settings.addException(new ExceptionPath("Nanbaka", "\\Other\\Nanbaka"));
         this.settingList.add(settings);
 
         settings = new TypeSettings();
@@ -37,6 +39,7 @@ class Controller {
         settings.setType(MediaType.Series);
         settings.setExtractionPath("M:\\Processing\\Completed\\Series");
         settings.setCompletionPath("M:\\Series");
+        settings.setUseCurrentlyWatchingCheck(true);
         settings.addException(new ExceptionPath("Ash vs Evil Dead", "\\Later\\Ash vs Evil Dead"));
         settings.addException(new ExceptionPath("Westworld", "\\Later\\Westworld"));
         settings.addException(new ExceptionPath("RARBG", "Delete"));
@@ -56,7 +59,8 @@ class Controller {
             LOGGER.info(
                     "Type: '" + settings.getType() + "', ExtractionPath: '" + settings.getExtractionPath()
                             + "', CompletionPath: '" + settings.getCompletionPath() + "', SeriesFolder: '"
-                            + settings.useSeriesFolder() + "', SeasonFolder: '" + settings.useSeasonFolder() + "'.");
+                            + settings.useSeriesFolder() + "', SeasonFolder: '" + settings.useSeasonFolder()
+                            + "', CurrentlyWatchingCheck: '" + settings.useCurrentlyWatchingCheck() + "'.");
         }
         File extractionFolder = new File(settings.getExtractionPath());
         File completionFolder = new File(settings.getCompletionPath());

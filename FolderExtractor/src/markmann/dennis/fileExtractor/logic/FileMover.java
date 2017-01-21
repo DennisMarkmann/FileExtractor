@@ -17,11 +17,17 @@ class FileMover {
 
     private static final Logger LOGGER = LogHandler.getLogger("./Logs/FileExtractor.log");
 
-    private String checkForAdditionalFolder(String name, TypeSettings settings) {
+    private String checkForAdditionalFolder(String name, TypeSettings settings, String exceptionPath) {
         String additionalFolder = "";
         if (settings.useSeriesFolder()) {
         }
         if (settings.useSeasonFolder()) {
+        }
+        if (exceptionPath.equals("") && settings.useCurrentlyWatchingCheck()) {
+            String mediaName = name.substring(0, name.indexOf("-") - 1);
+            if (!new File(settings.getCompletionPath() + "\\" + mediaName).exists()) {
+                additionalFolder = additionalFolder + "\\Later\\";
+            }
         }
         return additionalFolder;
     }
@@ -41,13 +47,16 @@ class FileMover {
             try {
                 Path sourcePath = file.toPath();
                 String exceptionPath = this.checkForException(file.getName(), settings.getExceptions());
-                String additionalFolder = this.checkForAdditionalFolder(file.getName(), settings);
+                String additionalFolder = this.checkForAdditionalFolder(file.getName(), settings, exceptionPath);
                 if (exceptionPath.equals("Delete")) {
                     LOGGER.info("Removing '" + file.getName() + "'.");
                     continue;
                 }
-                Path destinationPath = new File(
-                        destinationDirectory.getPath() + exceptionPath + "\\" + additionalFolder + file.getName()).toPath();
+                File destinationFolder = new File(destinationDirectory.getPath() + additionalFolder + "\\" + exceptionPath);
+                if (!destinationFolder.exists()) {
+                    destinationFolder.mkdir();
+                }
+                Path destinationPath = new File(destinationFolder.toString() + "\\" + file.getName()).toPath();
                 Files.move(sourcePath, destinationPath, StandardCopyOption.REPLACE_EXISTING);
                 LOGGER.info("Moving '" + file.getName() + "' to '" + destinationPath + "'.");
             }

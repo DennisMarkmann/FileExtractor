@@ -10,6 +10,7 @@ public class TypeSettings {
     private String completionPath;
     private boolean useSeriesFolder;
     private boolean useSeasonFolder;
+    private boolean useCurrentlyWatchingCheck;
     private ArrayList<ExceptionPath> exceptions = new ArrayList<>();
 
     public void addException(ExceptionPath exception) {
@@ -52,12 +53,20 @@ public class TypeSettings {
         this.type = type;
     }
 
+    public void setUseCurrentlyWatchingCheck(boolean useCurrentlyWatchingCheck) {
+        this.useCurrentlyWatchingCheck = useCurrentlyWatchingCheck;
+    }
+
     public void setUseSeasonFolder(boolean useSeasonFolder) {
         this.useSeasonFolder = useSeasonFolder;
     }
 
     public void setUseSeriesFolder(boolean useSeriesFolder) {
         this.useSeriesFolder = useSeriesFolder;
+    }
+
+    public boolean useCurrentlyWatchingCheck() {
+        return this.useCurrentlyWatchingCheck;
     }
 
     public boolean useSeasonFolder() {

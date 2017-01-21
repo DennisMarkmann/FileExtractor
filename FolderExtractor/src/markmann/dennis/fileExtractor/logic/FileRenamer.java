@@ -37,6 +37,9 @@ class FileRenamer {
         Matcher m = pattern.matcher(fileName);
         if (m.matches()) {
             String name = m.group(1).trim();
+            if (name.endsWith("-")) {
+                name = (name.substring(0, name.length() - 1)).trim();
+            }
             String episodeNumber = m.group(2).toUpperCase();
             fileName = name + (episodeNumber != null ? " - " + episodeNumber : "");
         }

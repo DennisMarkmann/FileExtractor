@@ -19,6 +19,7 @@ class TypeSettingsWriter {
         helper.createElement(doc, element, "CompletionPath", settings.getCompletionPath());
         helper.createElement(doc, element, "SeriesFolder", settings.useSeriesFolder() + "");
         helper.createElement(doc, element, "SeasonFolder", settings.useSeasonFolder() + "");
+        helper.createElement(doc, element, "CurrentlyWatchingCheck", settings.useCurrentlyWatchingCheck() + "");
 
         for (final ExceptionPath exceptionPath : settings.getExceptions()) {
             final Element exceptionElement = helper.createElement(doc, element, "Exception", null);
