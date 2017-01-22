@@ -2,6 +2,7 @@ package markmann.dennis.fileExtractor.logic;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -79,6 +80,7 @@ class Controller {
         LOGGER.info("Number of entries to process: '" + fileList.size() + "'.");
 
         if (this.generalSettings.useRenaming()) {
+            Collections.sort(fileList);
             fileList = new FileRenamer().renameFiles(fileList, settings.getType());
         }
         if (this.generalSettings.useFileMoving()) {
