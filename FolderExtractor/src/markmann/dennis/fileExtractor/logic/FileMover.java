@@ -19,16 +19,25 @@ class FileMover {
 
     private String checkForAdditionalFolder(String name, TypeSettings settings, String exceptionPath) {
         String additionalFolder = "";
+        String mediaName = name.substring(0, name.lastIndexOf("-") - 1);
+        boolean addSeriesFolder = false;
+
         if (settings.useSeriesFolder()) {
+            addSeriesFolder = true;
         }
         if (settings.useSeasonFolder()) {
         }
         if (exceptionPath.equals("") && settings.useCurrentlyWatchingCheck()) {
-            String mediaName = name.substring(0, name.lastIndexOf("-") - 1);
             if (!new File(settings.getCompletionPath() + "\\" + mediaName).exists()) {
-                additionalFolder = additionalFolder + "\\Later\\" + mediaName + "\\";
+                additionalFolder = additionalFolder + "\\Later\\";
+                addSeriesFolder = true;
             }
         }
+
+        if (addSeriesFolder) {
+            additionalFolder = additionalFolder + mediaName + "\\";
+        }
+
         return additionalFolder;
     }
 

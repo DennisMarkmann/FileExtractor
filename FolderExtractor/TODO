@@ -6,7 +6,6 @@
 1.2.1.	Close App via Taskbar
 
 2.	Additional functionality
-2.1.	SeriesFolder
 2.2.	SeasonFolder
 2.3.	File Rename & episode names etc from Online DB
 2.4.	Add movie functionality
@@ -19,6 +18,7 @@
 
 3. Cleanup
 3.1		Implement observable
+3.2		Use Media objects after reading files in
 
 4. Usability
 4.1.	Add Icon
