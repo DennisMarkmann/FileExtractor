@@ -2,8 +2,6 @@
 1.1.	XML-Settings
 1.1.1.	Read Settings
 1.1.2.	Use Settings if existing, otherwise default
-1.2.	Add Taskbar entry
-1.2.1.	Close App via Taskbar
 
 2.	Additional functionality
 2.2.	SeasonFolder
@@ -14,17 +12,15 @@
 2.4.3.	Remove from download directory
 2.4.1.	Cleanup unneeded files from movie folder (this movie only)
 2.5.	Change settings live
-2.6.	Unzip
+2.6.	Warning while working
 
 3. Cleanup
 3.1		Implement observable
+3.2.	Split Controller
 
 4. Usability
-4.1.	Add Icon
-4.2.	Rename process in taskmanager
-4.3.	Add Software entry
-4.4.	Add Installer
-4.5.	Warning while working
-4.6.	GUI implementation
-4.7.	Unix Support
-4.8.	Multiple languages
+4.1.	Rename process in taskmanager
+4.2.	Add Software entry
+4.3.	Add Installer
+4.4.	GUI implementation
+4.5.	Unix Support

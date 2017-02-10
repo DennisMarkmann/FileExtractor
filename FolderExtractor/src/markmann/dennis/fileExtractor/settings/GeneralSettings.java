@@ -2,22 +2,16 @@ package markmann.dennis.fileExtractor.settings;
 
 public class GeneralSettings {
 
-    private int timerInterval;
-    private boolean useUnzipping;
     private boolean useGui;
+    private boolean useSystemTray;
     private boolean useTimer;
-    private boolean useTaskbarEntry;
+    private int timerInterval;
     private boolean useNotificationWhileWorking;
     private boolean useRenaming;
     private boolean useCleanup;
     private boolean useFileMoving;
     private boolean useExtendedLogging;
     private boolean removeCorruptFiles;
-    private String language;
-
-    public String getLanguage() {
-        return this.language;
-    }
 
     public int getTimerInterval() {
         return this.timerInterval;
@@ -25,10 +19,6 @@ public class GeneralSettings {
 
     public boolean removeCorruptFiles() {
         return this.removeCorruptFiles;
-    }
-
-    public void setLanguage(String language) {
-        this.language = language;
     }
 
     public void setRemoveCorruptFiles(boolean removeCorruptFiles) {
@@ -63,16 +53,12 @@ public class GeneralSettings {
         this.useRenaming = useRenaming;
     }
 
-    public void setUseTaskbarEntry(boolean useTaskbarEntry) {
-        this.useTaskbarEntry = useTaskbarEntry;
+    public void setUseSystemTray(boolean useSystemTray) {
+        this.useSystemTray = useSystemTray;
     }
 
     public void setUseTimer(boolean useTimer) {
         this.useTimer = useTimer;
-    }
-
-    public void setUseUnzipping(boolean useUnzipping) {
-        this.useUnzipping = useUnzipping;
     }
 
     public boolean useCleanup() {
@@ -99,16 +85,12 @@ public class GeneralSettings {
         return this.useRenaming;
     }
 
-    boolean useTaskbarEntry() {
-        return this.useTaskbarEntry;
+    public boolean useSystemTray() {
+        return this.useSystemTray;
     }
 
     public boolean useTimer() {
         return this.useTimer;
-    }
-
-    boolean useUnzipping() {
-        return this.useUnzipping;
     }
 
 }

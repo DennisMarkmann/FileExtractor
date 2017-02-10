@@ -1,6 +1,8 @@
 package markmann.dennis.fileExtractor.logic;
 
+import java.awt.Desktop;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Timer;
@@ -17,11 +19,13 @@ import markmann.dennis.fileExtractor.settings.FileWriteHelper;
 import markmann.dennis.fileExtractor.settings.GeneralSettings;
 import markmann.dennis.fileExtractor.settings.MediaType;
 import markmann.dennis.fileExtractor.settings.TypeSettings;
+import markmann.dennis.fileExtractor.systemTray.SystemTrayMenu;
 
-class Controller {
+public class Controller {
 
     private static final Logger LOGGER = LogHandler.getLogger("./Logs/FileExtractor.log");
     private ArrayList<TypeSettings> settingList = new ArrayList<>();
+
     private GeneralSettings generalSettings = new GeneralSettings();
 
     private void createDefaultSettings() {
@@ -51,10 +55,16 @@ class Controller {
         this.generalSettings.setUseCleanup(true);
         this.generalSettings.setUseExtendedLogging(false);
         this.generalSettings.setRemoveCorruptFiles(true);
+        this.generalSettings.setUseSystemTray(true);
     }
 
-    private void extract(TypeSettings settings) {
-        LOGGER.info("Checking for " + settings.getName() + ":");
+    private void extract(TypeSettings settings, boolean manually) {
+        if (manually) {
+            LOGGER.info("Checking for " + settings.getName() + " (manually):");
+        }
+        else {
+            LOGGER.info("Checking for " + settings.getName() + ":");
+        }
         if (this.generalSettings.useExtendedLogging()) {
             LOGGER.info(
                     "Type: '" + settings.getType() + "', ExtractionPath: '" + settings.getExtractionPath()
@@ -97,6 +107,10 @@ class Controller {
         }
     }
 
+    public ArrayList<TypeSettings> getSettingList() {
+        return this.settingList;
+    }
+
     private boolean isPathValid(File folder) {
         if (folder.exists() && folder.isDirectory()) {
             return true;
@@ -104,9 +118,19 @@ class Controller {
         return false;
     }
 
+    public void openFile(String fileName) {
+        try {
+            Desktop.getDesktop().open(new File(fileName));
+        }
+        catch (IOException e1) {
+            e1.printStackTrace();
+        }
+    }
+
     void process() {
         this.createDefaultSettings();
         new FileWriteHelper().createXMLFiles(this.settingList, this.generalSettings);
+        new SystemTrayMenu().createSystemTrayEntry(this);
 
         if (this.generalSettings.useTimer()) {
             LOGGER.info("Timer activated. Interval: '" + this.generalSettings.getTimerInterval() + "' minutes.");
@@ -115,19 +139,24 @@ class Controller {
 
                 @Override
                 public void run() {
-                    Controller.this.startExtraction();
+                    Controller.this.startExtraction(false);
                 }
 
             }, 1000, this.generalSettings.getTimerInterval() * 60000);
         }
         else {
-            this.startExtraction();
+            this.startExtraction(true);
         }
     }
 
-    private void startExtraction() {
+    public void shutDownApplication() {
+        LOGGER.info("Application stopped.");
+        System.exit(0);
+    }
+
+    public void startExtraction(boolean manually) {
         for (final TypeSettings st : Controller.this.settingList) {
-            Controller.this.extract(st);
+            Controller.this.extract(st, manually);
         }
         LOGGER.info("-----------------------------------");
     }
