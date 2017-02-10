@@ -13,11 +13,11 @@ import org.apache.log4j.Logger;
 import dennis.markmann.MyLibraries.DefaultJobs.File.FileFilter;
 import dennis.markmann.MyLibraries.DefaultJobs.File.FileLister;
 import markmann.dennis.fileExtractor.logging.LogHandler;
+import markmann.dennis.fileExtractor.objects.MediaType;
 import markmann.dennis.fileExtractor.objects.Medium;
 import markmann.dennis.fileExtractor.settings.ExceptionPath;
 import markmann.dennis.fileExtractor.settings.FileWriteHelper;
 import markmann.dennis.fileExtractor.settings.GeneralSettings;
-import markmann.dennis.fileExtractor.settings.MediaType;
 import markmann.dennis.fileExtractor.settings.TypeSettings;
 import markmann.dennis.fileExtractor.systemTray.SystemTrayMenu;
 

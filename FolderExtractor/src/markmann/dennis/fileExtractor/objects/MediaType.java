@@ -1,4 +1,4 @@
-package markmann.dennis.fileExtractor.settings;
+package markmann.dennis.fileExtractor.objects;
 
 public enum MediaType {
 

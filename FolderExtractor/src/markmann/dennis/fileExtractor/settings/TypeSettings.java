@@ -2,6 +2,8 @@ package markmann.dennis.fileExtractor.settings;
 
 import java.util.ArrayList;
 
+import markmann.dennis.fileExtractor.objects.MediaType;
+
 public class TypeSettings {
 
     private String name;
