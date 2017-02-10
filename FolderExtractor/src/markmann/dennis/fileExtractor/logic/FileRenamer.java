@@ -8,74 +8,79 @@ import java.util.regex.Pattern;
 import org.apache.log4j.Logger;
 
 import markmann.dennis.fileExtractor.logging.LogHandler;
+import markmann.dennis.fileExtractor.objects.Anime;
+import markmann.dennis.fileExtractor.objects.Medium;
+import markmann.dennis.fileExtractor.objects.Series;
 import markmann.dennis.fileExtractor.settings.MediaType;
 
 class FileRenamer {
 
     private static final Logger LOGGER = LogHandler.getLogger("./Logs/FileExtractor.log");
 
-    private String handleAnimeRenaming(String fileName) {
-        final Pattern pattern = Pattern.compile("(?i)(\\[.*\\])(.*)(S\\d*)?( *- (OVA|\\d*))(.*)");
+    private Anime handleAnimeRenaming(String fileName) {
+        final Pattern pattern = Pattern.compile("(\\[.{1,}])?([^<]*)\\ - (.{2,3})(\\[.{4,5}])?\\.(.{3})");
         Matcher m = pattern.matcher(fileName);
+        Anime anime = new Anime();
+        // TODO: Exception if not successful rather than returning an empty anime
         if (m.matches()) {
-            String name = m.group(2).trim();
-            String seasonNumber = m.group(3);
-            String episodeNumber = m.group(4).trim();
-
-            fileName = name + (seasonNumber != null ? " " + seasonNumber.toUpperCase() : "") + " " + episodeNumber;
+            String title = m.group(2).trim();
+            String episode = m.group(3).trim();
+            String extension = m.group(5).trim();
+            anime.setTitle(title);
+            anime.setEpisode(episode);
+            anime.setExtension(extension);
         }
-        return fileName;
+        return anime;
     }
 
-    private String handleMovieRenaming(String fileName) {
-        return fileName;
-    }
-
-    private String handleSeriesRenaming(String fileName) {
-        fileName = this.replaceDots(fileName);
-        final Pattern pattern = Pattern.compile("(?i)(.*)(S\\d*E\\d*)(.*)");
+    private Series handleSeriesRenaming(String fileName) {
+        final Pattern pattern = Pattern.compile("([^<]*)(\\ - |\\.{1})S(.{2,3})E(.{2,3})(\\.[^<]*)?\\.(.{3})");
         Matcher m = pattern.matcher(fileName);
+        Series series = new Series();
+        // TODO: Exception if not successful rather than returning an empty series
         if (m.matches()) {
-            String name = m.group(1).trim();
-            if (name.endsWith("-")) {
-                name = (name.substring(0, name.length() - 1)).trim();
-            }
-            String episodeNumber = m.group(2).toUpperCase();
-            fileName = name + (episodeNumber != null ? " - " + episodeNumber : "");
+            String title = this.replaceDots(m.group(1).trim());
+            String season = m.group(3).trim();
+            String episode = m.group(4).trim();
+            String extension = m.group(6).trim();
+            series.setTitle(title);
+            series.setSeason(season);
+            series.setEpisode(episode);
+            series.setExtension(extension);
         }
-        return fileName;
+        return series;
     }
 
     ArrayList<File> renameFiles(ArrayList<File> fileList, MediaType mediaType) {
         ArrayList<File> renamedFiles = new ArrayList<>();
         for (final File file : fileList) {
             String originalFileName = file.getName();
-            String newFileName = file.getName().substring(0, file.getName().lastIndexOf("."));
-            String extention = file.getName().substring(file.getName().lastIndexOf("."));
-
+            Medium medium = null;
             if (mediaType == MediaType.Anime) {
-                newFileName = this.handleAnimeRenaming(newFileName);
+                medium = this.handleAnimeRenaming(originalFileName);
             }
             else if (mediaType == MediaType.Series) {
-                newFileName = this.handleSeriesRenaming(newFileName);
+                medium = this.handleSeriesRenaming(originalFileName);
             }
-            else if (mediaType == MediaType.Movie) {
-                newFileName = this.handleMovieRenaming(newFileName);
+
+            if (medium != null) {
+                String originPath = file.getAbsolutePath().substring(0, file.getAbsolutePath().lastIndexOf(File.separator));
+                medium.setOriginPath(originPath);
             }
-            String filePath = file.getAbsolutePath().substring(0, file.getAbsolutePath().lastIndexOf(File.separator));
-            newFileName = newFileName.trim() + extention;
-            if (newFileName.equals(originalFileName)) {
+
+            if (originalFileName.equals(medium.getCompleteTitle())) {
                 renamedFiles.add(file);
             }
             else {
-                File newFile = new File(filePath + "\\" + newFileName);
+                File newFile = new File(medium.getOriginPath() + "\\" + medium.getCompleteTitle());
                 if (file.renameTo(newFile)) {
                     renamedFiles.add(newFile);
-                    LOGGER.info("Renaming '" + file.getName() + "' to '" + newFile.getName() + "'.");
+                    LOGGER.info("Renaming '" + originalFileName + "' to '" + medium.getCompleteTitle() + "'.");
                 }
             }
         }
         return renamedFiles;
+
     }
 
     private String replaceDots(String fileName) {
