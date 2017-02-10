@@ -40,7 +40,7 @@ public class SystemTrayMenu {
         }
 
         final PopupMenu popup = new PopupMenu();
-        Image image = Toolkit.getDefaultToolkit().getImage("./Pictures/TrayIcon.png");
+        Image image = Toolkit.getDefaultToolkit().getImage("./Icons/TrayIcon.png");
         final SystemTray tray = SystemTray.getSystemTray();
         Dimension trayIconSize = tray.getTrayIconSize();
         final TrayIcon trayIcon = new TrayIcon(
