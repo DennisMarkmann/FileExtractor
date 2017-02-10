@@ -11,6 +11,7 @@ import org.apache.log4j.Logger;
 import dennis.markmann.MyLibraries.DefaultJobs.File.FileFilter;
 import dennis.markmann.MyLibraries.DefaultJobs.File.FileLister;
 import markmann.dennis.fileExtractor.logging.LogHandler;
+import markmann.dennis.fileExtractor.objects.Medium;
 import markmann.dennis.fileExtractor.settings.ExceptionPath;
 import markmann.dennis.fileExtractor.settings.FileWriteHelper;
 import markmann.dennis.fileExtractor.settings.GeneralSettings;
@@ -41,7 +42,6 @@ class Controller {
         settings.setExtractionPath("M:\\Processing\\Completed\\Series");
         settings.setCompletionPath("M:\\Series");
         settings.setUseCurrentlyWatchingCheck(true);
-        settings.addException(new ExceptionPath("RARBG", "Delete"));
         this.settingList.add(settings);
 
         this.generalSettings.setTimerInterval(60);
@@ -50,6 +50,7 @@ class Controller {
         this.generalSettings.setUseFileMoving(true);
         this.generalSettings.setUseCleanup(true);
         this.generalSettings.setUseExtendedLogging(false);
+        this.generalSettings.setRemoveCorruptFiles(true);
     }
 
     private void extract(TypeSettings settings) {
@@ -75,16 +76,21 @@ class Controller {
         FileLister fl = new FileLister();
         ArrayList<File> folderList = fl.listFolderAtPath(extractionFolder);
         ArrayList<File> fileList = fl.listFilesInFolderList(folderList, true);
+        ArrayList<Medium> mediaList = new ArrayList<>();
+
         fileList = fl.listFilesForFolder(extractionFolder, fileList, false);
         fileList = new FileFilter().addMovies().filter(fileList);
         LOGGER.info("Number of entries to process: '" + fileList.size() + "'.");
+        Collections.sort(fileList);
 
-        if (this.generalSettings.useRenaming()) {
-            Collections.sort(fileList);
-            fileList = new FileRenamer().renameFiles(fileList, settings.getType());
-        }
+        mediaList = new FileRenamer().scanFiles(
+                fileList,
+                settings.getType(),
+                this.generalSettings.useRenaming(),
+                this.generalSettings.removeCorruptFiles());
+
         if (this.generalSettings.useFileMoving()) {
-            new FileMover().moveFiles(fileList, completionFolder, settings);
+            new FileMover().moveFiles(mediaList, completionFolder, settings);
         }
         if (this.generalSettings.useCleanup()) {
             new FileCleaner().cleanFiles(folderList);

@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import org.apache.log4j.Logger;
 
 import markmann.dennis.fileExtractor.logging.LogHandler;
+import markmann.dennis.fileExtractor.objects.Medium;
 import markmann.dennis.fileExtractor.settings.ExceptionPath;
 import markmann.dennis.fileExtractor.settings.TypeSettings;
 
@@ -17,9 +18,8 @@ class FileMover {
 
     private static final Logger LOGGER = LogHandler.getLogger("./Logs/FileExtractor.log");
 
-    private String checkForAdditionalFolder(String name, TypeSettings settings, String exceptionPath) {
+    private String checkForAdditionalFolder(Medium medium, TypeSettings settings, String exceptionPath) {
         String additionalFolder = "";
-        String mediaName = name.substring(0, name.lastIndexOf("-") - 1);
         boolean addSeriesFolder = false;
 
         if (settings.useSeriesFolder()) {
@@ -28,14 +28,14 @@ class FileMover {
         if (settings.useSeasonFolder()) {
         }
         if (exceptionPath.equals("") && settings.useCurrentlyWatchingCheck()) {
-            if (!new File(settings.getCompletionPath() + "\\" + mediaName).exists()) {
+            if (!new File(settings.getCompletionPath() + "\\" + medium.getTitle()).exists()) {
                 additionalFolder = additionalFolder + "\\Later\\";
                 addSeriesFolder = true;
             }
         }
 
         if (addSeriesFolder) {
-            additionalFolder = additionalFolder + mediaName + "\\";
+            additionalFolder = additionalFolder + medium.getTitle() + "\\";
         }
 
         return additionalFolder;
@@ -50,24 +50,20 @@ class FileMover {
         return "";
     }
 
-    void moveFiles(final ArrayList<File> fileList, final File destinationDirectory, TypeSettings settings) {
+    void moveFiles(final ArrayList<Medium> mediaList, final File destinationDirectory, TypeSettings settings) {
 
-        for (final File file : fileList) {
+        for (final Medium medium : mediaList) {
             try {
-                Path sourcePath = file.toPath();
-                String exceptionPath = this.checkForException(file.getName(), settings.getExceptions());
-                String additionalFolder = this.checkForAdditionalFolder(file.getName(), settings, exceptionPath);
-                if (exceptionPath.equals("Delete")) {
-                    LOGGER.info("Removing '" + file.getName() + "'.");
-                    continue;
-                }
+                Path sourcePath = new File(medium.getCompletePath()).toPath();
+                String exceptionPath = this.checkForException(medium.getCompleteTitle(), settings.getExceptions());
+                String additionalFolder = this.checkForAdditionalFolder(medium, settings, exceptionPath);
                 File destinationFolder = new File(destinationDirectory.getPath() + additionalFolder + "\\" + exceptionPath);
                 if (!destinationFolder.exists()) {
                     destinationFolder.mkdir();
                 }
-                Path destinationPath = new File(destinationFolder.toString() + "\\" + file.getName()).toPath();
+                Path destinationPath = new File(destinationFolder.toString() + "\\" + medium.getCompleteTitle()).toPath();
                 Files.move(sourcePath, destinationPath, StandardCopyOption.REPLACE_EXISTING);
-                LOGGER.info("Moving '" + file.getName() + "' to '" + destinationPath + "'.");
+                LOGGER.info("Moving '" + medium.getCompleteTitle() + "' to '" + destinationPath + "'.");
             }
             catch (IOException e) {
                 e.printStackTrace();

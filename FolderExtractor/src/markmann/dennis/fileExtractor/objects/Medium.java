@@ -2,9 +2,15 @@ package markmann.dennis.fileExtractor.objects;
 
 public class Medium {
 
+    // TODO change to interface
     protected String title = "";
     protected String extension = "";
     protected String originPath = "";
+    private boolean keepOriginalName = false;
+
+    public String getCompletePath() {
+        return this.originPath + "\\" + this.getCompleteTitle();
+    }
 
     public String getCompleteTitle() {
         return this.title;
@@ -23,12 +29,7 @@ public class Medium {
     }
 
     public void setExtension(String extension) {
-        if ((extension != null) && !extension.trim().isEmpty()) {
-            this.extension = extension;
-        }
-        else {
-            // TODO error
-        }
+        this.extension = extension;
     }
 
     public void setOriginPath(String originPath) {
@@ -36,11 +37,14 @@ public class Medium {
     }
 
     public void setTitle(String title) {
-        if ((title != null) && !title.trim().isEmpty()) {
-            this.title = title;
-        }
-        else {
-            // TODO error
-        }
+        this.title = title;
+    }
+
+    public boolean isKeepOriginalName() {
+        return keepOriginalName;
+    }
+
+    public void setKeepOriginalName(boolean keepOriginalName) {
+        this.keepOriginalName = keepOriginalName;
     }
 }

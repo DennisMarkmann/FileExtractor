@@ -6,7 +6,12 @@ public class Anime extends Medium {
 
     @Override
     public String getCompleteTitle() {
-        return this.title + " - " + this.episode + "." + this.extension;
+        if (this.isKeepOriginalName()) {
+            return this.title;
+        }
+        else {
+            return this.title + " - " + this.episode + "." + this.extension;
+        }
     }
 
     public String getEpisode() {

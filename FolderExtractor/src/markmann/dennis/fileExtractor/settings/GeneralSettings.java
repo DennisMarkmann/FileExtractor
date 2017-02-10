@@ -12,6 +12,7 @@ public class GeneralSettings {
     private boolean useCleanup;
     private boolean useFileMoving;
     private boolean useExtendedLogging;
+    private boolean removeCorruptFiles;
     private String language;
 
     public String getLanguage() {
@@ -22,8 +23,16 @@ public class GeneralSettings {
         return this.timerInterval;
     }
 
+    public boolean removeCorruptFiles() {
+        return this.removeCorruptFiles;
+    }
+
     public void setLanguage(String language) {
         this.language = language;
+    }
+
+    public void setRemoveCorruptFiles(boolean removeCorruptFiles) {
+        this.removeCorruptFiles = removeCorruptFiles;
     }
 
     public void setTimerInterval(int timerInterval) {
@@ -32,6 +41,10 @@ public class GeneralSettings {
 
     public void setUseCleanup(boolean useCleanup) {
         this.useCleanup = useCleanup;
+    }
+
+    public void setUseExtendedLogging(boolean useExtendedLogging) {
+        this.useExtendedLogging = useExtendedLogging;
     }
 
     public void setUseFileMoving(boolean useFileMoving) {
@@ -66,6 +79,10 @@ public class GeneralSettings {
         return this.useCleanup;
     }
 
+    public boolean useExtendedLogging() {
+        return this.useExtendedLogging;
+    }
+
     public boolean useFileMoving() {
         return this.useFileMoving;
     }
@@ -92,14 +109,6 @@ public class GeneralSettings {
 
     boolean useUnzipping() {
         return this.useUnzipping;
-    }
-
-    public boolean useExtendedLogging() {
-        return useExtendedLogging;
-    }
-
-    public void setUseExtendedLogging(boolean useExtendedLogging) {
-        this.useExtendedLogging = useExtendedLogging;
     }
 
 }

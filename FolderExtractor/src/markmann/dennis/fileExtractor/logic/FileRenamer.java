@@ -17,74 +17,100 @@ class FileRenamer {
 
     private static final Logger LOGGER = LogHandler.getLogger("./Logs/FileExtractor.log");
 
-    private Anime handleAnimeRenaming(String fileName) {
+    private Anime handleAnimeRenaming(String fileName, Anime anime) {
         final Pattern pattern = Pattern.compile("(\\[.{1,}])?([^<]*)\\ - (.{2,3})(\\[.{4,5}])?\\.(.{3})");
         Matcher m = pattern.matcher(fileName);
-        Anime anime = new Anime();
-        // TODO: Exception if not successful rather than returning an empty anime
         if (m.matches()) {
             String title = m.group(2).trim();
             String episode = m.group(3).trim();
             String extension = m.group(5).trim();
+
             anime.setTitle(title);
             anime.setEpisode(episode);
             anime.setExtension(extension);
+            return anime;
         }
-        return anime;
+        return null;
     }
 
-    private Series handleSeriesRenaming(String fileName) {
+    private Series handleSeriesRenaming(String fileName, Series series) {
         final Pattern pattern = Pattern.compile("([^<]*)(\\ - |\\.{1})S(.{2,3})E(.{2,3})(\\.[^<]*)?\\.(.{3})");
         Matcher m = pattern.matcher(fileName);
-        Series series = new Series();
-        // TODO: Exception if not successful rather than returning an empty series
         if (m.matches()) {
             String title = this.replaceDots(m.group(1).trim());
             String season = m.group(3).trim();
             String episode = m.group(4).trim();
             String extension = m.group(6).trim();
+
             series.setTitle(title);
             series.setSeason(season);
             series.setEpisode(episode);
             series.setExtension(extension);
+            return series;
         }
-        return series;
-    }
-
-    ArrayList<File> renameFiles(ArrayList<File> fileList, MediaType mediaType) {
-        ArrayList<File> renamedFiles = new ArrayList<>();
-        for (final File file : fileList) {
-            String originalFileName = file.getName();
-            Medium medium = null;
-            if (mediaType == MediaType.Anime) {
-                medium = this.handleAnimeRenaming(originalFileName);
-            }
-            else if (mediaType == MediaType.Series) {
-                medium = this.handleSeriesRenaming(originalFileName);
-            }
-
-            if (medium != null) {
-                String originPath = file.getAbsolutePath().substring(0, file.getAbsolutePath().lastIndexOf(File.separator));
-                medium.setOriginPath(originPath);
-            }
-
-            if (originalFileName.equals(medium.getCompleteTitle())) {
-                renamedFiles.add(file);
-            }
-            else {
-                File newFile = new File(medium.getOriginPath() + "\\" + medium.getCompleteTitle());
-                if (file.renameTo(newFile)) {
-                    renamedFiles.add(newFile);
-                    LOGGER.info("Renaming '" + originalFileName + "' to '" + medium.getCompleteTitle() + "'.");
-                }
-            }
-        }
-        return renamedFiles;
-
+        return null;
     }
 
     private String replaceDots(String fileName) {
         fileName = fileName.replaceAll("\\.", " ");
         return fileName;
+    }
+
+    ArrayList<Medium> scanFiles(
+            ArrayList<File> fileList,
+            MediaType mediaType,
+            boolean useRenaming,
+            boolean removeCorruptFiles) {
+
+        ArrayList<Medium> mediaList = new ArrayList<>();
+        for (final File file : fileList) {
+            String originalFileName = file.getName();
+            Medium medium = null;
+
+            if (mediaType == MediaType.Anime) {
+                if (useRenaming) {
+                    medium = this.handleAnimeRenaming(originalFileName, new Anime());
+                }
+                else {
+                    medium = new Anime();
+                }
+            }
+
+            if (mediaType == MediaType.Series) {
+                if (useRenaming) {
+                    medium = this.handleSeriesRenaming(originalFileName, new Series());
+                }
+                else {
+                    medium = new Series();
+                }
+            }
+            if (!useRenaming) {
+                medium.setKeepOriginalName(true);
+                medium.setTitle(originalFileName);
+            }
+
+            if ((medium == null) && useRenaming) {
+                if (removeCorruptFiles) {
+                    LOGGER.info("Renaming of file:'" + originalFileName + "' not successful. File will be removed.");
+                    file.delete();
+                }
+                else {
+                    LOGGER.info("Renaming of file:'" + originalFileName + "' not successful. Please try to fix it manually.");
+                }
+                continue;
+            }
+
+            String originPath = file.getAbsolutePath().substring(0, file.getAbsolutePath().lastIndexOf(File.separator));
+            medium.setOriginPath(originPath);
+
+            if (!(originalFileName.equals(medium.getCompleteTitle())) && useRenaming) {
+                File newFile = new File(medium.getOriginPath() + "\\" + medium.getCompleteTitle());
+                if (file.renameTo(newFile)) {
+                    LOGGER.info("Renaming '" + originalFileName + "' to '" + medium.getCompleteTitle() + "'.");
+                }
+            }
+            mediaList.add(medium);
+        }
+        return mediaList;
     }
 }
