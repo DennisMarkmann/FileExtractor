@@ -16,6 +16,7 @@ import markmann.dennis.fileExtractor.settings.TypeSettings;
 public class SystemTrayMenu {
 
     private Menu createSettingsSubmenu(Controller controller) {
+
         Menu settingsMenu = new Menu("Settings");
         MenuItem generalSettings = new MenuItem("General");
         generalSettings.addActionListener(e -> {
@@ -38,11 +39,11 @@ public class SystemTrayMenu {
         if (!SystemTray.isSupported()) {
             return;
         }
-
-        final PopupMenu popup = new PopupMenu();
-        Image image = Toolkit.getDefaultToolkit().getImage("./Icons/TrayIcon.png");
         final SystemTray tray = SystemTray.getSystemTray();
+        final PopupMenu popup = new PopupMenu();
+
         Dimension trayIconSize = tray.getTrayIconSize();
+        Image image = Toolkit.getDefaultToolkit().getImage("./Icons/TrayIcon.png");
         final TrayIcon trayIcon = new TrayIcon(
                 image.getScaledInstance(trayIconSize.width, trayIconSize.height, Image.SCALE_SMOOTH),
                 "FileExtractor",
@@ -51,7 +52,6 @@ public class SystemTrayMenu {
         MenuItem scanItem = new MenuItem("Scan manually");
         MenuItem logItem = new MenuItem("Log");
         MenuItem exitItem = new MenuItem("Exit");
-
         Menu settingsMenu = this.createSettingsSubmenu(controller);
 
         scanItem.addActionListener(e -> {
