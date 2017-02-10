@@ -25,8 +25,7 @@ class FileMover {
         if (settings.useSeriesFolder()) {
             addSeriesFolder = true;
         }
-        if (settings.useSeasonFolder()) {
-        }
+
         if (exceptionPath.equals("") && settings.useCurrentlyWatchingCheck()) {
             if (!new File(settings.getCompletionPath() + "\\" + medium.getTitle()).exists()) {
                 additionalFolder = additionalFolder + "\\Later\\";
@@ -37,7 +36,8 @@ class FileMover {
         if (addSeriesFolder) {
             additionalFolder = additionalFolder + medium.getTitle() + "\\";
         }
-
+        if (settings.useSeasonFolder()) {
+        }
         return additionalFolder;
     }
 
@@ -54,16 +54,19 @@ class FileMover {
 
         for (final Medium medium : mediaList) {
             try {
-                Path sourcePath = new File(medium.getCompletePath()).toPath();
-                String exceptionPath = this.checkForException(medium.getCompleteTitle(), settings.getExceptions());
+                String title = medium.getCompleteTitle();
+                String exceptionPath = this.checkForException(title, settings.getExceptions());
                 String additionalFolder = this.checkForAdditionalFolder(medium, settings, exceptionPath);
+
                 File destinationFolder = new File(destinationDirectory.getPath() + additionalFolder + "\\" + exceptionPath);
                 if (!destinationFolder.exists()) {
                     destinationFolder.mkdir();
                 }
-                Path destinationPath = new File(destinationFolder.toString() + "\\" + medium.getCompleteTitle()).toPath();
+
+                Path destinationPath = new File(destinationFolder.toString() + "\\" + title).toPath();
+                Path sourcePath = new File(medium.getCompletePath()).toPath();
                 Files.move(sourcePath, destinationPath, StandardCopyOption.REPLACE_EXISTING);
-                LOGGER.info("Moving '" + medium.getCompleteTitle() + "' to '" + destinationPath + "'.");
+                LOGGER.info("Moving '" + title + "' to '" + destinationPath + "'.");
             }
             catch (IOException e) {
                 e.printStackTrace();
