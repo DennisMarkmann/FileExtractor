@@ -10,7 +10,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
-public class FileReaderHelper {
+class FileReaderHelper {
 
     final Document createDocument(final File file) {
         Document doc = null;

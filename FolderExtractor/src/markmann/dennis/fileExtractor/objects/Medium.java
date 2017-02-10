@@ -4,7 +4,7 @@ public class Medium {
 
     protected String title = "";
     protected String extension = "";
-    protected String originPath = "";
+    private String originPath = "";
     private boolean keepOriginalName = false;
 
     public String getCompletePath() {
