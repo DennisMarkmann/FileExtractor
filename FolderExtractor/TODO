@@ -3,24 +3,25 @@
 1.1.1.	Read Settings
 1.1.2.	Use Settings if existing, otherwise default
 
-2.	Additional functionality
-2.2.	SeasonFolder
-2.3.	File Rename & episode names etc from Online DB
-2.4.	Add movie functionality
-2.4.1.	Get correct movie name --> rename
-2.4.2.	Check if not existing in movie folder --> move
-2.4.3.	Remove from download directory
-2.4.1.	Cleanup unneeded files from movie folder (this movie only)
-2.5.	Change settings live
-2.6.	Warning while working
+2. Cleanup
+2.1.	Split Controller
+2.1		Implement observable
 
-3. Cleanup
-3.1		Implement observable
-3.2.	Split Controller
+3.	Additional functionality
+3.2.	SeasonFolder
+3.3.	File Rename & episode names etc from Online DB
+3.4.	Add movie functionality
+3.4.1.	Get correct movie name --> rename
+3.4.2.	Check if not existing in movie folder --> move
+3.4.3.	Remove from download directory
+3.4.1.	Cleanup unneeded files from movie folder (this movie only)
+3.5.	Change settings live
+3.6.	Warning while working
 
 4. Usability
-4.1.	Rename process in taskmanager
-4.2.	Add Software entry
-4.3.	Add Installer
-4.4.	GUI implementation
+4.1.	Get proper Icon
+4.2.	Rename process in taskmanager
+4.3.	Add Software entry
+4.4.	Add Installer
 4.5.	Unix Support
+4.6.	GUI implementation
