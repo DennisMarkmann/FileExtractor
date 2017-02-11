@@ -15,6 +15,17 @@ import markmann.dennis.fileExtractor.settings.TypeSettings;
 
 public class SystemTrayMenu {
 
+    private void changeVisibility(Controller controller, MenuItem pauseItem, MenuItem resumeItem) {
+        if (controller.isTimerIsActive()) {
+            pauseItem.setEnabled(true);
+            resumeItem.setEnabled(false);
+        }
+        else {
+            pauseItem.setEnabled(false);
+            resumeItem.setEnabled(true);
+        }
+    }
+
     private Menu createSettingsSubmenu(Controller controller) {
 
         Menu settingsMenu = new Menu("Settings");
@@ -34,7 +45,7 @@ public class SystemTrayMenu {
         return settingsMenu;
     }
 
-    public void createSystemTrayEntry(Controller controller) {
+    public void createSystemTrayEntry(Controller controller, boolean useTimer) {
 
         if (!SystemTray.isSupported()) {
             return;
@@ -50,12 +61,24 @@ public class SystemTrayMenu {
                 popup);
 
         MenuItem scanItem = new MenuItem("Scan manually");
+        MenuItem pauseItem = new MenuItem("Pause timer");
+        MenuItem resumeItem = new MenuItem("Resume timer");
         MenuItem logItem = new MenuItem("Log");
         MenuItem exitItem = new MenuItem("Exit");
         Menu settingsMenu = this.createSettingsSubmenu(controller);
 
         scanItem.addActionListener(e -> {
             controller.startExtraction(true);
+        });
+
+        pauseItem.addActionListener(e -> {
+            controller.stopTimer();
+            this.changeVisibility(controller, pauseItem, resumeItem);
+        });
+
+        resumeItem.addActionListener(e -> {
+            controller.startTimer(false);
+            this.changeVisibility(controller, pauseItem, resumeItem);
         });
 
         exitItem.addActionListener(e -> {
@@ -67,9 +90,15 @@ public class SystemTrayMenu {
         });
 
         popup.add(scanItem);
+        if (useTimer) {
+            popup.add(pauseItem);
+            popup.add(resumeItem);
+        }
         popup.add(logItem);
         popup.add(settingsMenu);
         popup.add(exitItem);
+
+        this.changeVisibility(controller, pauseItem, resumeItem);
 
         trayIcon.setPopupMenu(popup);
 

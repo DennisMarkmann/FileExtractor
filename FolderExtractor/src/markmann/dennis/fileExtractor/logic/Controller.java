@@ -25,8 +25,9 @@ public class Controller {
 
     private static final Logger LOGGER = LogHandler.getLogger("./Logs/FileExtractor.log");
     private ArrayList<TypeSettings> settingList = new ArrayList<>();
-
     private GeneralSettings generalSettings = new GeneralSettings();
+    private Timer timer = null;
+    private boolean timerIsActive = false;
 
     private void createDefaultSettings() {
         TypeSettings settings = new TypeSettings();
@@ -118,6 +119,10 @@ public class Controller {
         return false;
     }
 
+    public boolean isTimerIsActive() {
+        return this.timerIsActive;
+    }
+
     public void openFile(String fileName) {
         try {
             Desktop.getDesktop().open(new File(fileName));
@@ -130,23 +135,11 @@ public class Controller {
     void process() {
         this.createDefaultSettings();
         new FileWriteHelper().createXMLFiles(this.settingList, this.generalSettings);
-        new SystemTrayMenu().createSystemTrayEntry(this);
 
         if (this.generalSettings.useTimer()) {
-            LOGGER.info("Timer activated. Interval: '" + this.generalSettings.getTimerInterval() + "' minutes.");
-
-            new Timer().schedule(new TimerTask() {
-
-                @Override
-                public void run() {
-                    Controller.this.startExtraction(false);
-                }
-
-            }, 1000, this.generalSettings.getTimerInterval() * 60000);
+            this.startTimer(true);
         }
-        else {
-            this.startExtraction(true);
-        }
+        new SystemTrayMenu().createSystemTrayEntry(this, this.generalSettings.useTimer());
     }
 
     public void shutDownApplication() {
@@ -159,5 +152,31 @@ public class Controller {
             Controller.this.extract(st, manually);
         }
         LOGGER.info("-----------------------------------");
+    }
+
+    public void startTimer(boolean initialStart) {
+        if (initialStart) {
+            LOGGER.info("Timer activated. Interval: '" + this.generalSettings.getTimerInterval() + "' minutes.");
+        }
+        else {
+            LOGGER.info("Timer resumed.");
+        }
+
+        this.timer = new Timer();
+        this.timerIsActive = true;
+        this.timer.schedule(new TimerTask() {
+
+            @Override
+            public void run() {
+                Controller.this.startExtraction(false);
+            }
+
+        }, 1000, this.generalSettings.getTimerInterval() * 60000);
+    }
+
+    public void stopTimer() {
+        LOGGER.info("Timer stopped.");
+        this.timer.cancel();
+        this.timerIsActive = false;
     }
 }
