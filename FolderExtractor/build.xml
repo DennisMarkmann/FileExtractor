@@ -19,6 +19,9 @@
 		<copy todir="build/Settings">
 			<fileset dir="./Settings" />
 		</copy>
+		<copy todir="build/Icons">
+			<fileset dir="./Icons" />
+		</copy>
 	</target>
 
 	<target name="zip" description="Creates a zip file including the build files.">
