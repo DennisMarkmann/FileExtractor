@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <project default="build" name="FileExtractor">
+
 	<target name="build" description="Create a runnable jar file for the project and copies needed ressources.">
 		<mkdir dir="build" />
 		<jar destfile="build/FileExtractor.jar" filesetmanifest="mergewithoutmain">

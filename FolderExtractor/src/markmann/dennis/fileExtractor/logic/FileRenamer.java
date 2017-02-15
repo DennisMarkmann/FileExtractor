@@ -91,7 +91,7 @@ class FileRenamer {
 
             if ((medium == null) && useRenaming) {
                 if (removeCorruptFiles) {
-                    LOGGER.info("Renaming of file:'" + originalFileName + "' not successful. File will be removed.");
+                    LOGGER.info("Renaming of file:'" + originalFileName + "' not successful. File deleted.");
                     file.delete();
                 }
                 else {
