@@ -9,8 +9,10 @@ import java.awt.PopupMenu;
 import java.awt.SystemTray;
 import java.awt.Toolkit;
 import java.awt.TrayIcon;
+import java.util.ArrayList;
 
 import markmann.dennis.fileExtractor.logic.Controller;
+import markmann.dennis.fileExtractor.settings.GeneralSettings;
 import markmann.dennis.fileExtractor.settings.TypeSettings;
 
 public class SystemTrayMenu {
@@ -26,7 +28,7 @@ public class SystemTrayMenu {
         }
     }
 
-    private Menu createSettingsSubmenu(Controller controller) {
+    private Menu createSettingsSubmenu(Controller controller, ArrayList<TypeSettings> typeSettings) {
 
         Menu settingsMenu = new Menu("Settings");
         MenuItem generalSettings = new MenuItem("General");
@@ -35,7 +37,7 @@ public class SystemTrayMenu {
         });
         settingsMenu.add(generalSettings);
 
-        for (TypeSettings settings : controller.getSettingList()) {
+        for (TypeSettings settings : typeSettings) {
             MenuItem subMenuItem = new MenuItem(settings.getName());
             subMenuItem.addActionListener(e -> {
                 controller.openFile("./Settings/" + settings.getName() + ".xml");
@@ -45,7 +47,10 @@ public class SystemTrayMenu {
         return settingsMenu;
     }
 
-    public void createSystemTrayEntry(Controller controller, boolean useTimer) {
+    public void createSystemTrayEntry(
+            Controller controller,
+            GeneralSettings generalSettings,
+            ArrayList<TypeSettings> typeSettings) {
 
         if (!SystemTray.isSupported()) {
             return;
@@ -65,10 +70,10 @@ public class SystemTrayMenu {
         MenuItem resumeItem = new MenuItem("Resume timer");
         MenuItem logItem = new MenuItem("Log");
         MenuItem exitItem = new MenuItem("Exit");
-        Menu settingsMenu = this.createSettingsSubmenu(controller);
+        Menu settingsMenu = this.createSettingsSubmenu(controller, typeSettings);
 
         scanItem.addActionListener(e -> {
-            controller.startExtraction(true);
+            controller.initiateManualExtraction(generalSettings, typeSettings);
         });
 
         pauseItem.addActionListener(e -> {
@@ -77,7 +82,7 @@ public class SystemTrayMenu {
         });
 
         resumeItem.addActionListener(e -> {
-            controller.startTimer(false);
+            controller.startTimer(false, generalSettings, typeSettings);
             this.changeVisibility(controller, pauseItem, resumeItem);
         });
 
@@ -90,7 +95,7 @@ public class SystemTrayMenu {
         });
 
         popup.add(scanItem);
-        if (useTimer) {
+        if (generalSettings.useTimer()) {
             popup.add(pauseItem);
             popup.add(resumeItem);
         }

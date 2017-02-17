@@ -85,7 +85,7 @@ public class GeneralSettings {
         return this.useRenaming;
     }
 
-    boolean useSystemTray() {
+    public boolean useSystemTray() {
         return this.useSystemTray;
     }
 
