@@ -1,6 +1,7 @@
 1. Essential
 1.1.	Refactor TypeSetting writing (All attributes of class instead of hardcoded names)
 1.2.	Write pretty XML files (https://stackoverflow.com/questions/139076/how-to-pretty-print-xml-from-java)
+1.3.	Update function for new Settings (Only at first system start)
 
 2. Cleanup
 2.1.	Implement observable
