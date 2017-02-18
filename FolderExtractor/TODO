@@ -1,6 +1,5 @@
 1. Essential
-1.1.	Write pretty XML files (https://stackoverflow.com/questions/139076/how-to-pretty-print-xml-from-java)
-1.2.	Make default settings empty?
+1.1.	Make default settings empty?
 
 2. Cleanup
 2.1.	Implement observable
