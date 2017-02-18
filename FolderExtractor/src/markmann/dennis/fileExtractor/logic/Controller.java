@@ -19,9 +19,9 @@ public class Controller {
     private static Timer timer = null;
     private static boolean timerIsActive = false;
 
-    public static void initiateManualExtraction() {
+    public static void initiateManualScan() {
         SettingHandler.readSettingsFromXML(false);
-        new FileExtractor().startExtraction(true);
+        new FileScanner().startScan(true);
     }
 
     public static boolean isTimerIsActive() {
@@ -76,7 +76,7 @@ public class Controller {
             @Override
             public void run() {
                 SettingHandler.readSettingsFromXML(false);
-                new FileExtractor().startExtraction(false);
+                new FileScanner().startScan(false);
             }
 
         }, 1000, timerInterval * 60000);

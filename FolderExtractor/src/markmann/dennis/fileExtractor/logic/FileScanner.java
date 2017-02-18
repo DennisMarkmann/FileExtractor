@@ -13,11 +13,11 @@ import markmann.dennis.fileExtractor.objects.Medium;
 import markmann.dennis.fileExtractor.settings.SettingHandler;
 import markmann.dennis.fileExtractor.settings.TypeSettings;
 
-public class FileExtractor {
+public class FileScanner {
 
     private static final Logger LOGGER = LogHandler.getLogger("./Logs/FileExtractor.log");
 
-    void extract(TypeSettings settings, boolean manually) {
+    void scan(TypeSettings settings, boolean manually) {
         if (manually) {
             LOGGER.info("Checking for " + settings.getType().toString() + " (manually):");
         }
@@ -69,9 +69,9 @@ public class FileExtractor {
         return false;
     }
 
-    public void startExtraction(boolean manually) {
+    public void startScan(boolean manually) {
         for (final TypeSettings settings : SettingHandler.getTypeSettings()) {
-            this.extract(settings, manually);
+            this.scan(settings, manually);
         }
         LOGGER.info("-----------------------------------");
     }

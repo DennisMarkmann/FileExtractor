@@ -69,7 +69,7 @@ public class SystemTrayMenu {
         Menu settingsMenu = this.createSettingsSubmenu();
 
         scanItem.addActionListener(e -> {
-            Controller.initiateManualExtraction();
+            Controller.initiateManualScan();
         });
 
         pauseItem.addActionListener(e -> {
