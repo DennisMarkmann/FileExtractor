@@ -21,7 +21,8 @@ class GeneralSettingsWriter {
         for (Field field : settings.getClass().getDeclaredFields()) {
 
             try {
-                helper.createElement(doc, element, field.getName(), field.get(settings) + "");
+                String fieldName = Character.toUpperCase(field.getName().charAt(0)) + field.getName().substring(1);
+                helper.createElement(doc, element, fieldName, field.get(settings) + "");
             }
             catch (IllegalArgumentException | IllegalAccessException e) {
                 LOGGER.error("Writing of 'General.xml' file failed.", e);
@@ -34,4 +35,5 @@ class GeneralSettingsWriter {
     final void initializeXMLPrint(final GeneralSettings settings) {
         this.createXmlFile(settings);
     }
+
 }

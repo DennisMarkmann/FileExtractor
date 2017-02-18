@@ -2,11 +2,9 @@
 1.1.	XML-Settings
 1.1.1.	Read Settings
 1.1.2.	Use Settings if existing, otherwise default
-1.1.3.	Read settings before every scan
 
 2. Cleanup
 2.1.	Implement observable
-2.2.	Refactor XML-File Reading (All attributes of class instead of hardcoded names)
 2.3.	Refactor TypeSetting Writing (All attributes of class instead of hardcoded names)
 
 3.	Additional functionality

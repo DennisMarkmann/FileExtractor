@@ -38,7 +38,7 @@ public class XMLFileReader {
         return element.getElementsByTagName(name).item(0).getTextContent();
     }
 
-    public GeneralSettings readSettingsXML(String name, GeneralSettings settings) {
+    public GeneralSettings readSettingsXML(String name, GeneralSettings settings, boolean initial) {
 
         try {
 
@@ -67,11 +67,14 @@ public class XMLFileReader {
                     for (Field field : settings.getClass().getDeclaredFields()) {
 
                         try {
+                            String fieldName = Character.toUpperCase(field.getName().charAt(0)) + field.getName().substring(1);
                             Object oldFieldValue = field.get(settings);
                             Object newFieldValue = this
-                                    .convertValueToType(field.getType(), this.getValueByName(element, field.getName()));
+                                    .convertValueToType(field.getType(), this.getValueByName(element, fieldName));
                             if (!oldFieldValue.equals(newFieldValue)) {
-                                // TODO print settings changed if not initial
+                                if (!initial) {
+                                    LOGGER.info("Changed value of '" + fieldName + "' to '" + newFieldValue + "'.");
+                                }
                                 field.set(settings, newFieldValue);
                             }
                         }

@@ -60,7 +60,7 @@ public class SettingHandler {
         return SettingHandler.settingList;
     }
 
-    public static void readSettingsFromXML() {
-        generalSettings = new XMLFileReader().readSettingsXML("General.xml", generalSettings);
+    public static void readSettingsFromXML(boolean initial) {
+        generalSettings = new XMLFileReader().readSettingsXML("General.xml", generalSettings, initial);
     }
 }

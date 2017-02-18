@@ -20,6 +20,7 @@ public class Controller {
     private static boolean timerIsActive = false;
 
     public static void initiateManualExtraction() {
+        SettingHandler.readSettingsFromXML(false);
         new FileExtractor().startExtraction(true);
     }
 
@@ -43,7 +44,7 @@ public class Controller {
 
     static void startApplication() {
         SettingHandler.createDefaultSettings();
-        SettingHandler.readSettingsFromXML();
+        SettingHandler.readSettingsFromXML(true);
         new FileWriteHelper().createXMLFiles();
 
         if (SettingHandler.getGeneralSettings().useTimer()) {
@@ -69,6 +70,7 @@ public class Controller {
 
             @Override
             public void run() {
+                SettingHandler.readSettingsFromXML(false);
                 new FileExtractor().startExtraction(false);
             }
 
