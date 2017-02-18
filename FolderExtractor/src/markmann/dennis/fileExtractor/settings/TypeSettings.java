@@ -7,11 +7,11 @@ import markmann.dennis.fileExtractor.mediaObjects.MediaType;
 public class TypeSettings implements Settings {
 
     MediaType type = MediaType.Anime;
-    String extractionPath = "M:\\Processing\\Completed\\Anime";
-    String completionPath = "M:\\MyAnime";
+    String extractionPath = "ExamplePath:'C:\\Downloads\\Completed\\Media'";
+    String completionPath = "ExamplePath:'C:\\Media\\New'";
     boolean useSeriesFolder = false;
     boolean useSeasonFolder = false;
-    boolean useCurrentlyWatchingCheck = true;
+    boolean useCurrentlyWatchingCheck = false;
     ArrayList<ExceptionPath> exceptions = new ArrayList<>();
 
     public void addException(ExceptionPath newException) {

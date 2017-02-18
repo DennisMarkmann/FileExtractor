@@ -13,9 +13,6 @@ public class SettingHandler {
 
     private static TypeSettings createAnimeSettings() {
         TypeSettings settings = new TypeSettings();
-        settings.addException(new ExceptionPath("Naruto Shippuuden", "\\Other\\Naruto"));
-        settings.addException(new ExceptionPath("Monster Hunter Stories Ride On", "\\Other\\Monster Hunter Stories Ride On"));
-        settings.addException(new ExceptionPath("Nanbaka", "\\Other\\Nanbaka"));
         return settings;
     }
 
@@ -33,8 +30,6 @@ public class SettingHandler {
     private static TypeSettings createSeriesSettings() {
         TypeSettings settings = new TypeSettings();
         settings.setType(MediaType.Series);
-        settings.setExtractionPath("M:\\Processing\\Completed\\Series");
-        settings.setCompletionPath("M:\\Series");
         return settings;
     }
 
