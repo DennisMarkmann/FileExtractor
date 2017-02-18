@@ -10,15 +10,12 @@ import dennis.markmann.MyLibraries.DefaultJobs.File.FileFilter;
 import dennis.markmann.MyLibraries.DefaultJobs.File.FileLister;
 import markmann.dennis.fileExtractor.logging.LogHandler;
 import markmann.dennis.fileExtractor.objects.Medium;
-import markmann.dennis.fileExtractor.settings.GeneralSettings;
 import markmann.dennis.fileExtractor.settings.SettingHandler;
 import markmann.dennis.fileExtractor.settings.TypeSettings;
 
 public class FileExtractor {
 
     private static final Logger LOGGER = LogHandler.getLogger("./Logs/FileExtractor.log");
-
-    private GeneralSettings generalSettings = SettingHandler.getGeneralSettings();
 
     void extract(TypeSettings settings, boolean manually) {
         if (manually) {
@@ -27,7 +24,7 @@ public class FileExtractor {
         else {
             LOGGER.info("Checking for " + settings.getName() + ":");
         }
-        if (this.generalSettings.useExtendedLogging()) {
+        if (SettingHandler.getGeneralSettings().useExtendedLogging()) {
             LOGGER.info(
                     "Type: '" + settings.getType() + "', ExtractionPath: '" + settings.getExtractionPath()
                             + "', CompletionPath: '" + settings.getCompletionPath() + "', SeriesFolder: '"
@@ -55,16 +52,12 @@ public class FileExtractor {
         LOGGER.info("Number of entries to process: '" + fileList.size() + "'.");
         Collections.sort(fileList);
 
-        mediaList = new FileRenamer().scanFiles(
-                fileList,
-                settings.getType(),
-                this.generalSettings.useRenaming(),
-                this.generalSettings.removeCorruptFiles());
+        mediaList = new FileRenamer().scanFiles(fileList, settings.getType());
 
-        if (this.generalSettings.useFileMoving()) {
+        if (SettingHandler.getGeneralSettings().useFileMoving()) {
             new FileMover().moveFiles(mediaList, completionFolder, settings);
         }
-        if (this.generalSettings.useCleanup()) {
+        if (SettingHandler.getGeneralSettings().useCleanup()) {
             new FileCleaner().cleanFiles(folderList);
         }
         LOGGER.info("-----------------------------------");

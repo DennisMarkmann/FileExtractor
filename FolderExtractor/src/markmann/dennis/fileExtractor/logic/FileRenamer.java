@@ -12,6 +12,7 @@ import markmann.dennis.fileExtractor.objects.Anime;
 import markmann.dennis.fileExtractor.objects.MediaType;
 import markmann.dennis.fileExtractor.objects.Medium;
 import markmann.dennis.fileExtractor.objects.Series;
+import markmann.dennis.fileExtractor.settings.SettingHandler;
 
 class FileRenamer {
 
@@ -56,17 +57,13 @@ class FileRenamer {
         return fileName;
     }
 
-    ArrayList<Medium> scanFiles(
-            ArrayList<File> fileList,
-            MediaType mediaType,
-            boolean useRenaming,
-            boolean removeCorruptFiles) {
+    ArrayList<Medium> scanFiles(ArrayList<File> fileList, MediaType mediaType) {
 
         ArrayList<Medium> mediaList = new ArrayList<>();
         for (final File file : fileList) {
             String originalFileName = file.getName();
             Medium medium = null;
-
+            boolean useRenaming = SettingHandler.getGeneralSettings().useRenaming();
             if (mediaType == MediaType.Anime) {
                 if (useRenaming) {
                     medium = this.handleAnimeRenaming(originalFileName, new Anime());
@@ -90,7 +87,7 @@ class FileRenamer {
             }
 
             if ((medium == null) && useRenaming) {
-                if (removeCorruptFiles) {
+                if (SettingHandler.getGeneralSettings().removeCorruptFiles()) {
                     LOGGER.info("Renaming of file:'" + originalFileName + "' not successful. File deleted.");
                     file.delete();
                 }
