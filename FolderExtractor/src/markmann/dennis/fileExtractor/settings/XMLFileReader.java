@@ -13,6 +13,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import markmann.dennis.fileExtractor.logging.LogHandler;
+import markmann.dennis.fileExtractor.objects.MediaType;
 
 public class XMLFileReader {
 
@@ -24,6 +25,14 @@ public class XMLFileReader {
         }
         else if (fieldType.equals(int.class)) {
             return Integer.parseInt(value);
+        }
+        else if (fieldType.equals(MediaType.class)) {
+            if (value.equals("Anime")) {
+                return MediaType.Anime;
+            }
+            else if (value.equals("Series")) {
+                return MediaType.Series;
+            }
         }
         else if (fieldType.equals(String.class)) {
             return value;
@@ -38,7 +47,7 @@ public class XMLFileReader {
         return element.getElementsByTagName(name).item(0).getTextContent();
     }
 
-    public GeneralSettings readSettingsXML(String name, GeneralSettings settings, boolean initial) {
+    public void readSettingsXML(String name, Settings settings, boolean initial) {
 
         try {
 
@@ -68,6 +77,10 @@ public class XMLFileReader {
 
                         try {
                             String fieldName = Character.toUpperCase(field.getName().charAt(0)) + field.getName().substring(1);
+                            if (fieldName.equals("Exceptions")) {
+                                // TODO handle exceptions as well
+                                continue;
+                            }
                             Object oldFieldValue = field.get(settings);
                             Object newFieldValue = this
                                     .convertValueToType(field.getType(), this.getValueByName(element, fieldName));
@@ -90,7 +103,6 @@ public class XMLFileReader {
             LOGGER.error("Reading of '" + name + "' file failed.", e);
             e.printStackTrace();
         }
-        return settings;
     }
 
 }

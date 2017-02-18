@@ -1,6 +1,6 @@
 package markmann.dennis.fileExtractor.settings;
 
-public class GeneralSettings {
+public class GeneralSettings implements Settings {
 
     boolean useGui;
     boolean useSystemTray;

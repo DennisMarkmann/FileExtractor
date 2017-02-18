@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import markmann.dennis.fileExtractor.objects.MediaType;
 
-public class TypeSettings {
+public class TypeSettings implements Settings {
 
     String name;
     MediaType type;
