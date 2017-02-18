@@ -6,7 +6,8 @@
 
 2. Cleanup
 2.1.	Implement observable
-2.2.	Refactor XML-File Reading & Writing (All attributes of class instead of hardcoded names)
+2.2.	Refactor XML-File Reading (All attributes of class instead of hardcoded names)
+2.3.	Refactor TypeSetting Writing (All attributes of class instead of hardcoded names)
 
 3.	Additional functionality
 3.2.	SeasonFolder

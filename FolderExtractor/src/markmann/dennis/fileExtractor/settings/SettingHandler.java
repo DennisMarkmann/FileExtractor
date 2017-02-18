@@ -6,8 +6,8 @@ import markmann.dennis.fileExtractor.objects.MediaType;
 
 public class SettingHandler {
 
-    private static GeneralSettings generalSettings;
-    private static ArrayList<TypeSettings> settingList;
+    private static GeneralSettings generalSettings = new GeneralSettings();
+    private static ArrayList<TypeSettings> settingList = new ArrayList<>();
 
     private static TypeSettings createAnimeSettings() {
         TypeSettings settings = new TypeSettings();
@@ -23,24 +23,23 @@ public class SettingHandler {
     }
 
     public static void createDefaultSettings() {
-        settingList = new ArrayList<>();
-        generalSettings = createGeneralSettings();
+        // generalSettings = createGeneralSettings();
         settingList.add(SettingHandler.createAnimeSettings());
         settingList.add(createSeriesSettings());
     }
 
-    private static GeneralSettings createGeneralSettings() {
-        GeneralSettings generalSettings = new GeneralSettings();
-        generalSettings.setTimerInterval(60);
-        generalSettings.setUseTimer(true);
-        generalSettings.setUseRenaming(true);
-        generalSettings.setUseFileMoving(true);
-        generalSettings.setUseCleanup(true);
-        generalSettings.setUseExtendedLogging(false);
-        generalSettings.setRemoveCorruptFiles(true);
-        generalSettings.setUseSystemTray(true);
-        return generalSettings;
-    }
+    // private static GeneralSettings createGeneralSettings() {
+    // GeneralSettings generalSettings = new GeneralSettings();
+    // generalSettings.setTimerInterval(60);
+    // generalSettings.setUseTimer(true);
+    // generalSettings.setUseRenaming(true);
+    // generalSettings.setUseFileMoving(true);
+    // generalSettings.setUseCleanup(true);
+    // generalSettings.setUseExtendedLogging(false);
+    // generalSettings.setRemoveCorruptFiles(true);
+    // generalSettings.setUseSystemTray(true);
+    // return generalSettings;
+    // }
 
     private static TypeSettings createSeriesSettings() {
         TypeSettings settings = new TypeSettings();

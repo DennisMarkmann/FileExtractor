@@ -50,22 +50,23 @@ public class XMLFileReader {
 
                     Element element = (Element) nNode;
 
-                    generalSettings.setUseGui(Boolean.valueOf(this.getValueByName(element, "UseGui")));
-                    generalSettings.setUseSystemTray(Boolean.valueOf(this.getValueByName(element, "UseSystemTray")));
-                    generalSettings.setUseTimer(Boolean.valueOf(this.getValueByName(element, "UseTimer")));
-                    generalSettings.setTimerInterval(Integer.parseInt(this.getValueByName(element, "TimerInterval")));
+                    generalSettings.setUseGui(Boolean.valueOf(this.getValueByName(element, "useGui")));
+                    generalSettings.setUseSystemTray(Boolean.valueOf(this.getValueByName(element, "useSystemTray")));
+                    generalSettings.setUseTimer(Boolean.valueOf(this.getValueByName(element, "useTimer")));
+                    generalSettings.setTimerInterval(Integer.parseInt(this.getValueByName(element, "timerInterval")));
                     generalSettings.setUseNotificationWhileWorking(
-                            Boolean.valueOf(this.getValueByName(element, "UseNotificationWhileWorking")));
-                    generalSettings.setUseRenaming(Boolean.valueOf(this.getValueByName(element, "UseRenaming")));
-                    generalSettings.setUseCleanup(Boolean.valueOf(this.getValueByName(element, "UseCleanup")));
-                    generalSettings.setUseFileMoving(Boolean.valueOf(this.getValueByName(element, "UseFileMoving")));
-                    generalSettings.setUseExtendedLogging(Boolean.valueOf(this.getValueByName(element, "UseExtendedLogging")));
-                    generalSettings.setRemoveCorruptFiles(Boolean.valueOf(this.getValueByName(element, "RemoveCorruptFiles")));
+                            Boolean.valueOf(this.getValueByName(element, "useNotificationWhileWorking")));
+                    generalSettings.setUseRenaming(Boolean.valueOf(this.getValueByName(element, "useRenaming")));
+                    generalSettings.setUseCleanup(Boolean.valueOf(this.getValueByName(element, "useCleanup")));
+                    generalSettings.setUseFileMoving(Boolean.valueOf(this.getValueByName(element, "useFileMoving")));
+                    generalSettings.setUseExtendedLogging(Boolean.valueOf(this.getValueByName(element, "useExtendedLogging")));
+                    generalSettings.setRemoveCorruptFiles(Boolean.valueOf(this.getValueByName(element, "removeCorruptFiles")));
                 }
             }
         }
         catch (Exception e) {
             LOGGER.error("Reading of 'General.xml' file failed.", e);
+            e.printStackTrace();
         }
         return generalSettings;
     }

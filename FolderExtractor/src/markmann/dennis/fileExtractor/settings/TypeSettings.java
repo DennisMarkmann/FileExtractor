@@ -6,14 +6,14 @@ import markmann.dennis.fileExtractor.objects.MediaType;
 
 public class TypeSettings {
 
-    private String name;
-    private MediaType type;
-    private String extractionPath;
-    private String completionPath;
-    private boolean useSeriesFolder;
-    private boolean useSeasonFolder;
-    private boolean useCurrentlyWatchingCheck;
-    private ArrayList<ExceptionPath> exceptions = new ArrayList<>();
+    String name;
+    MediaType type;
+    String extractionPath;
+    String completionPath;
+    boolean useSeriesFolder;
+    boolean useSeasonFolder;
+    boolean useCurrentlyWatchingCheck;
+    ArrayList<ExceptionPath> exceptions = new ArrayList<>();
 
     public void addException(ExceptionPath exception) {
         this.exceptions.add(exception);

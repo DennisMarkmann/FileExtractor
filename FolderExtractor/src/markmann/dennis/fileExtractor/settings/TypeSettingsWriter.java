@@ -26,7 +26,7 @@ class TypeSettingsWriter {
             helper.createElement(doc, exceptionElement, "ExceptionName", exceptionPath.getName());
             helper.createElement(doc, exceptionElement, "ExceptionPath", exceptionPath.getPath());
         }
-        helper.writeFile("Settings//", settings.getName(), doc);
+        helper.writeFile("./Settings/", settings.getName(), doc);
     }
 
     final void initializeXMLPrint(final ArrayList<TypeSettings> settingList) {
