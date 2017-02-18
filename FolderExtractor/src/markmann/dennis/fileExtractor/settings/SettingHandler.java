@@ -32,12 +32,9 @@ public class SettingHandler {
 
     private static TypeSettings createSeriesSettings() {
         TypeSettings settings = new TypeSettings();
-        settings = new TypeSettings();
-        settings.setName("Series");
         settings.setType(MediaType.Series);
         settings.setExtractionPath("M:\\Processing\\Completed\\Series");
         settings.setCompletionPath("M:\\Series");
-        settings.setUseCurrentlyWatchingCheck(true);
         return settings;
     }
 

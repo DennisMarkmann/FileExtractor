@@ -6,7 +6,6 @@ import markmann.dennis.fileExtractor.objects.MediaType;
 
 public class TypeSettings implements Settings {
 
-    String name = "Anime";
     MediaType type = MediaType.Anime;
     String extractionPath = "M:\\Processing\\Completed\\Anime";
     String completionPath = "M:\\MyAnime";
@@ -40,10 +39,6 @@ public class TypeSettings implements Settings {
         return this.extractionPath;
     }
 
-    public String getName() {
-        return this.name;
-    }
-
     public MediaType getType() {
         return this.type;
     }
@@ -54,10 +49,6 @@ public class TypeSettings implements Settings {
 
     public void setExtractionPath(String extractionPath) {
         this.extractionPath = extractionPath;
-    }
-
-    public void setName(String type) {
-        this.name = type;
     }
 
     public void setType(MediaType type) {

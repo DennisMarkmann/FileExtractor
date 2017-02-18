@@ -37,9 +37,9 @@ public class SystemTrayMenu {
         settingsMenu.add(generalSettings);
 
         for (TypeSettings settings : SettingHandler.getTypeSettings()) {
-            MenuItem subMenuItem = new MenuItem(settings.getName());
+            MenuItem subMenuItem = new MenuItem(settings.getType().toString());
             subMenuItem.addActionListener(e -> {
-                Controller.openFile("./Settings/" + settings.getName() + ".xml");
+                Controller.openFile("./Settings/" + settings.getType().toString() + ".xml");
             });
             settingsMenu.add(subMenuItem);
         }

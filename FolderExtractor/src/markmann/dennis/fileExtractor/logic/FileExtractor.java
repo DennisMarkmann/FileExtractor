@@ -19,10 +19,10 @@ public class FileExtractor {
 
     void extract(TypeSettings settings, boolean manually) {
         if (manually) {
-            LOGGER.info("Checking for " + settings.getName() + " (manually):");
+            LOGGER.info("Checking for " + settings.getType().toString() + " (manually):");
         }
         else {
-            LOGGER.info("Checking for " + settings.getName() + ":");
+            LOGGER.info("Checking for " + settings.getType().toString() + ":");
         }
         if (SettingHandler.getGeneralSettings().useExtendedLogging()) {
             LOGGER.info(

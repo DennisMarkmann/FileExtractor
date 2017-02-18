@@ -13,7 +13,6 @@ class TypeSettingsWriter {
         final Document doc = helper.createDocument();
         final Element element = helper.createMainElement(doc, "Settings");
 
-        helper.createElement(doc, element, "Name", settings.getName());
         helper.createElement(doc, element, "Type", settings.getType().toString());
         helper.createElement(doc, element, "ExtractionPath", settings.getExtractionPath());
         helper.createElement(doc, element, "CompletionPath", settings.getCompletionPath());
@@ -26,7 +25,7 @@ class TypeSettingsWriter {
             helper.createElement(doc, exceptionElement, "ExceptionName", exceptionPath.getName());
             helper.createElement(doc, exceptionElement, "ExceptionPath", exceptionPath.getPath());
         }
-        helper.writeFile("./Settings/", settings.getName(), doc);
+        helper.writeFile("./Settings/", settings.getType().toString(), doc);
     }
 
     final void initializeXMLPrint(final ArrayList<TypeSettings> settingList) {
