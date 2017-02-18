@@ -60,4 +60,8 @@ public class SettingHandler {
     public static ArrayList<TypeSettings> getTypeSettings() {
         return SettingHandler.settingList;
     }
+
+    public static void readSettingsFromXML() {
+        generalSettings = new XMLFileReader().readGeneralSettings();
+    }
 }

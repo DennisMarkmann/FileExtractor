@@ -43,6 +43,7 @@ public class Controller {
 
     static void startApplication() {
         SettingHandler.createDefaultSettings();
+        SettingHandler.readSettingsFromXML();
         new FileWriteHelper().createXMLFiles();
 
         if (SettingHandler.getGeneralSettings().useTimer()) {
