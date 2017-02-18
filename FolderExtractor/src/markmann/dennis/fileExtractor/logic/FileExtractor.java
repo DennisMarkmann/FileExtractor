@@ -60,7 +60,6 @@ public class FileExtractor {
         if (SettingHandler.getGeneralSettings().useCleanup()) {
             new FileCleaner().cleanFiles(folderList);
         }
-        LOGGER.info("-----------------------------------");
     }
 
     private boolean isPathValid(File folder) {
@@ -74,6 +73,7 @@ public class FileExtractor {
         for (final TypeSettings settings : SettingHandler.getTypeSettings()) {
             this.extract(settings, manually);
         }
+        LOGGER.info("-----------------------------------");
     }
 
 }
