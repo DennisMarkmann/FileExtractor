@@ -10,9 +10,9 @@ import java.util.ArrayList;
 import org.apache.log4j.Logger;
 
 import markmann.dennis.fileExtractor.logging.LogHandler;
-import markmann.dennis.fileExtractor.objects.MediaType;
-import markmann.dennis.fileExtractor.objects.Medium;
-import markmann.dennis.fileExtractor.objects.Series;
+import markmann.dennis.fileExtractor.mediaObjects.MediaType;
+import markmann.dennis.fileExtractor.mediaObjects.Medium;
+import markmann.dennis.fileExtractor.mediaObjects.Series;
 import markmann.dennis.fileExtractor.settings.ExceptionPath;
 import markmann.dennis.fileExtractor.settings.TypeSettings;
 

@@ -1,4 +1,4 @@
-package markmann.dennis.fileExtractor.objects;
+package markmann.dennis.fileExtractor.mediaObjects;
 
 public class Anime extends Medium {
 

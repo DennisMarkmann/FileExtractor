@@ -13,7 +13,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import markmann.dennis.fileExtractor.logging.LogHandler;
-import markmann.dennis.fileExtractor.objects.MediaType;
+import markmann.dennis.fileExtractor.mediaObjects.MediaType;
 
 public class XMLFileReader {
 

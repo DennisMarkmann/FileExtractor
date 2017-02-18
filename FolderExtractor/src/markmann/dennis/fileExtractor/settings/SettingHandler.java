@@ -3,7 +3,7 @@ package markmann.dennis.fileExtractor.settings;
 import java.io.File;
 import java.util.ArrayList;
 
-import markmann.dennis.fileExtractor.objects.MediaType;
+import markmann.dennis.fileExtractor.mediaObjects.MediaType;
 
 public class SettingHandler {
 

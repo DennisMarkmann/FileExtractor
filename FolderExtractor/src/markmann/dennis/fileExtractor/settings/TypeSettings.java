@@ -2,7 +2,7 @@ package markmann.dennis.fileExtractor.settings;
 
 import java.util.ArrayList;
 
-import markmann.dennis.fileExtractor.objects.MediaType;
+import markmann.dennis.fileExtractor.mediaObjects.MediaType;
 
 public class TypeSettings implements Settings {
 
