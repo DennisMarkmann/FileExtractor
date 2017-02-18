@@ -61,6 +61,6 @@ public class SettingHandler {
     }
 
     public static void readSettingsFromXML() {
-        generalSettings = new XMLFileReader().readGeneralSettings();
+        generalSettings = new XMLFileReader().readSettingsXML("General.xml", generalSettings);
     }
 }

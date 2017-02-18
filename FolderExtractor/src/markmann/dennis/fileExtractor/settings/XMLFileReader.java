@@ -1,6 +1,7 @@
 package markmann.dennis.fileExtractor.settings;
 
 import java.io.File;
+import java.lang.reflect.Field;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -17,21 +18,35 @@ public class XMLFileReader {
 
     private static final Logger LOGGER = LogHandler.getLogger("./Logs/FileExtractor.log");
 
+    private Object convertValueToType(Object fieldType, String value) {
+        if (fieldType.equals(boolean.class)) {
+            return Boolean.valueOf(value);
+        }
+        else if (fieldType.equals(int.class)) {
+            return Integer.parseInt(value);
+        }
+        else if (fieldType.equals(String.class)) {
+            return value;
+        }
+        String errorMessage = "No handling implemented for reading given datatype '" + fieldType + "'.";
+        LOGGER.error(errorMessage);
+        System.out.println(errorMessage);
+        return null;
+    }
+
     private String getValueByName(Element element, String name) {
         return element.getElementsByTagName(name).item(0).getTextContent();
     }
 
-    public GeneralSettings readGeneralSettings() {
-
-        GeneralSettings generalSettings = null;
+    public GeneralSettings readSettingsXML(String name, GeneralSettings settings) {
 
         try {
 
             if (SettingHandler.getGeneralSettings().useExtendedLogging()) {
-                LOGGER.info("Reading 'General.xml' file.");
+                LOGGER.info("Reading '" + name + "' file.");
             }
 
-            File fXmlFile = new File("./Settings/General.xml");
+            File fXmlFile = new File("./Settings/" + name);
 
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
@@ -40,7 +55,6 @@ public class XMLFileReader {
             doc.getDocumentElement().normalize();
 
             NodeList nList = doc.getElementsByTagName("Settings");
-            generalSettings = new GeneralSettings();
 
             for (int temp = 0; temp < nList.getLength(); temp++) {
 
@@ -50,25 +64,30 @@ public class XMLFileReader {
 
                     Element element = (Element) nNode;
 
-                    generalSettings.setUseGui(Boolean.valueOf(this.getValueByName(element, "useGui")));
-                    generalSettings.setUseSystemTray(Boolean.valueOf(this.getValueByName(element, "useSystemTray")));
-                    generalSettings.setUseTimer(Boolean.valueOf(this.getValueByName(element, "useTimer")));
-                    generalSettings.setTimerInterval(Integer.parseInt(this.getValueByName(element, "timerInterval")));
-                    generalSettings.setUseNotificationWhileWorking(
-                            Boolean.valueOf(this.getValueByName(element, "useNotificationWhileWorking")));
-                    generalSettings.setUseRenaming(Boolean.valueOf(this.getValueByName(element, "useRenaming")));
-                    generalSettings.setUseCleanup(Boolean.valueOf(this.getValueByName(element, "useCleanup")));
-                    generalSettings.setUseFileMoving(Boolean.valueOf(this.getValueByName(element, "useFileMoving")));
-                    generalSettings.setUseExtendedLogging(Boolean.valueOf(this.getValueByName(element, "useExtendedLogging")));
-                    generalSettings.setRemoveCorruptFiles(Boolean.valueOf(this.getValueByName(element, "removeCorruptFiles")));
+                    for (Field field : settings.getClass().getDeclaredFields()) {
+
+                        try {
+                            Object oldFieldValue = field.get(settings);
+                            Object newFieldValue = this
+                                    .convertValueToType(field.getType(), this.getValueByName(element, field.getName()));
+                            if (!oldFieldValue.equals(newFieldValue)) {
+                                // TODO print settings changed if not initial
+                                field.set(settings, newFieldValue);
+                            }
+                        }
+                        catch (IllegalArgumentException | IllegalAccessException e) {
+                            LOGGER.error("Reading of '" + name + "' file failed.", e);
+                            e.printStackTrace();
+                        }
+                    }
                 }
             }
         }
         catch (Exception e) {
-            LOGGER.error("Reading of 'General.xml' file failed.", e);
+            LOGGER.error("Reading of '" + name + "' file failed.", e);
             e.printStackTrace();
         }
-        return generalSettings;
+        return settings;
     }
 
 }
