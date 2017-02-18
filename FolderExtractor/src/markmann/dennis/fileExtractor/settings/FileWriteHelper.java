@@ -40,17 +40,17 @@ public class FileWriteHelper {
     }
 
     public final void createXMLFiles() {
-
-        new TypeSettingsWriter().initializeXMLPrint(SettingHandler.getTypeSettings());
-        new GeneralSettingsWriter().initializeXMLPrint(SettingHandler.getGeneralSettings());
-
+        for (final TypeSettings settings : SettingHandler.getTypeSettings()) {
+            new XMLFileWriter().createXmlFile((settings.getType().toString() + ".xml"), settings);
+        }
+        new XMLFileWriter().createXmlFile("General.xml", SettingHandler.getGeneralSettings());
     }
 
     // write the content into xml file
     final void writeFile(final String path, final String fileName, final Document doc) {
 
         new File(path).mkdirs();
-        final File file = new File(path + fileName + ".xml");
+        final File file = new File(path + fileName);
 
         try {
             TransformerFactory.newInstance().newTransformer().transform(new DOMSource(doc), new StreamResult(file));
