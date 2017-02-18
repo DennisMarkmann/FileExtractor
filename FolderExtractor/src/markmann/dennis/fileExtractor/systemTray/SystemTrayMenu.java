@@ -9,16 +9,15 @@ import java.awt.PopupMenu;
 import java.awt.SystemTray;
 import java.awt.Toolkit;
 import java.awt.TrayIcon;
-import java.util.ArrayList;
 
 import markmann.dennis.fileExtractor.logic.Controller;
-import markmann.dennis.fileExtractor.settings.GeneralSettings;
+import markmann.dennis.fileExtractor.settings.SettingHandler;
 import markmann.dennis.fileExtractor.settings.TypeSettings;
 
 public class SystemTrayMenu {
 
-    private void changeVisibility(Controller controller, MenuItem pauseItem, MenuItem resumeItem) {
-        if (controller.isTimerIsActive()) {
+    private void changeVisibility(MenuItem pauseItem, MenuItem resumeItem) {
+        if (Controller.isTimerIsActive()) {
             pauseItem.setEnabled(true);
             resumeItem.setEnabled(false);
         }
@@ -28,29 +27,26 @@ public class SystemTrayMenu {
         }
     }
 
-    private Menu createSettingsSubmenu(Controller controller, ArrayList<TypeSettings> typeSettings) {
+    private Menu createSettingsSubmenu() {
 
         Menu settingsMenu = new Menu("Settings");
         MenuItem generalSettings = new MenuItem("General");
         generalSettings.addActionListener(e -> {
-            controller.openFile("./Settings/General.xml");
+            Controller.openFile("./Settings/General.xml");
         });
         settingsMenu.add(generalSettings);
 
-        for (TypeSettings settings : typeSettings) {
+        for (TypeSettings settings : SettingHandler.getTypeSettings()) {
             MenuItem subMenuItem = new MenuItem(settings.getName());
             subMenuItem.addActionListener(e -> {
-                controller.openFile("./Settings/" + settings.getName() + ".xml");
+                Controller.openFile("./Settings/" + settings.getName() + ".xml");
             });
             settingsMenu.add(subMenuItem);
         }
         return settingsMenu;
     }
 
-    public void createSystemTrayEntry(
-            Controller controller,
-            GeneralSettings generalSettings,
-            ArrayList<TypeSettings> typeSettings) {
+    public void createSystemTrayEntry() {
 
         if (!SystemTray.isSupported()) {
             return;
@@ -70,32 +66,32 @@ public class SystemTrayMenu {
         MenuItem resumeItem = new MenuItem("Resume timer");
         MenuItem logItem = new MenuItem("Log");
         MenuItem exitItem = new MenuItem("Exit");
-        Menu settingsMenu = this.createSettingsSubmenu(controller, typeSettings);
+        Menu settingsMenu = this.createSettingsSubmenu();
 
         scanItem.addActionListener(e -> {
-            controller.initiateManualExtraction(generalSettings, typeSettings);
+            Controller.initiateManualExtraction();
         });
 
         pauseItem.addActionListener(e -> {
-            controller.stopTimer();
-            this.changeVisibility(controller, pauseItem, resumeItem);
+            Controller.stopTimer();
+            this.changeVisibility(pauseItem, resumeItem);
         });
 
         resumeItem.addActionListener(e -> {
-            controller.startTimer(false, generalSettings, typeSettings);
-            this.changeVisibility(controller, pauseItem, resumeItem);
+            Controller.startTimer(false);
+            this.changeVisibility(pauseItem, resumeItem);
         });
 
         exitItem.addActionListener(e -> {
-            controller.shutDownApplication();
+            Controller.shutDownApplication();
         });
 
         logItem.addActionListener(e -> {
-            controller.openFile("./Logs/FileExtractor.log");
+            Controller.openFile("./Logs/FileExtractor.log");
         });
 
         popup.add(scanItem);
-        if (generalSettings.useTimer()) {
+        if (SettingHandler.getGeneralSettings().useTimer()) {
             popup.add(pauseItem);
             popup.add(resumeItem);
         }
@@ -103,7 +99,7 @@ public class SystemTrayMenu {
         popup.add(settingsMenu);
         popup.add(exitItem);
 
-        this.changeVisibility(controller, pauseItem, resumeItem);
+        this.changeVisibility(pauseItem, resumeItem);
 
         trayIcon.setPopupMenu(popup);
 

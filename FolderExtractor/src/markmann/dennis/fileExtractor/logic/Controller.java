@@ -3,7 +3,6 @@ package markmann.dennis.fileExtractor.logic;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -11,26 +10,24 @@ import org.apache.log4j.Logger;
 
 import markmann.dennis.fileExtractor.logging.LogHandler;
 import markmann.dennis.fileExtractor.settings.FileWriteHelper;
-import markmann.dennis.fileExtractor.settings.GeneralSettings;
 import markmann.dennis.fileExtractor.settings.SettingHandler;
-import markmann.dennis.fileExtractor.settings.TypeSettings;
 import markmann.dennis.fileExtractor.systemTray.SystemTrayMenu;
 
 public class Controller {
 
     private static final Logger LOGGER = LogHandler.getLogger("./Logs/FileExtractor.log");
-    private Timer timer = null;
-    private boolean timerIsActive = false;
+    private static Timer timer = null;
+    private static boolean timerIsActive = false;
 
-    public void initiateManualExtraction(GeneralSettings generalSettings, ArrayList<TypeSettings> typeSettings) {
-        new FileExtractor(generalSettings).startExtraction(typeSettings, true);
+    public static void initiateManualExtraction() {
+        new FileExtractor().startExtraction(true);
     }
 
-    public boolean isTimerIsActive() {
-        return this.timerIsActive;
+    public static boolean isTimerIsActive() {
+        return timerIsActive;
     }
 
-    public void openFile(String fileName) {
+    public static void openFile(String fileName) {
         try {
             Desktop.getDesktop().open(new File(fileName));
         }
@@ -39,50 +36,47 @@ public class Controller {
         }
     }
 
-    public void shutDownApplication() {
+    public static void shutDownApplication() {
         LOGGER.info("Application stopped.");
         System.exit(0);
     }
 
-    void startApplication() {
-        SettingHandler settingHandler = new SettingHandler();
-        settingHandler.createDefaultSettings();
-        GeneralSettings generalSettings = settingHandler.getGeneralSettings();
-        ArrayList<TypeSettings> typeSettings = settingHandler.getSettingList();
+    static void startApplication() {
+        SettingHandler.createDefaultSettings();
+        new FileWriteHelper().createXMLFiles();
 
-        new FileWriteHelper().createXMLFiles(typeSettings, generalSettings);
-
-        if (generalSettings.useTimer()) {
-            this.startTimer(true, generalSettings, typeSettings);
+        if (SettingHandler.getGeneralSettings().useTimer()) {
+            startTimer(true);
         }
-        if (generalSettings.useSystemTray()) {
-            new SystemTrayMenu().createSystemTrayEntry(this, generalSettings, typeSettings);
+        if (SettingHandler.getGeneralSettings().useSystemTray()) {
+            new SystemTrayMenu().createSystemTrayEntry();
         }
     }
 
-    public void startTimer(boolean initialStart, GeneralSettings generalSettings, ArrayList<TypeSettings> typeSettings) {
+    public static void startTimer(boolean initialStart) {
+        int timerInterval = SettingHandler.getGeneralSettings().getTimerInterval();
         if (initialStart) {
-            LOGGER.info("Timer activated. Interval: '" + generalSettings.getTimerInterval() + "' minutes.");
+            LOGGER.info("Timer activated. Interval: '" + timerInterval + "' minutes.");
         }
         else {
             LOGGER.info("Timer resumed.");
         }
 
-        this.timer = new Timer();
-        this.timerIsActive = true;
-        this.timer.schedule(new TimerTask() {
+        timer = new Timer();
+        timerIsActive = true;
+        timer.schedule(new TimerTask() {
 
             @Override
             public void run() {
-                new FileExtractor(generalSettings).startExtraction(typeSettings, false);
+                new FileExtractor().startExtraction(false);
             }
 
-        }, 1000, generalSettings.getTimerInterval() * 60000);
+        }, 1000, timerInterval * 60000);
     }
 
-    public void stopTimer() {
+    public static void stopTimer() {
         LOGGER.info("Timer stopped.");
-        this.timer.cancel();
-        this.timerIsActive = false;
+        timer.cancel();
+        timerIsActive = false;
     }
 }

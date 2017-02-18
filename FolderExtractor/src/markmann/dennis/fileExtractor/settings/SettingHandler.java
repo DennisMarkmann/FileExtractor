@@ -6,10 +6,10 @@ import markmann.dennis.fileExtractor.objects.MediaType;
 
 public class SettingHandler {
 
-    private ArrayList<TypeSettings> settingList;
-    private GeneralSettings generalSettings;
+    private static GeneralSettings generalSettings;
+    private static ArrayList<TypeSettings> settingList;
 
-    private TypeSettings createAnimeSettings() {
+    private static TypeSettings createAnimeSettings() {
         TypeSettings settings = new TypeSettings();
         settings.setName("Anime");
         settings.setType(MediaType.Anime);
@@ -22,14 +22,14 @@ public class SettingHandler {
         return settings;
     }
 
-    public void createDefaultSettings() {
-        this.settingList = new ArrayList<>();
-        this.setGeneralSettings(this.createGeneralSettings());
-        this.settingList.add(this.createAnimeSettings());
-        this.settingList.add(this.createSeriesSettings());
+    public static void createDefaultSettings() {
+        settingList = new ArrayList<>();
+        generalSettings = createGeneralSettings();
+        settingList.add(SettingHandler.createAnimeSettings());
+        settingList.add(createSeriesSettings());
     }
 
-    private GeneralSettings createGeneralSettings() {
+    private static GeneralSettings createGeneralSettings() {
         GeneralSettings generalSettings = new GeneralSettings();
         generalSettings.setTimerInterval(60);
         generalSettings.setUseTimer(true);
@@ -42,7 +42,7 @@ public class SettingHandler {
         return generalSettings;
     }
 
-    private TypeSettings createSeriesSettings() {
+    private static TypeSettings createSeriesSettings() {
         TypeSettings settings = new TypeSettings();
         settings = new TypeSettings();
         settings.setName("Series");
@@ -53,20 +53,11 @@ public class SettingHandler {
         return settings;
     }
 
-    public GeneralSettings getGeneralSettings() {
-        return this.generalSettings;
+    public static GeneralSettings getGeneralSettings() {
+        return generalSettings;
     }
 
-    public ArrayList<TypeSettings> getSettingList() {
-        return this.settingList;
+    public static ArrayList<TypeSettings> getTypeSettings() {
+        return SettingHandler.settingList;
     }
-
-    public void setGeneralSettings(GeneralSettings generalSettings) {
-        this.generalSettings = generalSettings;
-    }
-
-    public void setSettingList(ArrayList<TypeSettings> settingList) {
-        this.settingList = settingList;
-    }
-
 }

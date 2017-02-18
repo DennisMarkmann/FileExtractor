@@ -10,6 +10,6 @@ public class StartUp {
 
     public static void main(final String[] args) {
         LOGGER.info("Application starting.");
-        new Controller().startApplication();
+        Controller.startApplication();
     }
 }

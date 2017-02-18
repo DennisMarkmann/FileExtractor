@@ -11,17 +11,14 @@ import dennis.markmann.MyLibraries.DefaultJobs.File.FileLister;
 import markmann.dennis.fileExtractor.logging.LogHandler;
 import markmann.dennis.fileExtractor.objects.Medium;
 import markmann.dennis.fileExtractor.settings.GeneralSettings;
+import markmann.dennis.fileExtractor.settings.SettingHandler;
 import markmann.dennis.fileExtractor.settings.TypeSettings;
 
 public class FileExtractor {
 
     private static final Logger LOGGER = LogHandler.getLogger("./Logs/FileExtractor.log");
 
-    private GeneralSettings generalSettings;
-
-    public FileExtractor(GeneralSettings generalSettings) {
-        this.generalSettings = generalSettings;
-    }
+    private GeneralSettings generalSettings = SettingHandler.getGeneralSettings();
 
     void extract(TypeSettings settings, boolean manually) {
         if (manually) {
@@ -80,8 +77,8 @@ public class FileExtractor {
         return false;
     }
 
-    public void startExtraction(ArrayList<TypeSettings> settingList, boolean manually) {
-        for (final TypeSettings settings : settingList) {
+    public void startExtraction(boolean manually) {
+        for (final TypeSettings settings : SettingHandler.getTypeSettings()) {
             this.extract(settings, manually);
         }
     }

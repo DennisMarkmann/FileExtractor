@@ -1,7 +1,6 @@
 package markmann.dennis.fileExtractor.settings;
 
 import java.io.File;
-import java.util.ArrayList;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -40,10 +39,10 @@ public class FileWriteHelper {
         return element;
     }
 
-    public final void createXMLFiles(final ArrayList<TypeSettings> settingList, GeneralSettings generalSettings) {
+    public final void createXMLFiles() {
 
-        new TypeSettingsWriter().initializeXMLPrint(settingList);
-        new GeneralSettingsWriter().initializeXMLPrint(generalSettings);
+        new TypeSettingsWriter().initializeXMLPrint(SettingHandler.getTypeSettings());
+        new GeneralSettingsWriter().initializeXMLPrint(SettingHandler.getGeneralSettings());
 
     }
 
