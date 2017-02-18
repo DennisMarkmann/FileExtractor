@@ -43,9 +43,14 @@ public class Controller {
     }
 
     static void startApplication() {
-        SettingHandler.createDefaultSettings();
-        SettingHandler.readSettingsFromXML(true);
-        new FileWriteHelper().createXMLFiles();
+        boolean createDefaultSettings = false;
+        if (createDefaultSettings) {
+            SettingHandler.createDefaultSettings();
+            new FileWriteHelper().createXMLFiles();
+        }
+        else {
+            SettingHandler.readSettingsFromXML(true);
+        }
 
         if (SettingHandler.getGeneralSettings().useTimer()) {
             startTimer(true);

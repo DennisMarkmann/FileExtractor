@@ -1,5 +1,6 @@
 package markmann.dennis.fileExtractor.settings;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import markmann.dennis.fileExtractor.objects.MediaType;
@@ -8,14 +9,10 @@ public class SettingHandler {
 
     private static GeneralSettings generalSettings = new GeneralSettings();
     private static ArrayList<TypeSettings> settingList = new ArrayList<>();
+    private static File folder = new File("./Settings/");
 
     private static TypeSettings createAnimeSettings() {
         TypeSettings settings = new TypeSettings();
-        settings.setName("Anime");
-        settings.setType(MediaType.Anime);
-        settings.setExtractionPath("M:\\Processing\\Completed\\Anime");
-        settings.setCompletionPath("M:\\MyAnime");
-        settings.setUseCurrentlyWatchingCheck(true);
         settings.addException(new ExceptionPath("Naruto Shippuuden", "\\Other\\Naruto"));
         settings.addException(new ExceptionPath("Monster Hunter Stories Ride On", "\\Other\\Monster Hunter Stories Ride On"));
         settings.addException(new ExceptionPath("Nanbaka", "\\Other\\Nanbaka"));
@@ -23,23 +20,15 @@ public class SettingHandler {
     }
 
     public static void createDefaultSettings() {
-        // generalSettings = createGeneralSettings();
+        generalSettings = createGeneralSettings();
         settingList.add(SettingHandler.createAnimeSettings());
         settingList.add(createSeriesSettings());
     }
 
-    // private static GeneralSettings createGeneralSettings() {
-    // GeneralSettings generalSettings = new GeneralSettings();
-    // generalSettings.setTimerInterval(60);
-    // generalSettings.setUseTimer(true);
-    // generalSettings.setUseRenaming(true);
-    // generalSettings.setUseFileMoving(true);
-    // generalSettings.setUseCleanup(true);
-    // generalSettings.setUseExtendedLogging(false);
-    // generalSettings.setRemoveCorruptFiles(true);
-    // generalSettings.setUseSystemTray(true);
-    // return generalSettings;
-    // }
+    private static GeneralSettings createGeneralSettings() {
+        GeneralSettings generalSettings = new GeneralSettings();
+        return generalSettings;
+    }
 
     private static TypeSettings createSeriesSettings() {
         TypeSettings settings = new TypeSettings();
@@ -56,14 +45,34 @@ public class SettingHandler {
         return generalSettings;
     }
 
+    private static TypeSettings getMatchingTypeSettings(String name) {
+        for (TypeSettings typeSettings : settingList) {
+            if ((typeSettings.getType().toString() + ".xml").equals(name)) {
+                return typeSettings;
+            }
+        }
+        TypeSettings typeSettings = new TypeSettings();
+        settingList.add(typeSettings);
+        return typeSettings;
+    }
+
     public static ArrayList<TypeSettings> getTypeSettings() {
         return SettingHandler.settingList;
     }
 
     public static void readSettingsFromXML(boolean initial) {
-        new XMLFileReader().readSettingsXML("General.xml", generalSettings, initial);
-        for (TypeSettings settings : settingList) {
-            new XMLFileReader().readSettingsXML(settings.name + ".xml", settings, initial);
+        for (final File fileEntry : folder.listFiles()) {
+            if (!fileEntry.isDirectory()) {
+                String name = fileEntry.getName();
+                if (name.equals("General.xml")) {
+                    new XMLFileReader().readSettingsXML(name, generalSettings, initial);
+                }
+                else if (name.equals("Anime.xml") || name.equals("Series.xml")) {
+                    TypeSettings typeSettings = getMatchingTypeSettings(name);
+                    new XMLFileReader().readSettingsXML(name, typeSettings, initial);
+                }
+
+            }
         }
     }
 }

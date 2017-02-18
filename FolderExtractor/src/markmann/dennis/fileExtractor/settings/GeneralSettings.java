@@ -2,16 +2,16 @@ package markmann.dennis.fileExtractor.settings;
 
 public class GeneralSettings implements Settings {
 
-    boolean useGui;
-    boolean useSystemTray;
-    boolean useTimer;
-    int timerInterval;
-    boolean useNotificationWhileWorking;
-    boolean useRenaming;
-    boolean useCleanup;
-    boolean useFileMoving;
-    boolean useExtendedLogging;
-    boolean removeCorruptFiles;
+    boolean useGui = false;
+    boolean useSystemTray = true;
+    boolean useTimer = true;
+    int timerInterval = 60;
+    boolean useNotificationWhileWorking = false;
+    boolean useRenaming = true;
+    boolean useCleanup = true;
+    boolean useFileMoving = true;
+    boolean useExtendedLogging = false;
+    boolean removeCorruptFiles = true;
 
     public int getTimerInterval() {
         return this.timerInterval;

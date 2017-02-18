@@ -6,17 +6,26 @@ import markmann.dennis.fileExtractor.objects.MediaType;
 
 public class TypeSettings implements Settings {
 
-    String name;
-    MediaType type;
-    String extractionPath;
-    String completionPath;
-    boolean useSeriesFolder;
-    boolean useSeasonFolder;
-    boolean useCurrentlyWatchingCheck;
+    String name = "Anime";
+    MediaType type = MediaType.Anime;
+    String extractionPath = "M:\\Processing\\Completed\\Anime";
+    String completionPath = "M:\\MyAnime";
+    boolean useSeriesFolder = false;
+    boolean useSeasonFolder = false;
+    boolean useCurrentlyWatchingCheck = true;
     ArrayList<ExceptionPath> exceptions = new ArrayList<>();
 
-    public void addException(ExceptionPath exception) {
-        this.exceptions.add(exception);
+    public void addException(ExceptionPath newException) {
+        for (ExceptionPath e : this.exceptions) {
+            if (e.getName().equals(newException.getName())) {
+                return;
+            }
+        }
+        this.exceptions.add(newException);
+    }
+
+    public void clearExceptions() {
+        this.exceptions = new ArrayList<>();
     }
 
     public String getCompletionPath() {
