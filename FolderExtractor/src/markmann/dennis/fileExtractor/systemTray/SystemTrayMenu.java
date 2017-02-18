@@ -11,7 +11,9 @@ import java.awt.Toolkit;
 import java.awt.TrayIcon;
 
 import markmann.dennis.fileExtractor.logic.Controller;
+import markmann.dennis.fileExtractor.settings.GeneralSettings;
 import markmann.dennis.fileExtractor.settings.SettingHandler;
+import markmann.dennis.fileExtractor.settings.Settings;
 import markmann.dennis.fileExtractor.settings.TypeSettings;
 
 public class SystemTrayMenu {
@@ -28,18 +30,18 @@ public class SystemTrayMenu {
     }
 
     private Menu createSettingsSubmenu() {
-
         Menu settingsMenu = new Menu("Settings");
-        MenuItem generalSettings = new MenuItem("General");
-        generalSettings.addActionListener(e -> {
-            Controller.openFile("./Settings/General.xml");
-        });
-        settingsMenu.add(generalSettings);
-
-        for (TypeSettings settings : SettingHandler.getTypeSettings()) {
-            MenuItem subMenuItem = new MenuItem(settings.getType().toString());
+        for (Settings settings : SettingHandler.getAllSettings()) {
+            String name;
+            if (settings instanceof GeneralSettings) {
+                name = "General";
+            }
+            else {
+                name = ((TypeSettings) settings).getType().toString();
+            }
+            MenuItem subMenuItem = new MenuItem(name);
             subMenuItem.addActionListener(e -> {
-                Controller.openFile("./Settings/" + settings.getType().toString() + ".xml");
+                Controller.openFile("./Settings/" + name + ".xml");
             });
             settingsMenu.add(subMenuItem);
         }

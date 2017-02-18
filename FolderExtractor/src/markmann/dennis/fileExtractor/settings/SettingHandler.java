@@ -33,6 +33,15 @@ public class SettingHandler {
         return settings;
     }
 
+    public static ArrayList<Settings> getAllSettings() {
+        ArrayList<Settings> settings = new ArrayList<>();
+        for (TypeSettings s : settingList) {
+            settings.add(s);
+        }
+        settings.add(generalSettings);
+        return settings;
+    }
+
     public static GeneralSettings getGeneralSettings() {
         return generalSettings;
     }
@@ -49,7 +58,7 @@ public class SettingHandler {
     }
 
     public static ArrayList<TypeSettings> getTypeSettings() {
-        return SettingHandler.settingList;
+        return settingList;
     }
 
     public static void readSettingsFromXML(boolean initial) {

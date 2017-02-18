@@ -31,8 +31,9 @@ public class Controller {
         try {
             Desktop.getDesktop().open(new File(fileName));
         }
-        catch (IOException e1) {
-            e1.printStackTrace();
+        catch (IOException e) {
+            LOGGER.error("File can't be opened '" + fileName + "'.", e);
+            e.printStackTrace();
         }
     }
 
