@@ -9,7 +9,6 @@ import java.util.TimerTask;
 import org.apache.log4j.Logger;
 
 import markmann.dennis.fileExtractor.logging.LogHandler;
-import markmann.dennis.fileExtractor.settings.FileWriteHelper;
 import markmann.dennis.fileExtractor.settings.SettingHandler;
 import markmann.dennis.fileExtractor.systemTray.SystemTrayMenu;
 
@@ -46,11 +45,11 @@ public class Controller {
         boolean overwriteExistingSettings = false;
         if (overwriteExistingSettings) {
             SettingHandler.createDefaultSettings();
-            new FileWriteHelper().createXMLFiles();
+            SettingHandler.writeSettingsToXML();
         }
         else {
             SettingHandler.readSettingsFromXML(true);
-            new FileWriteHelper().createXMLFiles();
+            SettingHandler.writeSettingsToXML();
         }
 
         if (SettingHandler.getGeneralSettings().useTimer()) {

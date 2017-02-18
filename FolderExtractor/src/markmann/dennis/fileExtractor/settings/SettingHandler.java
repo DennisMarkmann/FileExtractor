@@ -72,4 +72,11 @@ public class SettingHandler {
             }
         }
     }
+
+    public static void writeSettingsToXML() {
+        for (final TypeSettings settings : SettingHandler.getTypeSettings()) {
+            new XMLFileWriter().createXmlFile((settings.getType().toString() + ".xml"), settings);
+        }
+        new XMLFileWriter().createXmlFile("General.xml", SettingHandler.getGeneralSettings());
+    }
 }
