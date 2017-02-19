@@ -11,7 +11,7 @@
 3.3.2.	Check if not existing in movie folder --> move
 3.2.3.	Remove from download directory
 3.2.1.	Cleanup unneeded files from movie folder (only currently moved movie), Types: ".en.sub", ".sub", ".idx"
-3.4.	Notifications: Popup / E-Mail
+3.4.	Notifications: E-Mail
 
 4. Usability
 4.1.	Get proper Icon

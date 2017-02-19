@@ -9,6 +9,7 @@ import java.awt.PopupMenu;
 import java.awt.SystemTray;
 import java.awt.Toolkit;
 import java.awt.TrayIcon;
+import java.awt.TrayIcon.MessageType;
 
 import markmann.dennis.fileExtractor.logic.Controller;
 import markmann.dennis.fileExtractor.settings.GeneralSettings;
@@ -17,6 +18,14 @@ import markmann.dennis.fileExtractor.settings.Settings;
 import markmann.dennis.fileExtractor.settings.TypeSettings;
 
 public class SystemTrayMenu {
+
+    private static TrayIcon trayIcon;
+
+    public static void sendInfoPopup(String title, String text) {
+        if (trayIcon != null) {
+            trayIcon.displayMessage(title, text, MessageType.INFO);
+        }
+    }
 
     private void changeVisibility(MenuItem pauseItem, MenuItem resumeItem) {
         if (Controller.isTimerIsActive()) {
@@ -58,7 +67,7 @@ public class SystemTrayMenu {
 
         Dimension trayIconSize = tray.getTrayIconSize();
         Image image = Toolkit.getDefaultToolkit().getImage("./Icons/TrayIcon.png");
-        final TrayIcon trayIcon = new TrayIcon(
+        SystemTrayMenu.trayIcon = new TrayIcon(
                 image.getScaledInstance(trayIconSize.width, trayIconSize.height, Image.SCALE_SMOOTH),
                 "FileExtractor",
                 popup);
@@ -103,10 +112,10 @@ public class SystemTrayMenu {
 
         this.changeVisibility(pauseItem, resumeItem);
 
-        trayIcon.setPopupMenu(popup);
+        SystemTrayMenu.trayIcon.setPopupMenu(popup);
 
         try {
-            tray.add(trayIcon);
+            tray.add(SystemTrayMenu.trayIcon);
         }
         catch (AWTException e) {
             System.out.println("TrayIcon could not be added.");

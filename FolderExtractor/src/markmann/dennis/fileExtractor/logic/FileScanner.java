@@ -12,6 +12,7 @@ import markmann.dennis.fileExtractor.logging.LogHandler;
 import markmann.dennis.fileExtractor.mediaObjects.Medium;
 import markmann.dennis.fileExtractor.settings.SettingHandler;
 import markmann.dennis.fileExtractor.settings.TypeSettings;
+import markmann.dennis.fileExtractor.systemTray.SystemTrayMenu;
 
 public class FileScanner implements Runnable {
 
@@ -75,6 +76,10 @@ public class FileScanner implements Runnable {
         fileList = new FileFilter().addMovies().filter(fileList);
         LOGGER.info("Number of entries to process: '" + fileList.size() + "'.");
         Collections.sort(fileList);
+        if (SettingHandler.getGeneralSettings().useSystemTray() && SettingHandler.getGeneralSettings().usePopupNotification()
+                && (fileList.size() > 0)) {
+            SystemTrayMenu.sendInfoPopup("FileExtractor", "Extracting new files.");
+        }
 
         mediaList = new FileRenamer().scanFiles(fileList, settings.getType());
 

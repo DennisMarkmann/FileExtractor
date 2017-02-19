@@ -6,6 +6,7 @@ public class GeneralSettings implements Settings {
     boolean useSystemTray = true;
     boolean useTimer = true;
     int timerInterval = 60;
+    boolean usePopupNotification = false;
     boolean useNotificationWhileWorking = false;
     boolean useRenaming = true;
     boolean useCleanup = true;
@@ -15,6 +16,10 @@ public class GeneralSettings implements Settings {
 
     public int getTimerInterval() {
         return this.timerInterval;
+    }
+
+    public boolean usePopupNotification() {
+        return this.usePopupNotification;
     }
 
     public boolean removeCorruptFiles() {
@@ -47,6 +52,10 @@ public class GeneralSettings implements Settings {
 
     public void setUseNotificationWhileWorking(boolean useNotificationWhileWorking) {
         this.useNotificationWhileWorking = useNotificationWhileWorking;
+    }
+
+    public void setUsePopupNotification(boolean usePopupNotification) {
+        this.usePopupNotification = usePopupNotification;
     }
 
     public void setUseRenaming(boolean useRenaming) {
