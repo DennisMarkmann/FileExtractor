@@ -76,10 +76,6 @@ public class FileScanner implements Runnable {
         fileList = new FileFilter().addMovies().filter(fileList);
         LOGGER.info("Number of entries to process: '" + fileList.size() + "'.");
         Collections.sort(fileList);
-        if (SettingHandler.getGeneralSettings().useSystemTray() && SettingHandler.getGeneralSettings().usePopupNotification()
-                && (fileList.size() > 0)) {
-            SystemTrayMenu.sendInfoPopup("FileExtractor", "Extracting new files.");
-        }
 
         mediaList = new FileRenamer().scanFiles(fileList, settings.getType());
 
@@ -88,6 +84,15 @@ public class FileScanner implements Runnable {
         }
         if (SettingHandler.getGeneralSettings().useCleanup()) {
             new FileCleaner().cleanFiles(folderList);
+        }
+        if (SettingHandler.getGeneralSettings().useSystemTray() && SettingHandler.getGeneralSettings().usePopupNotification()
+                && (mediaList.size() > 0)) {
+            StringBuilder fileNames = new StringBuilder();
+            for (Medium medium : mediaList) {
+                fileNames.append("\n");
+                fileNames.append(medium.getCompleteTitle());
+            }
+            SystemTrayMenu.sendInfoPopup("FileExtractor", "Extracted new files: " + fileNames);
         }
     }
 }
