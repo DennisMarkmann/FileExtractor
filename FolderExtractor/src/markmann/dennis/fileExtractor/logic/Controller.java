@@ -33,8 +33,7 @@ public class Controller {
     }
 
     public static void initiateManualScan() {
-        SettingHandler.readSettingsFromXML(false);
-        new FileScanner().startScan(true);
+        new Thread(new FileScanner(true)).start();
     }
 
     public static boolean isTimerIsActive() {
@@ -94,8 +93,7 @@ public class Controller {
 
             @Override
             public void run() {
-                SettingHandler.readSettingsFromXML(false);
-                new FileScanner().startScan(false);
+                new Thread(new FileScanner(false)).start();
             }
 
         }, 1000, timerInterval * 60000);

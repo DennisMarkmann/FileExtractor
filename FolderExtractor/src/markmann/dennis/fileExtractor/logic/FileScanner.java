@@ -13,15 +13,32 @@ import markmann.dennis.fileExtractor.mediaObjects.Medium;
 import markmann.dennis.fileExtractor.settings.SettingHandler;
 import markmann.dennis.fileExtractor.settings.TypeSettings;
 
-public class FileScanner {
+public class FileScanner implements Runnable {
 
     private static final Logger LOGGER = LogHandler.getLogger("./Logs/FileExtractor.log");
+    private boolean manually;
+
+    public FileScanner(boolean manually) {
+        this.manually = manually;
+    }
 
     private boolean isPathValid(File folder) {
         if (folder.exists() && folder.isDirectory()) {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public void run() {
+        if (Controller.applyForWriteAccess()) {
+            SettingHandler.readSettingsFromXML(false);
+            for (final TypeSettings settings : SettingHandler.getTypeSettings()) {
+                this.scan(settings, this.manually);
+            }
+        }
+        LOGGER.info("-----------------------------------");
+        Controller.returnWriteAccess();
     }
 
     void scan(TypeSettings settings, boolean manually) {
@@ -67,15 +84,5 @@ public class FileScanner {
         if (SettingHandler.getGeneralSettings().useCleanup()) {
             new FileCleaner().cleanFiles(folderList);
         }
-    }
-
-    public void startScan(boolean manually) {
-        if (Controller.applyForWriteAccess()) {
-            for (final TypeSettings settings : SettingHandler.getTypeSettings()) {
-                this.scan(settings, manually);
-            }
-        }
-        LOGGER.info("-----------------------------------");
-        Controller.returnWriteAccess();
     }
 }
