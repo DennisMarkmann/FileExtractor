@@ -17,6 +17,13 @@ public class FileScanner {
 
     private static final Logger LOGGER = LogHandler.getLogger("./Logs/FileExtractor.log");
 
+    private boolean isPathValid(File folder) {
+        if (folder.exists() && folder.isDirectory()) {
+            return true;
+        }
+        return false;
+    }
+
     void scan(TypeSettings settings, boolean manually) {
         if (manually) {
             LOGGER.info("Checking for " + settings.getType().toString() + " (manually):");
@@ -62,18 +69,13 @@ public class FileScanner {
         }
     }
 
-    private boolean isPathValid(File folder) {
-        if (folder.exists() && folder.isDirectory()) {
-            return true;
-        }
-        return false;
-    }
-
     public void startScan(boolean manually) {
-        for (final TypeSettings settings : SettingHandler.getTypeSettings()) {
-            this.scan(settings, manually);
+        if (Controller.applyForWriteAccess()) {
+            for (final TypeSettings settings : SettingHandler.getTypeSettings()) {
+                this.scan(settings, manually);
+            }
         }
         LOGGER.info("-----------------------------------");
+        Controller.returnWriteAccess();
     }
-
 }

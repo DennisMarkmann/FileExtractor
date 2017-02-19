@@ -17,6 +17,20 @@ public class Controller {
     private static final Logger LOGGER = LogHandler.getLogger("./Logs/FileExtractor.log");
     private static Timer timer = null;
     private static boolean timerIsActive = false;
+    private static boolean applicationIsBusy = false;
+
+    public static boolean applyForWriteAccess() {
+        while (applicationIsBusy) {
+            try {
+                Thread.sleep(5000);
+            }
+            catch (InterruptedException e) {
+                LOGGER.error(e);
+                e.printStackTrace();
+            }
+        }
+        return true;
+    }
 
     public static void initiateManualScan() {
         SettingHandler.readSettingsFromXML(false);
@@ -35,6 +49,10 @@ public class Controller {
             LOGGER.error("File can't be opened '" + fileName + "'.", e);
             e.printStackTrace();
         }
+    }
+
+    public static void returnWriteAccess() {
+        applicationIsBusy = false;
     }
 
     public static void shutDownApplication() {
