@@ -44,7 +44,11 @@ public class XMLFileReader {
     }
 
     private String getValueByName(Element element, String name) {
-        return element.getElementsByTagName(name).item(0).getTextContent();
+        Node node = element.getElementsByTagName(name).item(0);
+        if (node != null) {
+            return node.getTextContent();
+        }
+        return null;
     }
 
     public void readSettingsXML(String name, Settings settings, boolean initial) {
