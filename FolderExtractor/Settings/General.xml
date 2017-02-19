@@ -4,7 +4,7 @@
     <UseSystemTray>true</UseSystemTray>
     <UseTimer>true</UseTimer>
     <TimerInterval>60</TimerInterval>
-    <UsePopupNotification>false</UsePopupNotification>
+    <UsePopupNotification>true</UsePopupNotification>
     <UseNotificationWhileWorking>false</UseNotificationWhileWorking>
     <UseRenaming>true</UseRenaming>
     <UseCleanup>true</UseCleanup>
