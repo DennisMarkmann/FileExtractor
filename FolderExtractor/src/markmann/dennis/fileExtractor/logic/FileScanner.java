@@ -88,11 +88,18 @@ public class FileScanner implements Runnable {
         if (SettingHandler.getGeneralSettings().useSystemTray() && SettingHandler.getGeneralSettings().usePopupNotification()
                 && (mediaList.size() > 0)) {
             StringBuilder fileNames = new StringBuilder();
+            int i = 0;
+            String returnString = "new file:";
             for (Medium medium : mediaList) {
                 fileNames.append("\n");
                 fileNames.append(medium.getCompleteTitle());
+                i++;
+                if (i == 2) {
+                    returnString = mediaList.size() + " new files:";
+                    break;
+                }
             }
-            SystemTrayMenu.sendInfoPopup("FileExtractor", "Extracted new files: " + fileNames);
+            SystemTrayMenu.sendInfoPopup("FileExtractor", "Extracted " + returnString + fileNames.toString());
         }
     }
 }
