@@ -1,9 +1,8 @@
 1. Next
+1.1.	Change Calender & Date logic in History to Java 8 standard
 
 2. Cleanup
-2.1.	Implement observable
-2.2.	Remove special logic for reading / writing of Exceptions from / to XML (TypeSettings)
-2.3.	Change Calender & Date logic in History to Java 8 standard
+2.1.	Remove special logic for reading / writing of Exceptions from / to XML (TypeSettings)
 
 3.	Additional functionality
 3.1.	File Rename & episode names etc from Online DB
@@ -12,17 +11,17 @@
 3.3.2.	Check if not existing in movie folder --> move
 3.2.3.	Remove from download directory
 3.2.1.	Cleanup unneeded files from movie folder (only currently moved movie), Types: ".en.sub", ".sub", ".idx"
-3.4.	Notifications: E-Mail
+3.4.	Add E-Mail Notifications
 
 4. Usability
 4.1.	Rename process in taskmanager
 4.2.	Add Software entry
 4.3.	Add Installer
-4.4.	Unix Support
-4.5.	GUI implementation
+4.4.	Add Unix Support
+4.5.	Add GUI implementation
 
 5. Other
-5.1.	JUnit Tests
-5.2.	Build Server (Travis-CI)
-5.3.	Documentation
-5.4.	Make it public
+5.1.	Add JUnit Tests
+5.2.	Use Build Server (Travis-CI)
+5.3.	Add Documentation
+5.4.	Make the project public
