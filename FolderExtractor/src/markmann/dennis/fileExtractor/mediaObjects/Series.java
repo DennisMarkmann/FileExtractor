@@ -1,8 +1,9 @@
 package markmann.dennis.fileExtractor.mediaObjects;
 
-public class Series extends Anime {
+public class Series extends Medium {
 
-    private String season = "";
+    protected String episode = "";
+    protected String season = "";
 
     @Override
     public String getCompleteTitleNoExt() {
@@ -14,8 +15,16 @@ public class Series extends Anime {
         }
     }
 
+    public String getEpisode() {
+        return this.episode;
+    }
+
     public String getSeason() {
         return this.season;
+    }
+
+    public void setEpisode(String episode) {
+        this.episode = episode;
     }
 
     public void setSeason(String season) {
