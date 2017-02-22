@@ -89,7 +89,7 @@ public class FileScanner implements Runnable {
                 && (mediaList.size() > 0)) {
             this.showExtractionNotification(mediaList);
         }
-        if (!mediaList.isEmpty()) {
+        if (SettingHandler.getGeneralSettings().useHistory() && !mediaList.isEmpty()) {
             new HistoryHandler().addToHistory(mediaList);
         }
     }

@@ -11,6 +11,7 @@ public class GeneralSettings implements Settings {
     boolean useRenaming = true;
     boolean useCleanup = true;
     boolean useFileMoving = true;
+    boolean useHistory = true;
     boolean useExtendedLogging = false;
     boolean removeCorruptFiles = true;
 
@@ -44,6 +45,10 @@ public class GeneralSettings implements Settings {
 
     public void setUseGui(boolean useGui) {
         this.useGui = useGui;
+    }
+
+    public void setUseHistory(boolean useHistory) {
+        this.useHistory = useHistory;
     }
 
     public void setUseNotificationWhileWorking(boolean useNotificationWhileWorking) {
@@ -80,6 +85,10 @@ public class GeneralSettings implements Settings {
 
     boolean useGui() {
         return this.useGui;
+    }
+
+    public boolean useHistory() {
+        return this.useHistory;
     }
 
     boolean useNotificationWhileWorking() {
