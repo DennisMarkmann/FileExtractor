@@ -1,8 +1,14 @@
 package markmann.dennis.fileExtractor.logic;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 
 import org.apache.log4j.Logger;
 
@@ -21,6 +27,27 @@ public class FileScanner implements Runnable {
 
     public FileScanner(boolean manually) {
         this.manually = manually;
+    }
+
+    private void addToHistory(ArrayList<Medium> mediaList) {
+        try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("./Logs/History.txt", true)))) {
+            String dateString = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(new Date());
+            StringBuilder sb = new StringBuilder();
+            for (Medium medium : mediaList) {
+                sb.append(dateString);
+                sb.append("  (");
+                sb.append(medium.getClass().getSimpleName());
+                sb.append(")  ");
+                sb.append(medium.getCompleteTitleNoExt());
+                sb.append("\n");
+            }
+            out.print(sb.toString());
+        }
+        catch (IOException e) {
+            LOGGER.error("Error while trying to access '/Logs/History.txt'.", e);
+            e.printStackTrace();
+        }
+
     }
 
     private boolean isPathValid(File folder) {
@@ -87,8 +114,9 @@ public class FileScanner implements Runnable {
         }
         if (SettingHandler.getGeneralSettings().useSystemTray() && SettingHandler.getGeneralSettings().usePopupNotification()
                 && (mediaList.size() > 0)) {
-            showExtractionNotification(mediaList);
+            this.showExtractionNotification(mediaList);
         }
+        this.addToHistory(mediaList);
     }
 
     private void showExtractionNotification(ArrayList<Medium> mediaList) {

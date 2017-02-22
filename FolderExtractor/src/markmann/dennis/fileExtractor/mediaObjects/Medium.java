@@ -12,6 +12,15 @@ public class Medium {
     }
 
     public String getCompleteTitle() {
+        if (this.isKeepOriginalName()) {
+            return this.getCompleteTitleNoExt();
+        }
+        else {
+            return this.getCompleteTitleNoExt() + "." + this.extension;
+        }
+    }
+
+    public String getCompleteTitleNoExt() {
         return this.title;
     }
 

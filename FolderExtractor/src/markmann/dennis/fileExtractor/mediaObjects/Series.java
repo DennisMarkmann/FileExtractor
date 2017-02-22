@@ -5,12 +5,12 @@ public class Series extends Anime {
     private String season = "";
 
     @Override
-    public String getCompleteTitle() {
+    public String getCompleteTitleNoExt() {
         if (this.isKeepOriginalName()) {
             return this.title;
         }
         else {
-            return this.title + " - " + "S" + this.season + "E" + this.episode + "." + this.extension;
+            return this.title + " - " + "S" + this.season + "E" + this.episode;
         }
     }
 
