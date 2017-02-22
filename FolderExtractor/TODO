@@ -15,10 +15,14 @@
 3.4.	Notifications: E-Mail
 
 4. Usability
-4.1.	Get proper Icon
-4.2.	Rename process in taskmanager
-4.3.	Add Software entry
-4.4.	Add Installer
-4.5.	Unix Support
-4.6.	GUI implementation
-4.7.	Auto-Build (Travis-CI)
+4.1.	Rename process in taskmanager
+4.2.	Add Software entry
+4.3.	Add Installer
+4.4.	Unix Support
+4.5.	GUI implementation
+
+5. Other
+5.1.	JUnit Tests
+5.2.	Build Server (Travis-CI)
+5.3.	Documentation
+5.4.	Make it public
