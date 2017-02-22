@@ -15,6 +15,7 @@ import org.apache.log4j.Logger;
 import dennis.markmann.MyLibraries.DefaultJobs.File.FileFilter;
 import dennis.markmann.MyLibraries.DefaultJobs.File.FileLister;
 import markmann.dennis.fileExtractor.logging.LogHandler;
+import markmann.dennis.fileExtractor.mediaObjects.Anime;
 import markmann.dennis.fileExtractor.mediaObjects.Medium;
 import markmann.dennis.fileExtractor.settings.SettingHandler;
 import markmann.dennis.fileExtractor.settings.TypeSettings;
@@ -38,6 +39,9 @@ public class FileScanner implements Runnable {
                 sb.append("  (");
                 sb.append(medium.getClass().getSimpleName());
                 sb.append(")  ");
+                if (medium instanceof Anime) {
+                    sb.append(" ");
+                }
                 sb.append(medium.getCompleteTitleNoExt());
                 sb.append("\n");
             }
