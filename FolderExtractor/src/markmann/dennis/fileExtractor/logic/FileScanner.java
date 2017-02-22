@@ -1,21 +1,14 @@
 package markmann.dennis.fileExtractor.logic;
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 
 import org.apache.log4j.Logger;
 
 import dennis.markmann.MyLibraries.DefaultJobs.File.FileFilter;
 import dennis.markmann.MyLibraries.DefaultJobs.File.FileLister;
 import markmann.dennis.fileExtractor.logging.LogHandler;
-import markmann.dennis.fileExtractor.mediaObjects.Anime;
 import markmann.dennis.fileExtractor.mediaObjects.Medium;
 import markmann.dennis.fileExtractor.settings.SettingHandler;
 import markmann.dennis.fileExtractor.settings.TypeSettings;
@@ -28,30 +21,6 @@ public class FileScanner implements Runnable {
 
     public FileScanner(boolean manually) {
         this.manually = manually;
-    }
-
-    private void addToHistory(ArrayList<Medium> mediaList) {
-        try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("./Logs/History.txt", true)))) {
-            String dateString = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(new Date());
-            StringBuilder sb = new StringBuilder();
-            for (Medium medium : mediaList) {
-                sb.append(dateString);
-                sb.append("  (");
-                sb.append(medium.getClass().getSimpleName());
-                sb.append(")  ");
-                if (medium instanceof Anime) {
-                    sb.append(" ");
-                }
-                sb.append(medium.getCompleteTitleNoExt());
-                sb.append("\n");
-            }
-            out.print(sb.toString());
-        }
-        catch (IOException e) {
-            LOGGER.error("Error while trying to access '/Logs/History.txt'.", e);
-            e.printStackTrace();
-        }
-
     }
 
     private boolean isPathValid(File folder) {
@@ -120,7 +89,9 @@ public class FileScanner implements Runnable {
                 && (mediaList.size() > 0)) {
             this.showExtractionNotification(mediaList);
         }
-        this.addToHistory(mediaList);
+        if (!mediaList.isEmpty()) {
+            new HistoryHandler().addToHistory(mediaList);
+        }
     }
 
     private void showExtractionNotification(ArrayList<Medium> mediaList) {

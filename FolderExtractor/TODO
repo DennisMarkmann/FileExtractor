@@ -3,6 +3,7 @@
 2. Cleanup
 2.1.	Implement observable
 2.2.	Remove special logic for reading / writing of Exceptions from / to XML (TypeSettings)
+2.3.	Change Calender & Date logic in History to Java 8 standard
 
 3.	Additional functionality
 3.1.	File Rename & episode names etc from Online DB
