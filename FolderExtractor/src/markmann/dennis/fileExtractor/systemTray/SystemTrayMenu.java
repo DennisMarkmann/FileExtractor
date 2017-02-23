@@ -53,15 +53,13 @@ public class SystemTrayMenu {
         this.inActiveIcon = this.inActiveIcon.getScaledInstance(trayIconSize.width, trayIconSize.height, Image.SCALE_SMOOTH);
     }
 
-    private void changeVisibility(MenuItem pauseItem, MenuItem resumeItem) {
+    private void changeIcon(MenuItem pauseItem) {
         if (Controller.isTimerIsActive()) {
-            pauseItem.setEnabled(true);
-            resumeItem.setEnabled(false);
+            pauseItem.setLabel("Pause Scan");
             trayIcon.setImage(this.activeIcon);
         }
         else {
-            pauseItem.setEnabled(false);
-            resumeItem.setEnabled(true);
+            pauseItem.setLabel("Resume Scan");
             trayIcon.setImage(this.inActiveIcon);
         }
     }
@@ -91,8 +89,7 @@ public class SystemTrayMenu {
         trayIcon = new TrayIcon(this.activeIcon, "FileExtractor", popup);
 
         MenuItem scanItem = new MenuItem("Scan manually");
-        MenuItem pauseItem = new MenuItem("Pause timer");
-        MenuItem resumeItem = new MenuItem("Resume timer");
+        MenuItem pauseItem = new MenuItem("Pause Scan");
         MenuItem historyItem = new MenuItem("History");
         MenuItem logItem = new MenuItem("Log");
         MenuItem exitItem = new MenuItem("Exit");
@@ -103,13 +100,13 @@ public class SystemTrayMenu {
         });
 
         pauseItem.addActionListener(e -> {
-            Controller.stopTimer();
-            this.changeVisibility(pauseItem, resumeItem);
-        });
-
-        resumeItem.addActionListener(e -> {
-            Controller.startTimer(false);
-            this.changeVisibility(pauseItem, resumeItem);
+            if (Controller.isTimerIsActive()) {
+                Controller.stopTimer();
+            }
+            else {
+                Controller.startTimer(false);
+            }
+            this.changeIcon(pauseItem);
         });
 
         historyItem.addActionListener(e -> {
@@ -127,14 +124,11 @@ public class SystemTrayMenu {
         popup.add(scanItem);
         if (SettingHandler.getGeneralSettings().useTimer()) {
             popup.add(pauseItem);
-            popup.add(resumeItem);
         }
         popup.add(historyItem);
         popup.add(settingsMenu);
         popup.add(logItem);
         popup.add(exitItem);
-
-        this.changeVisibility(pauseItem, resumeItem);
 
         SystemTrayMenu.trayIcon.setPopupMenu(popup);
 
