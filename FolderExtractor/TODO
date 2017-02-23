@@ -1,5 +1,4 @@
 1. Next
-1.1.	Change Icon if timer is stopped (Same but grey)
 
 2. Cleanup
 2.1.	Remove special logic for reading / writing of Exceptions from / to XML (TypeSettings)

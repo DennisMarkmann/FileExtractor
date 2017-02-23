@@ -23,6 +23,7 @@ import markmann.dennis.fileExtractor.settings.TypeSettings;
 public class SystemTrayMenu {
 
     private static TrayIcon trayIcon;
+
     private static final Logger LOGGER = LogHandler.getLogger("./Logs/FileExtractor.log");
 
     public static void sendInfoPopup(String title, String text) {
@@ -31,14 +32,37 @@ public class SystemTrayMenu {
         }
     }
 
+    private Image activeIcon;
+    private Image inActiveIcon;
+    private SystemTray tray;
+
+    public SystemTrayMenu() {
+
+        if (!SystemTray.isSupported()) {
+            LOGGER.error("TrayIcon is not supported.");
+            System.out.println("TrayIcon is not supported.");
+            return;
+        }
+        this.activeIcon = Toolkit.getDefaultToolkit().getImage("./Icons/TrayIcon_Active.png");
+        this.inActiveIcon = Toolkit.getDefaultToolkit().getImage("./Icons/TrayIcon_Inactive.png");
+
+        this.tray = SystemTray.getSystemTray();
+        Dimension trayIconSize = this.tray.getTrayIconSize();
+
+        this.activeIcon = this.activeIcon.getScaledInstance(trayIconSize.width, trayIconSize.height, Image.SCALE_SMOOTH);
+        this.inActiveIcon = this.inActiveIcon.getScaledInstance(trayIconSize.width, trayIconSize.height, Image.SCALE_SMOOTH);
+    }
+
     private void changeVisibility(MenuItem pauseItem, MenuItem resumeItem) {
         if (Controller.isTimerIsActive()) {
             pauseItem.setEnabled(true);
             resumeItem.setEnabled(false);
+            trayIcon.setImage(this.activeIcon);
         }
         else {
             pauseItem.setEnabled(false);
             resumeItem.setEnabled(true);
+            trayIcon.setImage(this.inActiveIcon);
         }
     }
 
@@ -63,20 +87,8 @@ public class SystemTrayMenu {
 
     public void createSystemTrayEntry() {
 
-        if (!SystemTray.isSupported()) {
-            LOGGER.error("TrayIcon is not supported.");
-            System.out.println("TrayIcon is not supported.");
-            return;
-        }
-        final SystemTray tray = SystemTray.getSystemTray();
         final PopupMenu popup = new PopupMenu();
-
-        Dimension trayIconSize = tray.getTrayIconSize();
-        Image image = Toolkit.getDefaultToolkit().getImage("./Icons/TrayIcon.png");
-        SystemTrayMenu.trayIcon = new TrayIcon(
-                image.getScaledInstance(trayIconSize.width, trayIconSize.height, Image.SCALE_SMOOTH),
-                "FileExtractor",
-                popup);
+        trayIcon = new TrayIcon(this.activeIcon, "FileExtractor", popup);
 
         MenuItem scanItem = new MenuItem("Scan manually");
         MenuItem pauseItem = new MenuItem("Pause timer");
@@ -127,7 +139,7 @@ public class SystemTrayMenu {
         SystemTrayMenu.trayIcon.setPopupMenu(popup);
 
         try {
-            tray.add(SystemTrayMenu.trayIcon);
+            this.tray.add(SystemTrayMenu.trayIcon);
         }
         catch (AWTException e) {
             LOGGER.error("TrayIcon could not be added.", e);
