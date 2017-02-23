@@ -1,5 +1,6 @@
 package markmann.dennis.fileExtractor.logic;
 
+import java.awt.TrayIcon.MessageType;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -60,11 +61,15 @@ public class FileScanner implements Runnable {
         File completionFolder = new File(settings.getCompletionPath());
 
         if (!this.isPathValid(extractionFolder)) {
-            LOGGER.error("ExtractionFolder '" + extractionFolder.getAbsolutePath() + "' is not valid.");
+            String errorMessage = "ExtractionFolder '" + extractionFolder.getAbsolutePath() + "' is not valid.";
+            LOGGER.error(errorMessage);
+            SystemTrayMenu.sendTextPopup("FileExtractor", errorMessage, MessageType.ERROR);
             return;
         }
         if (!this.isPathValid(completionFolder)) {
-            LOGGER.error("CompletionFolder '" + extractionFolder.getAbsolutePath() + "' is not valid.");
+            String errorMessage = "CompletionFolder '" + extractionFolder.getAbsolutePath() + "' is not valid.";
+            LOGGER.error(errorMessage);
+            SystemTrayMenu.sendTextPopup("FileExtractor", errorMessage, MessageType.ERROR);
             return;
         }
         FileLister fl = new FileLister();
@@ -85,12 +90,12 @@ public class FileScanner implements Runnable {
         if (SettingHandler.getGeneralSettings().useCleanup()) {
             new FileCleaner().cleanFiles(folderList);
         }
+        if (SettingHandler.getGeneralSettings().useHistory() && !mediaList.isEmpty()) {
+            new HistoryHandler().addToHistory(mediaList);
+        }
         if (SettingHandler.getGeneralSettings().useSystemTray() && SettingHandler.getGeneralSettings().usePopupNotification()
                 && (mediaList.size() > 0)) {
             this.showExtractionNotification(mediaList);
-        }
-        if (SettingHandler.getGeneralSettings().useHistory() && !mediaList.isEmpty()) {
-            new HistoryHandler().addToHistory(mediaList);
         }
     }
 
@@ -107,6 +112,6 @@ public class FileScanner implements Runnable {
                 break;
             }
         }
-        SystemTrayMenu.sendInfoPopup("FileExtractor", "Extracted " + infoString + fileNames.toString());
+        SystemTrayMenu.sendTextPopup("FileExtractor", "Extracted " + infoString + fileNames.toString(), MessageType.INFO);
     }
 }

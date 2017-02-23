@@ -26,14 +26,15 @@ public class SystemTrayMenu {
 
     private static final Logger LOGGER = LogHandler.getLogger("./Logs/FileExtractor.log");
 
-    public static void sendInfoPopup(String title, String text) {
+    public static void sendTextPopup(String title, String text, MessageType type) {
         if (trayIcon != null) {
-            trayIcon.displayMessage(title, text, MessageType.INFO);
+            trayIcon.displayMessage(title, text, type);
         }
     }
 
     private Image activeIcon;
     private Image inActiveIcon;
+
     private SystemTray tray;
 
     public SystemTrayMenu() {
