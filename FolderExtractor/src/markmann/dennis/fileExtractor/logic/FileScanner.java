@@ -63,13 +63,13 @@ public class FileScanner implements Runnable {
         if (!this.isPathValid(extractionFolder)) {
             String errorMessage = "ExtractionFolder '" + extractionFolder.getAbsolutePath() + "' is not valid.";
             LOGGER.error(errorMessage);
-            SystemTrayMenu.sendTextPopup("FileExtractor", errorMessage, MessageType.ERROR);
+            this.showErrorNotification(errorMessage);
             return;
         }
         if (!this.isPathValid(completionFolder)) {
             String errorMessage = "CompletionFolder '" + extractionFolder.getAbsolutePath() + "' is not valid.";
             LOGGER.error(errorMessage);
-            SystemTrayMenu.sendTextPopup("FileExtractor", errorMessage, MessageType.ERROR);
+            this.showErrorNotification(errorMessage);
             return;
         }
         FileLister fl = new FileLister();
@@ -96,6 +96,12 @@ public class FileScanner implements Runnable {
         if (SettingHandler.getGeneralSettings().useSystemTray() && SettingHandler.getGeneralSettings().usePopupNotification()
                 && (mediaList.size() > 0)) {
             this.showExtractionNotification(mediaList);
+        }
+    }
+
+    private void showErrorNotification(String errorMessage) {
+        if (SettingHandler.getGeneralSettings().useSystemTray() && SettingHandler.getGeneralSettings().usePopupNotification()) {
+            SystemTrayMenu.sendTextPopup("FileExtractor", errorMessage, MessageType.ERROR);
         }
     }
 
