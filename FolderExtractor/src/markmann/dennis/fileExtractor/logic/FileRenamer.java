@@ -14,11 +14,11 @@ import markmann.dennis.fileExtractor.mediaObjects.Medium;
 import markmann.dennis.fileExtractor.mediaObjects.Series;
 import markmann.dennis.fileExtractor.settings.SettingHandler;
 
-class FileRenamer {
+public class FileRenamer {
 
     private static final Logger LOGGER = LogHandler.getLogger("./Logs/FileExtractor.log");
 
-    private Anime handleAnimeRenaming(String fileName, Anime anime) {
+    public Anime handleAnimeRenaming(String fileName, Anime anime) {
         final Pattern pattern = Pattern.compile("(\\[.{1,}])?([^<]*)\\ - (.{2,3})(\\[.{4,5}])?\\.(.{3})");
         Matcher m = pattern.matcher(fileName);
         if (m.matches()) {
