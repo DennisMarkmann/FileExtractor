@@ -46,8 +46,7 @@ public class FileScanner implements Runnable {
     void scan(TypeSettings settings, boolean manually) {
         if (manually) {
             LOGGER.info("Checking for " + settings.getType().toString() + " (manually):");
-        }
-        else {
+        } else {
             LOGGER.info("Checking for " + settings.getType().toString() + ":");
         }
         if (SettingHandler.getGeneralSettings().useExtendedLogging()) {
@@ -90,7 +89,7 @@ public class FileScanner implements Runnable {
         if (SettingHandler.getGeneralSettings().useCleanup()) {
             new FileCleaner().cleanFiles(folderList);
         }
-        if (SettingHandler.getGeneralSettings().useHistory() && !mediaList.isEmpty()) {
+        if (SettingHandler.getGeneralSettings().useHistory()) {
             new HistoryHandler().addToHistory(mediaList);
         }
         if (SettingHandler.getGeneralSettings().useSystemTray() && SettingHandler.getGeneralSettings().usePopupNotification()

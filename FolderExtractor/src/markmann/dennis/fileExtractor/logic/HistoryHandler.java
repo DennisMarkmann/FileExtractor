@@ -1,6 +1,7 @@
 package markmann.dennis.fileExtractor.logic;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -25,28 +26,30 @@ public class HistoryHandler {
     private String historyPath = "./Logs/History.txt";
 
     void addToHistory(ArrayList<Medium> mediaList) {
-        try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(this.historyPath, true)))) {
-            Date datum = new Date();
-            String dateStringShort = new SimpleDateFormat("dd.MM.yyyy").format(datum);
-            String dateStringComplete = new SimpleDateFormat("HH:mm:ss").format(datum);
-            StringBuilder sb = new StringBuilder();
-            sb = this.handleDayChange(dateStringShort, sb);
-            for (Medium medium : mediaList) {
-                sb.append(dateStringComplete);
-                sb.append("  (");
-                sb.append(medium.getClass().getSimpleName());
-                sb.append(")  ");
-                if (medium instanceof Anime) {
-                    sb.append(" ");
+        new File(this.historyPath).mkdir();
+        if (!mediaList.isEmpty()) {
+            try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(this.historyPath, true)))) {
+                Date datum = new Date();
+                String dateStringShort = new SimpleDateFormat("dd.MM.yyyy").format(datum);
+                String dateStringComplete = new SimpleDateFormat("HH:mm:ss").format(datum);
+                StringBuilder sb = new StringBuilder();
+                sb = this.handleDayChange(dateStringShort, sb);
+                for (Medium medium : mediaList) {
+                    sb.append(dateStringComplete);
+                    sb.append("  (");
+                    sb.append(medium.getClass().getSimpleName());
+                    sb.append(")  ");
+                    if (medium instanceof Anime) {
+                        sb.append(" ");
+                    }
+                    sb.append(medium.getCompleteTitleNoExt());
+                    sb.append("\n");
                 }
-                sb.append(medium.getCompleteTitleNoExt());
-                sb.append("\n");
+                out.print(sb.toString());
+            } catch (IOException e) {
+                LOGGER.error("Error while trying to access '" + this.historyPath + "'.", e);
+                e.printStackTrace();
             }
-            out.print(sb.toString());
-        }
-        catch (IOException e) {
-            LOGGER.error("Error while trying to access '" + this.historyPath + "'.", e);
-            e.printStackTrace();
         }
     }
 
@@ -58,13 +61,11 @@ public class HistoryHandler {
                 try {
                     int index = history.lastIndexOf(") ***");
                     lastExtractionDate = history.substring(index - 10, index);
-                }
-                catch (StringIndexOutOfBoundsException e) {
+                } catch (StringIndexOutOfBoundsException e) {
                     // nothing to do here, returning the empty String is fine.
                 }
             }
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             LOGGER.error("Error while trying to access '" + this.historyPath + "'.", e);
             e.printStackTrace();
         }
