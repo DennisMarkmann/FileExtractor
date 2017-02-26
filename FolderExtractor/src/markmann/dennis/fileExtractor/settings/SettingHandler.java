@@ -35,10 +35,10 @@ public class SettingHandler {
 
     public static ArrayList<Settings> getAllSettings() {
         ArrayList<Settings> settings = new ArrayList<>();
+        settings.add(generalSettings);
         for (TypeSettings s : settingList) {
             settings.add(s);
         }
-        settings.add(generalSettings);
         return settings;
     }
 
@@ -67,8 +67,7 @@ public class SettingHandler {
                 String name = fileEntry.getName();
                 if (name.equals("General.xml")) {
                     new XMLFileReader().readSettingsXML(name, generalSettings, initial);
-                }
-                else if (name.equals("Anime.xml") || name.equals("Series.xml")) {
+                } else if (name.equals("Anime.xml") || name.equals("Series.xml")) {
                     TypeSettings typeSettings = getMatchingTypeSettings(name);
                     new XMLFileReader().readSettingsXML(name, typeSettings, initial);
                 }
