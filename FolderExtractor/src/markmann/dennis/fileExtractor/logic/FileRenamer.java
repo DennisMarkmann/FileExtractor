@@ -19,12 +19,12 @@ public class FileRenamer {
     private static final Logger LOGGER = LogHandler.getLogger("./Logs/FileExtractor.log");
 
     public Anime handleAnimeRenaming(String fileName, Anime anime) {
-        final Pattern pattern = Pattern.compile("(\\[.{1,}])?([^<]*)\\ - (.{2,3})(\\[.{4,5}])?\\.(.{3})");
+        final Pattern pattern = Pattern.compile("(\\[.{1,}])?([^<]*)\\ - (.{2,6})(\\[.{4,5}])?(\\[.{2,10}])?\\.(.{3})");
         Matcher m = pattern.matcher(fileName);
         if (m.matches()) {
             String title = m.group(2).trim();
             String episode = m.group(3).trim();
-            String extension = m.group(5).trim();
+            String extension = m.group(6).trim();
 
             anime.setTitle(title);
             anime.setEpisode(episode);
@@ -35,7 +35,7 @@ public class FileRenamer {
     }
 
     private Series handleSeriesRenaming(String fileName, Series series) {
-        final Pattern pattern = Pattern.compile("([^<]*)(\\ - |\\.{1})S(.{2,3})E(.{2,3})(\\.[^<]*)?\\.(.{3})");
+        final Pattern pattern = Pattern.compile("([^<]*)(\\ - |\\.{1})(?i)S(.{2,3})(?i)E(.{2,3})(\\.[^<]*)?\\.(.{3})");
         Matcher m = pattern.matcher(fileName);
         if (m.matches()) {
             String title = this.replaceDots(m.group(1).trim());
