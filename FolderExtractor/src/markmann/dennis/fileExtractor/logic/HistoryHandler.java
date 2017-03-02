@@ -46,7 +46,8 @@ public class HistoryHandler {
                     sb.append("\n");
                 }
                 out.print(sb.toString());
-            } catch (IOException e) {
+            }
+            catch (IOException e) {
                 LOGGER.error("Error while trying to access '" + this.historyPath + "'.", e);
                 e.printStackTrace();
             }
@@ -61,11 +62,13 @@ public class HistoryHandler {
                 try {
                     int index = history.lastIndexOf(") ***");
                     lastExtractionDate = history.substring(index - 10, index);
-                } catch (StringIndexOutOfBoundsException e) {
+                }
+                catch (StringIndexOutOfBoundsException e) {
                     // nothing to do here, returning the empty String is fine.
                 }
             }
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             LOGGER.error("Error while trying to access '" + this.historyPath + "'.", e);
             e.printStackTrace();
         }
@@ -74,7 +77,7 @@ public class HistoryHandler {
 
     private StringBuilder handleDayChange(String newDateString, StringBuilder sb) {
         if (!this.getLastExtractionDate().equals(newDateString)) {
-            sb.append("----------------------");
+            sb.append("\n");
             sb.append("\n");
             sb.append("*** ");
             sb.append(Calendar.getInstance().getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.ENGLISH));
