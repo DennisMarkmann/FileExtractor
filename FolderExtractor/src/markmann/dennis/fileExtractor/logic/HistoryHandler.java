@@ -78,7 +78,6 @@ public class HistoryHandler {
     private StringBuilder handleDayChange(String newDateString, StringBuilder sb) {
         if (!this.getLastExtractionDate().equals(newDateString)) {
             sb.append("\n");
-            sb.append("\n");
             sb.append("*** ");
             sb.append(Calendar.getInstance().getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.ENGLISH));
             sb.append(" (");
