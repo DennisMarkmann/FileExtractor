@@ -19,12 +19,13 @@ public class FileRenamer {
     private static final Logger LOGGER = LogHandler.getLogger("./Logs/FileExtractor.log");
 
     public Anime handleAnimeRenaming(String fileName, Anime anime) {
-        final Pattern pattern = Pattern.compile("(\\[.{1,}])?([^<]*)\\ - (.{2,6})(\\[.{4,5}])?(\\[.{2,10}])?\\.(.{3})");
+        final Pattern pattern = Pattern
+                .compile("(\\[.{1,}])?([^<]*)\\ - (.{2,6})(\\[.{4,5}])?(\\[.{2,30}])?(\\(.{2,30}\\))?\\.(.{3})");
         Matcher m = pattern.matcher(fileName);
         if (m.matches()) {
             String title = m.group(2).trim();
             String episode = m.group(3).trim();
-            String extension = m.group(6).trim();
+            String extension = m.group(7).trim();
 
             anime.setTitle(title);
             anime.setEpisode(episode);
