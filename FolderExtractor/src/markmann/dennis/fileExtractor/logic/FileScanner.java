@@ -81,7 +81,7 @@ public class FileScanner implements Runnable {
         LOGGER.info("Number of entries to process: '" + fileList.size() + "'.");
         Collections.sort(fileList);
 
-        mediaList = new FileRenamer().scanFiles(fileList, settings.getType());
+        mediaList = new FileRenamer().scanFiles(fileList, settings.getType(), settings.replaceOldVersions());
 
         if (SettingHandler.getGeneralSettings().useFileMoving()) {
             new FileMover().moveFiles(mediaList, completionFolder, settings);

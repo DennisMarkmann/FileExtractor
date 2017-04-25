@@ -18,7 +18,7 @@ public class FileRenamer {
 
     private static final Logger LOGGER = LogHandler.getLogger("./Logs/FileExtractor.log");
 
-    public Anime handleAnimeRenaming(String fileName, Anime anime) {
+    public Anime handleAnimeRenaming(String fileName, Anime anime, boolean replaceOldVersions) {
         final Pattern pattern = Pattern
                 .compile("(\\[.{1,}])?([^<]*)\\ - (.{2,6})(\\[.{4,5}])?(\\[.{2,30}])?(\\(.{2,30}\\))?\\.(.{3})");
         Matcher m = pattern.matcher(fileName);
@@ -28,7 +28,7 @@ public class FileRenamer {
             String extension = m.group(7).trim();
 
             anime.setTitle(title);
-            anime.setEpisode(episode);
+            this.setEpisode(anime, episode, replaceOldVersions);
             anime.setExtension(extension);
             return anime;
         }
@@ -58,7 +58,7 @@ public class FileRenamer {
         return fileName;
     }
 
-    ArrayList<Medium> scanFiles(ArrayList<File> fileList, MediaType mediaType) {
+    ArrayList<Medium> scanFiles(ArrayList<File> fileList, MediaType mediaType, boolean replaceOldVersions) {
 
         ArrayList<Medium> mediaList = new ArrayList<>();
         for (final File file : fileList) {
@@ -67,7 +67,7 @@ public class FileRenamer {
             boolean useRenaming = SettingHandler.getGeneralSettings().useRenaming();
             if (mediaType == MediaType.Anime) {
                 if (useRenaming) {
-                    medium = this.handleAnimeRenaming(originalFileName, new Anime());
+                    medium = this.handleAnimeRenaming(originalFileName, new Anime(), replaceOldVersions);
                 }
                 else {
                     medium = new Anime();
@@ -110,5 +110,12 @@ public class FileRenamer {
             mediaList.add(medium);
         }
         return mediaList;
+    }
+
+    public void setEpisode(Anime anime, String episode, boolean replaceOldVersions) {
+        if (replaceOldVersions && episode.contains("v")) {
+            episode = episode.substring(0, episode.indexOf("v"));
+        }
+        anime.setEpisode(episode);
     }
 }
