@@ -14,6 +14,7 @@ public class GeneralSettings implements Settings {
     boolean useHistory = true;
     boolean useExtendedLogging = false;
     boolean removeCorruptFiles = true;
+    boolean removeVersionNumbers = true;
 
     public int getTimerInterval() {
         return this.timerInterval;
@@ -23,8 +24,16 @@ public class GeneralSettings implements Settings {
         return this.removeCorruptFiles;
     }
 
+    public boolean removeVersionNumbers() {
+        return this.removeVersionNumbers;
+    }
+
     public void setRemoveCorruptFiles(boolean removeCorruptFiles) {
         this.removeCorruptFiles = removeCorruptFiles;
+    }
+
+    public void setRemoveVersionNumbers(boolean removeVersionNumbers) {
+        this.removeVersionNumbers = removeVersionNumbers;
     }
 
     public void setTimerInterval(int timerInterval) {

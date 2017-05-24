@@ -18,7 +18,7 @@ public class FileRenamerTest {
         String resultTitleComplete = "Kono Subarashii Sekai ni Shukufuku wo! 2 - 07.mkv";
         String resultTitleCompleteNoExt = "Kono Subarashii Sekai ni Shukufuku wo! 2 - 07";
 
-        Anime anime = new FileRenamer().handleAnimeRenaming(originalFineName, new Anime(), false);
+        Anime anime = new FileRenamer().handleAnimeRenaming(originalFineName, new Anime());
         assertEquals(resultTitle, anime.getTitle());
         assertEquals(resultEpisode, anime.getEpisode());
         assertEquals(resultExtension, anime.getExtension());

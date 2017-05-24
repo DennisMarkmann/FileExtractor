@@ -12,7 +12,6 @@ public class TypeSettings implements Settings {
     boolean useSeriesFolder = false;
     boolean useSeasonFolder = false;
     boolean useCurrentlyWatchingCheck = false;
-    boolean replaceOldVersions = false;
 
     ArrayList<ExceptionPath> exceptions = new ArrayList<>();
 
@@ -45,20 +44,11 @@ public class TypeSettings implements Settings {
         return this.type;
     }
 
-    public boolean replaceOldVersions() {
-        return this.replaceOldVersions;
-    }
-
     public void setCompletionPath(String path) {
-        this.completionPath = path;
     }
 
     public void setExtractionPath(String extractionPath) {
         this.extractionPath = extractionPath;
-    }
-
-    public void setReplaceOldVersions(boolean replaceOldVersions) {
-        this.replaceOldVersions = replaceOldVersions;
     }
 
     public void setType(MediaType type) {
