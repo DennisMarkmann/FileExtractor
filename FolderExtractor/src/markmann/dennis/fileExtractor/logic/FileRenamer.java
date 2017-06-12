@@ -21,21 +21,15 @@ public class FileRenamer {
     public Anime handleAnimeRenaming(String fileName, Anime anime) {
         final Pattern pattern = Pattern
                 .compile("(\\[.{1,}])?([^<]*)\\ - (.{2,6})(\\[.{4,5}])?(\\[.{2,30}])?(\\(.{2,30}\\))?\\.(.{3})");
-        // TODO: use sth like this? ("(\\[.{1,}])?([^<]*)\\ -
-        // (.{2,6})(\\[.{4,5}])?([v{1,1])(\\[.{2,30}])?(\\(.{2,30}\\))?\\.(.{3})");
-        // TODO: remember to increment the following group numbers after the change
 
         Matcher m = pattern.matcher(fileName);
         if (m.matches()) {
             String title = m.group(2).trim();
             String episode = m.group(3).trim();
             String extension = m.group(7).trim();
-            // TODO: add this group for version numbers
-            // m.group(4).trim();
-            String versionNumber = "";
 
             anime.setTitle(title);
-            this.setEpisode(anime, episode, versionNumber);
+            this.setEpisode(anime, episode);
             anime.setExtension(extension);
             return anime;
         }
@@ -75,7 +69,8 @@ public class FileRenamer {
             if (mediaType == MediaType.Anime) {
                 if (useRenaming) {
                     medium = this.handleAnimeRenaming(originalFileName, new Anime());
-                } else {
+                }
+                else {
                     medium = new Anime();
                 }
             }
@@ -83,7 +78,8 @@ public class FileRenamer {
             if (mediaType == MediaType.Series) {
                 if (useRenaming) {
                     medium = this.handleSeriesRenaming(originalFileName, new Series());
-                } else {
+                }
+                else {
                     medium = new Series();
                 }
             }
@@ -96,7 +92,8 @@ public class FileRenamer {
                 if (SettingHandler.getGeneralSettings().removeCorruptFiles()) {
                     LOGGER.info("Renaming of file:'" + originalFileName + "' not successful. File deleted.");
                     file.delete();
-                } else {
+                }
+                else {
                     LOGGER.info("Renaming of file:'" + originalFileName + "' not successful. Please try to fix it manually.");
                 }
                 continue;
@@ -116,9 +113,9 @@ public class FileRenamer {
         return mediaList;
     }
 
-    public void setEpisode(Anime anime, String episode, String versionNumber) {
-        if (!SettingHandler.getGeneralSettings().removeVersionNumbers()) {
-            episode = episode + versionNumber;
+    public void setEpisode(Anime anime, String episode) {
+        if (SettingHandler.getGeneralSettings().removeVersionNumbers() && episode.contains("v")) {
+            episode = episode.substring(0, episode.indexOf("v"));
         }
         anime.setEpisode(episode);
     }
