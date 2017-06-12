@@ -7,7 +7,6 @@ public class GeneralSettings implements Settings {
     boolean useTimer = true;
     int timerInterval = 60;
     boolean usePopupNotification = true;
-    boolean useNotificationWhileWorking = false;
     boolean useRenaming = true;
     boolean useCleanup = true;
     boolean useFileMoving = true;
@@ -60,10 +59,6 @@ public class GeneralSettings implements Settings {
         this.useHistory = useHistory;
     }
 
-    public void setUseNotificationWhileWorking(boolean useNotificationWhileWorking) {
-        this.useNotificationWhileWorking = useNotificationWhileWorking;
-    }
-
     public void setUsePopupNotification(boolean usePopupNotification) {
         this.usePopupNotification = usePopupNotification;
     }
@@ -98,10 +93,6 @@ public class GeneralSettings implements Settings {
 
     public boolean useHistory() {
         return this.useHistory;
-    }
-
-    boolean useNotificationWhileWorking() {
-        return this.useNotificationWhileWorking;
     }
 
     public boolean usePopupNotification() {

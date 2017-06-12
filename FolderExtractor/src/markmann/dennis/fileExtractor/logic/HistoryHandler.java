@@ -20,22 +20,33 @@ import markmann.dennis.fileExtractor.logging.LogHandler;
 import markmann.dennis.fileExtractor.mediaObjects.Anime;
 import markmann.dennis.fileExtractor.mediaObjects.Medium;
 
+/**
+ * Class used for creating and expanding the history file containing information about the media files handled by the
+ * application.
+ *
+ * @author Dennis.Markmann
+ */
+
 public class HistoryHandler {
 
     private static final Logger LOGGER = LogHandler.getLogger("./Logs/FileExtractor.log");
     private String historyPath = "./Logs/History.txt";
 
+    /**
+     * Adds new entries in the history file for recently handled media files. Creates the history file in case it doesn't exist
+     * yet.
+     *
+     * @param mediaList: List containing the information about the recently handled media files.
+     */
     void addToHistory(ArrayList<Medium> mediaList) {
         new File(this.historyPath).mkdir();
         if (!mediaList.isEmpty()) {
             try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(this.historyPath, true)))) {
-                Date datum = new Date();
-                String dateStringShort = new SimpleDateFormat("dd.MM.yyyy").format(datum);
-                String dateStringComplete = new SimpleDateFormat("HH:mm:ss").format(datum);
                 StringBuilder sb = new StringBuilder();
-                sb = this.handleDayChange(dateStringShort, sb);
+                Date date = new Date();
+                sb.append(this.handleDayChange(date));
                 for (Medium medium : mediaList) {
-                    sb.append(dateStringComplete);
+                    sb.append(new SimpleDateFormat("HH:mm:ss").format(date));
                     sb.append("  (");
                     sb.append(medium.getClass().getSimpleName());
                     sb.append(")  ");
@@ -54,6 +65,11 @@ public class HistoryHandler {
         }
     }
 
+    /**
+     * Returning the date of the last extraction according to the log file. Format("dd.MM.yyyy").
+     *
+     * @return date of the last extraction.
+     */
     private String getLastExtractionDate() {
         String lastExtractionDate = "";
         try {
@@ -75,8 +91,17 @@ public class HistoryHandler {
         return lastExtractionDate;
     }
 
-    private StringBuilder handleDayChange(String newDateString, StringBuilder sb) {
+    /**
+     * Checks if the date changed since the last extraction. If it did: Returns a String containing the information for the new
+     * date header. If not: Returns an empty String. .
+     *
+     * @param date: Date object containing the current time.
+     * @return String containing the new date header.
+     */
+    private String handleDayChange(Date date) {
+        String newDateString = new SimpleDateFormat("dd.MM.yyyy").format(date);
         if (!this.getLastExtractionDate().equals(newDateString)) {
+            StringBuilder sb = new StringBuilder();
             sb.append("\n");
             sb.append("*** ");
             sb.append(Calendar.getInstance().getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.ENGLISH));
@@ -84,7 +109,8 @@ public class HistoryHandler {
             sb.append(newDateString);
             sb.append(") ***");
             sb.append("\n");
+            return sb.toString();
         }
-        return sb;
+        return "";
     }
 }

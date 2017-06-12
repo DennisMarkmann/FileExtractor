@@ -26,7 +26,6 @@ public class LogHandler implements Serializable {
         final PatternLayout layout = new PatternLayout();
         layout.setConversionPattern("%d{dd.MM.yyyy HH:mm:ss} %5p (%F:%L) - %m%n");
 
-        // Create appender
         appender = new RollingFileAppender();
         appender.setFile(logFilePath);
         appender.setMaxFileSize("5MB");

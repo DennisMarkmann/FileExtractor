@@ -6,7 +6,6 @@
     <UseSeriesFolder>false</UseSeriesFolder>
     <UseSeasonFolder>false</UseSeasonFolder>
     <UseCurrentlyWatchingCheck>true</UseCurrentlyWatchingCheck>
-    <ReplaceOldVersions>false</ReplaceOldVersions>
     <Exception>
         <ExceptionName>Naruto Shippuuden</ExceptionName>
         <ExceptionPath>\Other\Naruto</ExceptionPath>

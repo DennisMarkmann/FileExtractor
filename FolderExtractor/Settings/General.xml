@@ -12,4 +12,5 @@
     <UseHistory>false</UseHistory>
     <UseExtendedLogging>false</UseExtendedLogging>
     <RemoveCorruptFiles>true</RemoveCorruptFiles>
+    <RemoveVersionNumbers>false</RemoveVersionNumbers>
 </Settings>
