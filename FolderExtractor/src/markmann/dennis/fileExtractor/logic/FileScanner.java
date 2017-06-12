@@ -11,14 +11,27 @@ import dennis.markmann.MyLibraries.DefaultJobs.File.FileFilter;
 import dennis.markmann.MyLibraries.DefaultJobs.File.FileLister;
 import markmann.dennis.fileExtractor.logging.LogHandler;
 import markmann.dennis.fileExtractor.mediaObjects.Medium;
+import markmann.dennis.fileExtractor.settings.GeneralSettings;
 import markmann.dennis.fileExtractor.settings.SettingHandler;
 import markmann.dennis.fileExtractor.settings.TypeSettings;
 import markmann.dennis.fileExtractor.systemTray.SystemTrayMenu;
+
+/**
+ * Used to scan for new media to process.
+ *
+ * @author Dennis.Markmann
+ */
 
 public class FileScanner implements Runnable {
 
     private static final Logger LOGGER = LogHandler.getLogger("./Logs/FileExtractor.log");
     private boolean manually;
+
+    /**
+     * Constructor for the class remembering if the scan was caused automatically or manually.
+     *
+     * @param manually: constructor called manually or automatically?
+     */
 
     public FileScanner(boolean manually) {
         this.manually = manually;
@@ -30,6 +43,11 @@ public class FileScanner implements Runnable {
         }
         return false;
     }
+
+    /**
+     * Locks the write access for itself and reads the current settings. Then carries out a scan for new media to process and
+     * returns the write access afterwards.
+     */
 
     @Override
     public void run() {
@@ -43,10 +61,17 @@ public class FileScanner implements Runnable {
         Controller.returnWriteAccess();
     }
 
+    /**
+     * Scanning for new media to process, starting all configured follow up operations.
+     *
+     * @param settings: settings used for the currently processed media type.
+     * @param manually: used for logging purposes only.
+     */
     void scan(TypeSettings settings, boolean manually) {
         if (manually) {
             LOGGER.info("Checking for " + settings.getType().toString() + " (manually):");
-        } else {
+        }
+        else {
             LOGGER.info("Checking for " + settings.getType().toString() + ":");
         }
         if (SettingHandler.getGeneralSettings().useExtendedLogging()) {
@@ -82,29 +107,45 @@ public class FileScanner implements Runnable {
         Collections.sort(fileList);
 
         mediaList = new FileRenamer().scanFiles(fileList, settings.getType());
+        GeneralSettings generalSettings = SettingHandler.getGeneralSettings();
 
-        if (SettingHandler.getGeneralSettings().useFileMoving()) {
+        if (generalSettings.useFileMoving()) {
             new FileMover().moveFiles(mediaList, completionFolder, settings);
         }
-        if (SettingHandler.getGeneralSettings().useCleanup()) {
+        if (generalSettings.useCleanup()) {
             new FileCleaner().cleanFiles(folderList);
         }
-        if (SettingHandler.getGeneralSettings().useHistory()) {
+        if (generalSettings.useHistory()) {
             new HistoryHandler().addToHistory(mediaList);
         }
-        if (SettingHandler.getGeneralSettings().useSystemTray() && SettingHandler.getGeneralSettings().usePopupNotification()
-                && (mediaList.size() > 0)) {
+        if ((mediaList.size() > 0)) {
             this.showExtractionNotification(mediaList);
         }
     }
 
+    /**
+     * Shows an error notification popup in case the systemTray and popupNotification settings are enabled.
+     *
+     * @param errorMessage: The message shown in the popup.
+     */
+
     private void showErrorNotification(String errorMessage) {
         if (SettingHandler.getGeneralSettings().useSystemTray() && SettingHandler.getGeneralSettings().usePopupNotification()) {
-            SystemTrayMenu.sendTextPopup("FileExtractor", errorMessage, MessageType.ERROR);
+            SystemTrayMenu.sendTextPopup(errorMessage, MessageType.ERROR);
         }
     }
 
+    /**
+     * Showing a notification popup displaying the newest processed media file names.
+     *
+     * @param mediaList: List containing the information about the recently processed media files.
+     */
+
     private void showExtractionNotification(ArrayList<Medium> mediaList) {
+        if (!SettingHandler.getGeneralSettings().useSystemTray()
+                || !SettingHandler.getGeneralSettings().usePopupNotification()) {
+            return;
+        }
         StringBuilder fileNames = new StringBuilder();
         int i = 0;
         String infoString = "new file:";
@@ -112,11 +153,12 @@ public class FileScanner implements Runnable {
             fileNames.append("\n");
             fileNames.append(medium.getCompleteTitle());
             i++;
+            // Cant show more than 2 entries with the windows 10 default popup anyway.
             if (i == 2) {
                 infoString = mediaList.size() + " new files:";
                 break;
             }
         }
-        SystemTrayMenu.sendTextPopup("FileExtractor", "Extracted " + infoString + fileNames.toString(), MessageType.INFO);
+        SystemTrayMenu.sendTextPopup("Extracted " + infoString + fileNames.toString(), MessageType.INFO);
     }
 }

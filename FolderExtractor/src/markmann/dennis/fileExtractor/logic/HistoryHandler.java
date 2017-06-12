@@ -21,7 +21,7 @@ import markmann.dennis.fileExtractor.mediaObjects.Anime;
 import markmann.dennis.fileExtractor.mediaObjects.Medium;
 
 /**
- * Class used for creating and expanding the history file containing information about the media files handled by the
+ * Class used for creating and expanding the history file containing information about the media files processed by the
  * application.
  *
  * @author Dennis.Markmann
@@ -33,10 +33,10 @@ public class HistoryHandler {
     private String historyPath = "./Logs/History.txt";
 
     /**
-     * Adds new entries in the history file for recently handled media files. Creates the history file in case it doesn't exist
-     * yet.
+     * Adds new entries in the history file for recently processed media files. Creates the history file in case it doesn't
+     * exist yet.
      *
-     * @param mediaList: List containing the information about the recently handled media files.
+     * @param mediaList: List containing the information about the recently processed media files.
      */
     void addToHistory(ArrayList<Medium> mediaList) {
         new File(this.historyPath).mkdir();
@@ -93,7 +93,7 @@ public class HistoryHandler {
 
     /**
      * Checks if the date changed since the last extraction. If it did: Returns a String containing the information for the new
-     * date header. If not: Returns an empty String. .
+     * date header. If not: Returns an empty String.
      *
      * @param date: Date object containing the current time.
      * @return String containing the new date header.

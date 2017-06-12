@@ -26,9 +26,9 @@ public class SystemTrayMenu {
 
     private static final Logger LOGGER = LogHandler.getLogger("./Logs/FileExtractor.log");
 
-    public static void sendTextPopup(String title, String text, MessageType type) {
+    public static void sendTextPopup(String text, MessageType type) {
         if (trayIcon != null) {
-            trayIcon.displayMessage(title, text, type);
+            trayIcon.displayMessage("FileExtractor", text, type);
         }
     }
 

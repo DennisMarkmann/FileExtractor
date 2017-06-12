@@ -7,9 +7,9 @@ import markmann.dennis.fileExtractor.logging.LogHandler;
 /**
  * Class containing just the main method used to start the program.
  *
- * @author Dennis Markmann
- *
+ * @author Dennis.Markmann
  */
+
 public class StartUp {
 
     private static final Logger LOGGER = LogHandler.getLogger("./Logs/FileExtractor.log");
