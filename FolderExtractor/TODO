@@ -31,4 +31,3 @@
 
 6. Refactoring
 6.1. FileScanner: Scan (Only returns the mediaList, no follow up operations)
-6.2. FileScanner: Extract popup notification logic to somewhere else
