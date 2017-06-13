@@ -54,7 +54,7 @@
 		</delete>
 	</target>
 	
-	<target name="run-junit" depends="compile">
+	<target name="test" depends="compile">
 		<mkdir dir="${reports.dir}"/>
 
 		<junit printsummary="yes" haltonfailure="no">
