@@ -61,7 +61,6 @@
 			<classpath location="lib/junit-4.12.jar"/>
 			<classpath location="lib/hamcrest-core-1.3.jar"/>
 			<classpath location="lib/log4j-1.2.17.jar"/>
-			<!-- test class -->
 			<classpath location="${build.dir}" />
 
 			<formatter type="plain" />

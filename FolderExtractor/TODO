@@ -1,11 +1,11 @@
 1. Next
-1.1.	Use build server for automatic testing (Travis-CI)
+1.1.	Use Travis-CI for automatic testing
 
 2. Cleanup
 2.1.	Remove special logic for reading / writing of Exceptions from / to XML (TypeSettings)
 2.2.	Add observable pattern (Timer active status -> GUI)
 2.3.	Implement easier logging solution
-2.4.	FileScanner: Scan (Only returns the mediaList, no follow up operations)
+2.4.	Refactor FileScanner.Scan: Only return the mediaList, no follow up operations
 
 3.	Additional functionality
 3.1.	File rename & episode names etc from Online DB
