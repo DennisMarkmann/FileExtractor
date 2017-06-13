@@ -4,7 +4,8 @@
 	<property name="src.dir" location="src"/>
 	<property name="build.dir" location="build"/>
 	<property name="reports.dir" location="reports"/>
-
+	<property name="install.dir" location="install"/>
+	
 	<target name="init" description="creates the build folder if it doesn't exist.">
 		<mkdir dir="${build.dir}"/>
 	</target>
@@ -19,15 +20,15 @@
 	</javac>  
 	</target>
 	
-	<target name="clean" description="Deletes the created build files for the project.">
+	<target name="clean">
 		<delete>
 			<fileset dir="${build.dir}" includes="**/*" />
 		</delete>
 	</target>
 	
 	<target name="jar" description="Create a runnable jar file for the project and copies needed ressources.">
-		<mkdir dir="${build.dir}" />
-		<jar destfile="${build.dir}/FileExtractor.jar" filesetmanifest="mergewithoutmain">
+		<mkdir dir="${install.dir}" />
+		<jar destfile="${install.dir}/FileExtractor.jar" filesetmanifest="mergewithoutmain">
 			<manifest>
 				<attribute name="Main-Class" value="markmann.dennis.fileExtractor.logic.StartUp" />
 				<attribute name="Class-Path" value="." />
@@ -40,18 +41,20 @@
 			</fileset>
 			<zipfileset excludes="META-INF/*.SF" src="./lib/log4j-1.2.17.jar" />
 			<zipfileset excludes="META-INF/*.SF" src="./lib/MyLibraries.jar" />
+			<zipfileset excludes="META-INF/*.SF" src="./lib/junit-4.12.jar" />
+			<zipfileset excludes="META-INF/*.SF" src="./lib/hamcrest-core-1.3.jar" />
 		</jar>
-		<copy todir="${build.dir}/Settings">
+		<copy todir="${install.dir}/Settings">
 			<fileset dir="./Settings" />
 		</copy>
-		<copy todir="${build.dir}/Icons">
+		<copy todir="${install.dir}/Icons">
 			<fileset dir="./Icons" />
 		</copy>
 	</target>
 
-	<target name="zip" description="Creates a zip file including the build files.">
-		<zip destfile="./${build.dir}/release.zip">
-			<fileset dir="${build.dir}">
+	<target name="zip" depends="jar" description="Creates a zip file including the install files.">
+		<zip destfile="${install.dir}/release.zip">
+			<fileset dir="${install.dir}">
 				<exclude name="*.zip" />
 			</fileset>
 		</zip>
