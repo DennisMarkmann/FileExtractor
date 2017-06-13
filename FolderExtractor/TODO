@@ -1,5 +1,5 @@
 1. Next
-1.1.	Fix JUnit Target in Ant
+1.1.	Use build server for automatic testing (Travis-CI)
 
 2. Cleanup
 2.1.	Remove special logic for reading / writing of Exceptions from / to XML (TypeSettings)
@@ -27,5 +27,4 @@
 4.5.	Add GUI implementation
 
 5. Other
-5.1.	Use build server for automatic testing (Travis-CI)
-5.2.	Add JUnit Tests
+5.1.	Add JUnit Tests
