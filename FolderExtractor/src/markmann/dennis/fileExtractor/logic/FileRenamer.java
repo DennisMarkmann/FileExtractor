@@ -48,7 +48,7 @@ public class FileRenamer {
     /**
      * Regex for series renaming.
      */
-    private Series handleSeriesRenaming(String fileName, Series series) {
+    public Series handleSeriesRenaming(String fileName, Series series) {
         final Pattern pattern = Pattern.compile("([^<]*)(\\ - |\\.{1})(?i)S(.{2,3})(?i)E(.{2,3})(\\.[^<]*)?\\.(.{3})");
         Matcher m = pattern.matcher(fileName);
         if (m.matches()) {
