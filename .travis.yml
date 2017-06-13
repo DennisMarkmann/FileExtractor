@@ -3,4 +3,4 @@ jdk:
   - oraclejdk8
 
 script: ant build
-before_install: cd project
+before_install: cd FolderExtractor
