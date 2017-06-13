@@ -13,6 +13,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import markmann.dennis.fileExtractor.logging.LogHandler;
+import markmann.dennis.fileExtractor.logic.Controller;
 import markmann.dennis.fileExtractor.mediaObjects.MediaType;
 
 /**
@@ -50,11 +51,7 @@ public class XMLFileReader {
         else if (fieldType.equals(String.class)) {
             return value;
         }
-        // No exception here! The user should be allowed to write into the file as he wishes, without destroying the whole
-        // program.
-        String errorMessage = "No handling implemented for reading given datatype '" + fieldType + "'.";
-        LOGGER.error(errorMessage);
-        System.out.println(errorMessage);
+        Controller.showErrorNotification("No handling implemented for reading given datatype '" + fieldType + "'.", true, null);
         return null;
     }
 
@@ -138,8 +135,7 @@ public class XMLFileReader {
             }
         }
         catch (Exception e) {
-            LOGGER.error("Reading of '" + name + "' file failed.", e);
-            e.printStackTrace();
+            Controller.showErrorNotification("Reading of '" + name + "' file failed.", true, e);
         }
     }
 

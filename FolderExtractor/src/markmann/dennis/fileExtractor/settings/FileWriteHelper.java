@@ -15,11 +15,10 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import markmann.dennis.fileExtractor.logging.LogHandler;
+import markmann.dennis.fileExtractor.logic.Controller;
 
 /**
  * Class used to make the XMLFileWriter a bit more tidy and help with creating the XML files.
@@ -28,14 +27,12 @@ import markmann.dennis.fileExtractor.logging.LogHandler;
  */
 public class FileWriteHelper {
 
-    private static final Logger LOGGER = LogHandler.getLogger("./Logs/FileExtractor.log");
-
     final Document createDocument() {
         try {
             return DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();
         }
         catch (final ParserConfigurationException e) {
-            e.printStackTrace();
+            Controller.showErrorNotification("Error while trying to write file.", true, e);
         }
         return null;
     }
@@ -71,8 +68,7 @@ public class FileWriteHelper {
             transformer.transform(new DOMSource(doc), new StreamResult(new OutputStreamWriter(out, "UTF-8")));
         }
         catch (final TransformerException | FileNotFoundException | UnsupportedEncodingException e) {
-            LOGGER.error("Writing of '" + fileName + "' file failed.", e);
-            e.printStackTrace();
+            Controller.showErrorNotification("Writing of '" + fileName + "' file failed.", true, e);
         }
 
     }

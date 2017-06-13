@@ -83,15 +83,17 @@ public class FileScanner implements Runnable {
         File completionFolder = new File(settings.getCompletionPath());
 
         if (!this.isPathValid(extractionFolder)) {
-            String errorMessage = "ExtractionFolder '" + extractionFolder.getAbsolutePath() + "' is not valid.";
-            LOGGER.error(errorMessage);
-            Controller.showErrorNotification(errorMessage);
+            Controller.showErrorNotification(
+                    "ExtractionFolder '" + extractionFolder.getAbsolutePath() + "' is not valid.",
+                    true,
+                    null);
             return;
         }
         if (!this.isPathValid(completionFolder)) {
-            String errorMessage = "CompletionFolder '" + extractionFolder.getAbsolutePath() + "' is not valid.";
-            LOGGER.error(errorMessage);
-            Controller.showErrorNotification(errorMessage);
+            Controller.showErrorNotification(
+                    "CompletionFolder '" + extractionFolder.getAbsolutePath() + "' is not valid.",
+                    true,
+                    null);
             return;
         }
         FileLister fl = new FileLister();

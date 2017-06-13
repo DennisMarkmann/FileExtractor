@@ -54,7 +54,6 @@ public class SystemTrayMenu {
 
         if (!SystemTray.isSupported()) {
             LOGGER.error("TrayIcon is not supported.");
-            System.out.println("TrayIcon is not supported.");
             return;
         }
         this.activeIcon = Toolkit.getDefaultToolkit().getImage("./Icons/TrayIcon_Active.png");
@@ -164,7 +163,6 @@ public class SystemTrayMenu {
         }
         catch (AWTException e) {
             LOGGER.error("TrayIcon could not be added.", e);
-            System.out.println("TrayIcon could not be added.");
         }
     }
 }

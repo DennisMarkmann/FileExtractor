@@ -14,9 +14,6 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.stream.Collectors;
 
-import org.apache.log4j.Logger;
-
-import markmann.dennis.fileExtractor.logging.LogHandler;
 import markmann.dennis.fileExtractor.mediaObjects.Anime;
 import markmann.dennis.fileExtractor.mediaObjects.Medium;
 
@@ -29,7 +26,6 @@ import markmann.dennis.fileExtractor.mediaObjects.Medium;
 
 public class HistoryHandler {
 
-    private static final Logger LOGGER = LogHandler.getLogger("./Logs/FileExtractor.log");
     private String historyPath = "./Logs/History.txt";
 
     /**
@@ -59,8 +55,8 @@ public class HistoryHandler {
                 out.print(sb.toString());
             }
             catch (IOException e) {
-                LOGGER.error("Error while trying to access '" + this.historyPath + "'.", e);
-                e.printStackTrace();
+                Controller.showErrorNotification("Error while trying to access '" + this.historyPath + "'.", true, e);
+                return;
             }
         }
     }
@@ -85,8 +81,7 @@ public class HistoryHandler {
             }
         }
         catch (IOException e) {
-            LOGGER.error("Error while trying to access '" + this.historyPath + "'.", e);
-            e.printStackTrace();
+            Controller.showErrorNotification("Error while trying to access '" + this.historyPath + "'.", true, e);
         }
         return lastExtractionDate;
     }

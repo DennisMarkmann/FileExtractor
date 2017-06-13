@@ -2,11 +2,10 @@ package markmann.dennis.fileExtractor.settings;
 
 import java.lang.reflect.Field;
 
-import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import markmann.dennis.fileExtractor.logging.LogHandler;
+import markmann.dennis.fileExtractor.logic.Controller;
 
 /**
  * Class used to write the current settings into XML files.
@@ -15,8 +14,6 @@ import markmann.dennis.fileExtractor.logging.LogHandler;
  */
 
 class XMLFileWriter {
-
-    private static final Logger LOGGER = LogHandler.getLogger("./Logs/FileExtractor.log");
 
     /**
      * Stores the given settings in the XML file of the given name / path.
@@ -47,8 +44,7 @@ class XMLFileWriter {
                 }
             }
             catch (IllegalArgumentException | IllegalAccessException e) {
-                LOGGER.error("Writing of '" + name + "' file failed.", e);
-                e.printStackTrace();
+                Controller.showErrorNotification("Writing of '" + name + "' file failed.", true, e);
             }
         }
         helper.writeFile("./Settings/", name, doc);

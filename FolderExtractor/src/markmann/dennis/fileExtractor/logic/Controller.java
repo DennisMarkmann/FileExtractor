@@ -88,9 +88,17 @@ public class Controller {
      * @param errorMessage: The message shown in the popup.
      */
 
-    static void showErrorNotification(String errorMessage) {
+    public static void showErrorNotification(String errorMessage, boolean logErrorMessage, Exception exception) {
         if (SettingHandler.getGeneralSettings().useSystemTray() && SettingHandler.getGeneralSettings().usePopupNotification()) {
             SystemTrayMenu.sendTextPopup(errorMessage, MessageType.ERROR);
+        }
+        if (logErrorMessage) {
+            if (exception != null) {
+                LOGGER.error(errorMessage, exception);
+            }
+            else {
+                LOGGER.error(errorMessage);
+            }
         }
     }
 
