@@ -5,7 +5,6 @@
     <UseTimer>true</UseTimer>
     <TimerInterval>60</TimerInterval>
     <UsePopupNotification>true</UsePopupNotification>
-    <UseNotificationWhileWorking>false</UseNotificationWhileWorking>
     <UseRenaming>true</UseRenaming>
     <UseCleanup>true</UseCleanup>
     <UseFileMoving>true</UseFileMoving>
