@@ -1,5 +1,11 @@
 package markmann.dennis.fileExtractor.mediaObjects;
 
+/**
+ * Anime media object. Extends medium and adds the episode attribute.
+ * 
+ * @author Dennis.Markmann
+ */
+
 public class Anime extends Medium {
 
     protected String episode = "";

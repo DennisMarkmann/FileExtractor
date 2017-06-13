@@ -6,6 +6,11 @@ import java.io.OutputStream;
 import org.apache.log4j.Category;
 import org.apache.log4j.Priority;
 
+/**
+ * Self defined outputStream used for logging.
+ *
+ * @author Dennis.Markmann
+ */
 public class LoggingOutputStream extends OutputStream {
 
     private static final String LINE_SEPERATOR = System.getProperty("line.separator");

@@ -1,9 +1,13 @@
 package markmann.dennis.fileExtractor.settings;
 
+/**
+ * Used as a workaround to store media objects with different destinations from the default.
+ *
+ * @author Dennis.Markmann
+ */
 public class ExceptionPath {
 
     private String name;
-
     private String path;
 
     public ExceptionPath(String name, String path) {

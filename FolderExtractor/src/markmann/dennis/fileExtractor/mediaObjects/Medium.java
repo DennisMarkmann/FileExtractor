@@ -1,5 +1,11 @@
 package markmann.dennis.fileExtractor.mediaObjects;
 
+/**
+ * Default media object. Has title, extension (.mkv, .avi,..), and the file path as attributes.
+ *
+ * @author Dennis.Markmann
+ */
+
 public class Medium {
 
     protected String title = "";

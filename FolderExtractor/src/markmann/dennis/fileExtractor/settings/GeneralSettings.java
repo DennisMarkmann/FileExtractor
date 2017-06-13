@@ -1,5 +1,11 @@
 package markmann.dennis.fileExtractor.settings;
 
+/**
+ * Settings object containing all universal settings affecting every kind of media.
+ *
+ * @author Dennis.Markmann
+ */
+
 public class GeneralSettings implements Settings {
 
     boolean useGui = false;

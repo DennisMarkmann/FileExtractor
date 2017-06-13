@@ -16,10 +16,25 @@ import markmann.dennis.fileExtractor.mediaObjects.Series;
 import markmann.dennis.fileExtractor.settings.ExceptionPath;
 import markmann.dennis.fileExtractor.settings.TypeSettings;
 
+/**
+ * Used to move files from their current directory to a given destination.
+ *
+ * @author Dennis.Markmann
+ */
+
 class FileMover {
 
     private static final Logger LOGGER = LogHandler.getLogger("./Logs/FileExtractor.log");
 
+    /**
+     * Used to handle configured exceptions for the media to move. i.e. move them to a specific folder instead of the default
+     * one, create a subfolder for them e.g.
+     *
+     * @param medium to move.
+     * @param settings configured for special behavior.
+     * @param exceptionPath for even more special behavior
+     * @return the path to move the file to.
+     */
     private String checkForAdditionalFolder(Medium medium, TypeSettings settings, String exceptionPath) {
         String additionalFolder = "";
         boolean addSeriesFolder = false;
@@ -53,6 +68,13 @@ class FileMover {
         return "";
     }
 
+    /**
+     * Moving all given media files to the destination.
+     *
+     * @param mediaList to move.
+     * @param destinationDirectory to move to.
+     * @param settings
+     */
     void moveFiles(final ArrayList<Medium> mediaList, final File destinationDirectory, TypeSettings settings) {
 
         for (final Medium medium : mediaList) {

@@ -15,10 +15,23 @@ import org.w3c.dom.NodeList;
 import markmann.dennis.fileExtractor.logging.LogHandler;
 import markmann.dennis.fileExtractor.mediaObjects.MediaType;
 
+/**
+ * Class used to read the current settings from XML files.
+ *
+ * @author Dennis.Markmann
+ */
+
 public class XMLFileReader {
 
     private static final Logger LOGGER = LogHandler.getLogger("./Logs/FileExtractor.log");
 
+    /**
+     * Converts the given XML attribute into the desired object.
+     *
+     * @param fieldType to convert the value into.
+     * @param value to convert.
+     * @return the converted value as the given type. Logs an error if the type was not supported.
+     */
     private Object convertValueToType(Object fieldType, String value) {
         if (fieldType.equals(boolean.class)) {
             return Boolean.valueOf(value);
@@ -37,12 +50,21 @@ public class XMLFileReader {
         else if (fieldType.equals(String.class)) {
             return value;
         }
+        // No exception here! The user should be allowed to write into the file as he wishes, without destroying the whole
+        // program.
         String errorMessage = "No handling implemented for reading given datatype '" + fieldType + "'.";
         LOGGER.error(errorMessage);
         System.out.println(errorMessage);
         return null;
     }
 
+    /**
+     * Method used to extract the value of the given node.
+     *
+     * @param element to get the value from.
+     * @param name of the node searched for.
+     * @return the value as a String.
+     */
     private String getValueByName(Element element, String name) {
         Node node = element.getElementsByTagName(name).item(0);
         if (node != null) {
@@ -51,6 +73,14 @@ public class XMLFileReader {
         return null;
     }
 
+    /**
+     * Used to read in all settings from the XML file at the given path.
+     *
+     * @param name / path of the XML file.
+     * @param settings to save the new values into.
+     * @param initial time reading the settings since program start? Only logging changed attributes if its not the first time
+     *            happening.
+     */
     public void readSettingsXML(String name, Settings settings, boolean initial) {
 
         try {

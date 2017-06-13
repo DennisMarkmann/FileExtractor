@@ -8,10 +8,22 @@ import org.w3c.dom.Element;
 
 import markmann.dennis.fileExtractor.logging.LogHandler;
 
+/**
+ * Class used to write the current settings into XML files.
+ *
+ * @author Dennis.Markmann
+ */
+
 class XMLFileWriter {
 
     private static final Logger LOGGER = LogHandler.getLogger("./Logs/FileExtractor.log");
 
+    /**
+     * Stores the given settings in the XML file of the given name / path.
+     *
+     * @param name of the setting file to write to.
+     * @param settings to store in the file.
+     */
     void createXmlFile(String name, Settings settings) {
 
         final FileWriteHelper helper = new FileWriteHelper();

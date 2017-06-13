@@ -12,6 +12,12 @@ import markmann.dennis.fileExtractor.logging.LogHandler;
 import markmann.dennis.fileExtractor.settings.SettingHandler;
 import markmann.dennis.fileExtractor.systemTray.SystemTrayMenu;
 
+/**
+ * Controller class used for various default operations.
+ *
+ * @author Dennis.Markmann
+ */
+
 public class Controller {
 
     private static final Logger LOGGER = LogHandler.getLogger("./Logs/FileExtractor.log");
@@ -19,6 +25,11 @@ public class Controller {
     private static boolean timerIsActive = false;
     private static boolean applicationIsBusy = false;
 
+    /**
+     * Handles the write access so only one instance of the scan can run at the same time.
+     *
+     * @return if the write access is locked or not.
+     */
     public static boolean applyForWriteAccess() {
         while (applicationIsBusy) {
             try {
@@ -32,14 +43,25 @@ public class Controller {
         return true;
     }
 
+    /**
+     * Initial scan for files to extract.
+     */
     public static void initiateManualScan() {
         new Thread(new FileScanner(true)).start();
     }
 
+    /**
+     * Checks if the application is running timer based or not / paused.
+     */
     public static boolean isTimerIsActive() {
         return timerIsActive;
     }
 
+    /**
+     * Used to open a file with the given name with the configured default application.
+     *
+     * @param fileName of the file to open.
+     */
     public static void openFile(String fileName) {
         try {
             Desktop.getDesktop().open(new File(fileName));
@@ -50,18 +72,29 @@ public class Controller {
         }
     }
 
+    /**
+     * Returning the write access so another scan may get it and start.
+     */
     public static void returnWriteAccess() {
         applicationIsBusy = false;
     }
 
+    /**
+     * Controlled shutdown of the whole application.
+     */
     public static void shutDownApplication() {
         LOGGER.info("Application stopped.");
         System.exit(0);
     }
 
+    /**
+     * Start method of the application. Reads the settings from XML, adds new settings to the XML files if created through an
+     * update of the tool, starts the timer for the scan if configured and creates the system tray if configured.
+     */
     static void startApplication() {
         boolean overwriteExistingSettings = false;
         if (overwriteExistingSettings) {
+            // Use with caution! This overwrites the currently defined settings with default ones!
             SettingHandler.createDefaultSettings();
             SettingHandler.writeSettingsToXML();
         }
@@ -78,6 +111,11 @@ public class Controller {
         }
     }
 
+    /**
+     * Starts the timer for the automatic scans.
+     *
+     * @param initialStart: Logs additional parameters if its the initial start.
+     */
     public static void startTimer(boolean initialStart) {
         int timerInterval = SettingHandler.getGeneralSettings().getTimerInterval();
         if (initialStart) {
@@ -99,6 +137,9 @@ public class Controller {
         }, 1000, timerInterval * 60000);
     }
 
+    /**
+     * Pauses the timer.
+     */
     public static void stopTimer() {
         LOGGER.info("Timer stopped.");
         timer.cancel();

@@ -1,7 +1,6 @@
 1. Next
 1.1.	Fix JUnit Target in Ant
 1.2.	Add JUnit Tests
-1.3.	Add documentation
 
 2. Cleanup
 2.1.	Remove special logic for reading / writing of Exceptions from / to XML (TypeSettings)

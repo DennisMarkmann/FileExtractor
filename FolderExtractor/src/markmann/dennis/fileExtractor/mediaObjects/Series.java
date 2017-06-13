@@ -1,5 +1,11 @@
 package markmann.dennis.fileExtractor.mediaObjects;
 
+/**
+ * Series media object. Extends medium and adds the episode and season attribute.
+ *
+ * @author Dennis.Markmann
+ */
+
 public class Series extends Medium {
 
     protected String episode = "";

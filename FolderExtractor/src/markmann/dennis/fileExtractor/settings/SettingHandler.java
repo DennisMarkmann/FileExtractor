@@ -5,34 +5,34 @@ import java.util.ArrayList;
 
 import markmann.dennis.fileExtractor.mediaObjects.MediaType;
 
+/**
+ * Class used to help with everything concidering settings.
+ *
+ * @author Dennis.Markmann
+ */
+
 public class SettingHandler {
 
     private static GeneralSettings generalSettings = new GeneralSettings();
     private static ArrayList<TypeSettings> settingList = new ArrayList<>();
     private static File folder = new File("./Settings/");
 
-    private static TypeSettings createAnimeSettings() {
-        TypeSettings settings = new TypeSettings();
-        return settings;
-    }
-
+    /**
+     * Creating general, series and anime settings with default values.
+     */
     public static void createDefaultSettings() {
-        generalSettings = createGeneralSettings();
-        settingList.add(SettingHandler.createAnimeSettings());
-        settingList.add(createSeriesSettings());
+        generalSettings = new GeneralSettings();
+        settingList.add(new TypeSettings());
+        TypeSettings seriesSettings = new TypeSettings();
+        seriesSettings.setType(MediaType.Series);
+        settingList.add(seriesSettings);
     }
 
-    private static GeneralSettings createGeneralSettings() {
-        GeneralSettings generalSettings = new GeneralSettings();
-        return generalSettings;
-    }
-
-    private static TypeSettings createSeriesSettings() {
-        TypeSettings settings = new TypeSettings();
-        settings.setType(MediaType.Series);
-        return settings;
-    }
-
+    /**
+     * Returning every kind of settings existing.
+     *
+     * @return ArrayList containing settings.
+     */
     public static ArrayList<Settings> getAllSettings() {
         ArrayList<Settings> settings = new ArrayList<>();
         settings.add(generalSettings);
@@ -46,6 +46,12 @@ public class SettingHandler {
         return generalSettings;
     }
 
+    /**
+     * Searches and returns existing settings for the given name. Creates new settings with that name if they dont exist yet.
+     *
+     * @param name of the settings to search for.
+     * @return the found / created settings.
+     */
     private static TypeSettings getMatchingTypeSettings(String name) {
         for (TypeSettings typeSettings : settingList) {
             if ((typeSettings.getType().toString() + ".xml").equals(name)) {
@@ -61,13 +67,19 @@ public class SettingHandler {
         return settingList;
     }
 
+    /**
+     * Used to start reading in all settings from XML files.
+     *
+     * @param initial: First time reading in -> no logging for value changes.
+     */
     public static void readSettingsFromXML(boolean initial) {
         for (final File fileEntry : folder.listFiles()) {
             if (!fileEntry.isDirectory()) {
                 String name = fileEntry.getName();
                 if (name.equals("General.xml")) {
                     new XMLFileReader().readSettingsXML(name, generalSettings, initial);
-                } else if (name.equals("Anime.xml") || name.equals("Series.xml")) {
+                }
+                else if (name.equals("Anime.xml") || name.equals("Series.xml")) {
                     TypeSettings typeSettings = getMatchingTypeSettings(name);
                     new XMLFileReader().readSettingsXML(name, typeSettings, initial);
                 }
@@ -76,6 +88,9 @@ public class SettingHandler {
         }
     }
 
+    /**
+     * Used to start writing all currently configured settings into their XML files.
+     */
     public static void writeSettingsToXML() {
         for (final TypeSettings settings : SettingHandler.getTypeSettings()) {
             new XMLFileWriter().createXmlFile((settings.getType().toString() + ".xml"), settings);

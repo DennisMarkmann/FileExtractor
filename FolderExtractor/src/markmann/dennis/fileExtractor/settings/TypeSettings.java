@@ -4,6 +4,12 @@ import java.util.ArrayList;
 
 import markmann.dennis.fileExtractor.mediaObjects.MediaType;
 
+/**
+ * Settings object containing specific settings affecting only one kind of media.
+ *
+ * @author Dennis.Markmann
+ */
+
 public class TypeSettings implements Settings {
 
     MediaType type = MediaType.Anime;

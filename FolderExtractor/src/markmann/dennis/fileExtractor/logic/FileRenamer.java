@@ -14,10 +14,19 @@ import markmann.dennis.fileExtractor.mediaObjects.Medium;
 import markmann.dennis.fileExtractor.mediaObjects.Series;
 import markmann.dennis.fileExtractor.settings.SettingHandler;
 
+/**
+ * Used to handle the media renaming.
+ *
+ * @author Dennis.Markmann
+ */
+
 public class FileRenamer {
 
     private static final Logger LOGGER = LogHandler.getLogger("./Logs/FileExtractor.log");
 
+    /**
+     * Regex for anime renaming.
+     */
     public Anime handleAnimeRenaming(String fileName, Anime anime) {
         final Pattern pattern = Pattern
                 .compile("(\\[.{1,}])?([^<]*)\\ - (.{2,6})(\\[.{4,5}])?(\\[.{2,30}])?(\\(.{2,30}\\))?\\.(.{3})");
@@ -36,6 +45,9 @@ public class FileRenamer {
         return null;
     }
 
+    /**
+     * Regex for series renaming.
+     */
     private Series handleSeriesRenaming(String fileName, Series series) {
         final Pattern pattern = Pattern.compile("([^<]*)(\\ - |\\.{1})(?i)S(.{2,3})(?i)E(.{2,3})(\\.[^<]*)?\\.(.{3})");
         Matcher m = pattern.matcher(fileName);
@@ -54,11 +66,21 @@ public class FileRenamer {
         return null;
     }
 
+    /**
+     * Replaces all dots in the filename with space.
+     */
     private String replaceDots(String fileName) {
         fileName = fileName.replaceAll("\\.", " ");
         return fileName;
     }
 
+    /**
+     * Starts the renaming process for the give fileList.
+     *
+     * @param fileList to rename.
+     * @param mediaType of the files.
+     * @return the renamed list of files.
+     */
     ArrayList<Medium> scanFiles(ArrayList<File> fileList, MediaType mediaType) {
 
         ArrayList<Medium> mediaList = new ArrayList<>();
@@ -113,6 +135,12 @@ public class FileRenamer {
         return mediaList;
     }
 
+    /**
+     * Set the episode number attribute for the anime episode.
+     *
+     * @param anime to store the episode number for.
+     * @param episode number to store.
+     */
     public void setEpisode(Anime anime, String episode) {
         if (SettingHandler.getGeneralSettings().removeVersionNumbers() && episode.contains("v")) {
             episode = episode.substring(0, episode.indexOf("v"));

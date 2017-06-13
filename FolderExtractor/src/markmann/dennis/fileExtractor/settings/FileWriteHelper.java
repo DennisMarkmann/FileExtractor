@@ -21,6 +21,11 @@ import org.w3c.dom.Element;
 
 import markmann.dennis.fileExtractor.logging.LogHandler;
 
+/**
+ * Class used to make the XMLFileWriter a bit more tidy and help with creating the XML files.
+ *
+ * @author Dennis.Markmann
+ */
 public class FileWriteHelper {
 
     private static final Logger LOGGER = LogHandler.getLogger("./Logs/FileExtractor.log");
@@ -50,7 +55,6 @@ public class FileWriteHelper {
         return element;
     }
 
-    // write the content into xml file
     final void writeFile(final String path, final String fileName, final Document doc) {
         new File(path).mkdirs();
         final File file = new File(path + fileName);

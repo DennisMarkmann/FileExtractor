@@ -20,12 +20,23 @@ import markmann.dennis.fileExtractor.settings.SettingHandler;
 import markmann.dennis.fileExtractor.settings.Settings;
 import markmann.dennis.fileExtractor.settings.TypeSettings;
 
+/**
+ * Class used to create the system tray icon for the application. Also handles popup notifications.
+ *
+ * @author Dennis.Markmann
+ */
+
 public class SystemTrayMenu {
 
     private static TrayIcon trayIcon;
-
     private static final Logger LOGGER = LogHandler.getLogger("./Logs/FileExtractor.log");
 
+    /**
+     * Create a popup notification.
+     *
+     * @param text to display.
+     * @param type of notification to display. (MessageType.ERROR e.g.)
+     */
     public static void sendTextPopup(String text, MessageType type) {
         if (trayIcon != null) {
             trayIcon.displayMessage("FileExtractor", text, type);
@@ -34,9 +45,11 @@ public class SystemTrayMenu {
 
     private Image activeIcon;
     private Image inActiveIcon;
-
     private SystemTray tray;
 
+    /**
+     * Constructor creating the system tray entry if supported by the OS. Otherwise logs an error and does nothing.
+     */
     public SystemTrayMenu() {
 
         if (!SystemTray.isSupported()) {
@@ -54,6 +67,11 @@ public class SystemTrayMenu {
         this.inActiveIcon = this.inActiveIcon.getScaledInstance(trayIconSize.width, trayIconSize.height, Image.SCALE_SMOOTH);
     }
 
+    /**
+     * Used to change the state of the pause / resume scan entry.
+     *
+     * @param pauseItem
+     */
     private void changeIcon(MenuItem pauseItem) {
         if (Controller.isTimerIsActive()) {
             pauseItem.setLabel("Pause Scan");
@@ -65,6 +83,11 @@ public class SystemTrayMenu {
         }
     }
 
+    /**
+     * Creates the settings submenu in the system tray.
+     *
+     * @return the created menu.
+     */
     private Menu createSettingsSubmenu() {
         Menu settingsMenu = new Menu("Settings");
         for (Settings settings : SettingHandler.getAllSettings()) {
@@ -84,6 +107,9 @@ public class SystemTrayMenu {
         return settingsMenu;
     }
 
+    /**
+     * Creates the tray itself.
+     */
     public void createSystemTrayEntry() {
 
         final PopupMenu popup = new PopupMenu();

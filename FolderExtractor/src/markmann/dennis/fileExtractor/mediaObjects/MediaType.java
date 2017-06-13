@@ -1,5 +1,11 @@
 package markmann.dennis.fileExtractor.mediaObjects;
 
+/**
+ * Enum used to differentiate between different media objects.
+ *
+ * @author Dennis.Markmann
+ */
+
 public enum MediaType {
 
     Anime {
