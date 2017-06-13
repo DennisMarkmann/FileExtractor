@@ -13,7 +13,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import markmann.dennis.fileExtractor.logging.LogHandler;
-import markmann.dennis.fileExtractor.logic.Controller;
+import markmann.dennis.fileExtractor.logic.NotificationHelper;
 import markmann.dennis.fileExtractor.mediaObjects.MediaType;
 
 /**
@@ -51,7 +51,8 @@ public class XMLFileReader {
         else if (fieldType.equals(String.class)) {
             return value;
         }
-        Controller.showErrorNotification("No handling implemented for reading given datatype '" + fieldType + "'.", true, null);
+        NotificationHelper
+                .showErrorNotification("No handling implemented for reading given datatype '" + fieldType + "'.", true, null);
         return null;
     }
 
@@ -135,7 +136,7 @@ public class XMLFileReader {
             }
         }
         catch (Exception e) {
-            Controller.showErrorNotification("Reading of '" + name + "' file failed.", true, e);
+            NotificationHelper.showErrorNotification("Reading of '" + name + "' file failed.", true, e);
         }
     }
 

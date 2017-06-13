@@ -83,14 +83,14 @@ public class FileScanner implements Runnable {
         File completionFolder = new File(settings.getCompletionPath());
 
         if (!this.isPathValid(extractionFolder)) {
-            Controller.showErrorNotification(
+            NotificationHelper.showErrorNotification(
                     "ExtractionFolder '" + extractionFolder.getAbsolutePath() + "' is not valid.",
                     true,
                     null);
             return;
         }
         if (!this.isPathValid(completionFolder)) {
-            Controller.showErrorNotification(
+            NotificationHelper.showErrorNotification(
                     "CompletionFolder '" + extractionFolder.getAbsolutePath() + "' is not valid.",
                     true,
                     null);
@@ -119,7 +119,7 @@ public class FileScanner implements Runnable {
             new HistoryHandler().addToHistory(mediaList);
         }
         if ((mediaList.size() > 0)) {
-            Controller.showExtractionNotification(mediaList);
+            NotificationHelper.showExtractionNotification(mediaList);
         }
     }
 

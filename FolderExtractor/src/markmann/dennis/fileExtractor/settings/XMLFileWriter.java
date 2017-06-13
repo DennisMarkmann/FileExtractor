@@ -5,7 +5,7 @@ import java.lang.reflect.Field;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import markmann.dennis.fileExtractor.logic.Controller;
+import markmann.dennis.fileExtractor.logic.NotificationHelper;
 
 /**
  * Class used to write the current settings into XML files.
@@ -44,7 +44,7 @@ class XMLFileWriter {
                 }
             }
             catch (IllegalArgumentException | IllegalAccessException e) {
-                Controller.showErrorNotification("Writing of '" + name + "' file failed.", true, e);
+                NotificationHelper.showErrorNotification("Writing of '" + name + "' file failed.", true, e);
             }
         }
         helper.writeFile("./Settings/", name, doc);

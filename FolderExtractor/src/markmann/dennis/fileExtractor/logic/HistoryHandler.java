@@ -55,7 +55,7 @@ public class HistoryHandler {
                 out.print(sb.toString());
             }
             catch (IOException e) {
-                Controller.showErrorNotification("Error while trying to access '" + this.historyPath + "'.", true, e);
+                NotificationHelper.showErrorNotification("Error while trying to access '" + this.historyPath + "'.", true, e);
                 return;
             }
         }
@@ -81,7 +81,7 @@ public class HistoryHandler {
             }
         }
         catch (IOException e) {
-            Controller.showErrorNotification("Error while trying to access '" + this.historyPath + "'.", true, e);
+            NotificationHelper.showErrorNotification("Error while trying to access '" + this.historyPath + "'.", true, e);
         }
         return lastExtractionDate;
     }

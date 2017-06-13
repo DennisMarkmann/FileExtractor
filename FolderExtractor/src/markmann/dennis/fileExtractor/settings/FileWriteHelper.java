@@ -18,7 +18,7 @@ import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import markmann.dennis.fileExtractor.logic.Controller;
+import markmann.dennis.fileExtractor.logic.NotificationHelper;
 
 /**
  * Class used to make the XMLFileWriter a bit more tidy and help with creating the XML files.
@@ -32,7 +32,7 @@ public class FileWriteHelper {
             return DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();
         }
         catch (final ParserConfigurationException e) {
-            Controller.showErrorNotification("Error while trying to write file.", true, e);
+            NotificationHelper.showErrorNotification("Error while trying to write file.", true, e);
         }
         return null;
     }
@@ -68,7 +68,7 @@ public class FileWriteHelper {
             transformer.transform(new DOMSource(doc), new StreamResult(new OutputStreamWriter(out, "UTF-8")));
         }
         catch (final TransformerException | FileNotFoundException | UnsupportedEncodingException e) {
-            Controller.showErrorNotification("Writing of '" + fileName + "' file failed.", true, e);
+            NotificationHelper.showErrorNotification("Writing of '" + fileName + "' file failed.", true, e);
         }
 
     }
