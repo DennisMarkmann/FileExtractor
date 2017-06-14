@@ -16,8 +16,6 @@ public class StartUp {
 
     /**
      * Main method used to start the program.
-     *
-     * @param args
      */
     public static void main(final String[] args) {
         LOGGER.info("Application starting.");
