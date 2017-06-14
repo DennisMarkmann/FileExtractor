@@ -21,7 +21,7 @@ public class TypeSettings implements Settings {
 
     ArrayList<ExceptionPath> exceptions = new ArrayList<>();
 
-    public void addException(ExceptionPath newException) {
+    void addException(ExceptionPath newException) {
         for (ExceptionPath e : this.exceptions) {
             if (e.getName().equals(newException.getName())) {
                 return;
@@ -30,7 +30,7 @@ public class TypeSettings implements Settings {
         this.exceptions.add(newException);
     }
 
-    public void clearExceptions() {
+    void clearExceptions() {
         this.exceptions = new ArrayList<>();
     }
 

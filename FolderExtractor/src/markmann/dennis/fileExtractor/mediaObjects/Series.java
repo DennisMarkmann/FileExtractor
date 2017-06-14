@@ -8,8 +8,8 @@ package markmann.dennis.fileExtractor.mediaObjects;
 
 public class Series extends Medium {
 
-    protected String episode = "";
-    protected String season = "";
+    private String episode = "";
+    private String season = "";
 
     @Override
     public String getCompleteTitleNoExt() {

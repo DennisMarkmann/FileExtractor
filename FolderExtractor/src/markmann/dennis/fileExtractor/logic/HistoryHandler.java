@@ -24,7 +24,7 @@ import markmann.dennis.fileExtractor.mediaObjects.Medium;
  * @author Dennis.Markmann
  */
 
-public class HistoryHandler {
+class HistoryHandler {
 
     private String historyPath = "./Logs/History.txt";
 

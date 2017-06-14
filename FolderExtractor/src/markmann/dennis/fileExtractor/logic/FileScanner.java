@@ -20,7 +20,7 @@ import markmann.dennis.fileExtractor.settings.TypeSettings;
  * @author Dennis.Markmann
  */
 
-public class FileScanner implements Runnable {
+class FileScanner implements Runnable {
 
     private static final Logger LOGGER = LogHandler.getLogger("./Logs/FileExtractor.log");
     private boolean manually;
@@ -31,7 +31,7 @@ public class FileScanner implements Runnable {
      * @param manually: constructor called manually or automatically?
      */
 
-    public FileScanner(boolean manually) {
+    FileScanner(boolean manually) {
         this.manually = manually;
     }
 
@@ -80,7 +80,7 @@ public class FileScanner implements Runnable {
      * @param settings: settings used for the currently processed media type.
      * @param manually: used for logging purposes only.
      */
-    void scan(TypeSettings settings, boolean manually) {
+    private void scan(TypeSettings settings, boolean manually) {
         LOGGER.info("Checking for " + settings.getType().toString() + ((manually) ? " (manually):" : ":"));
         if (SettingHandler.getGeneralSettings().useExtendedLogging()) {
             LOGGER.info(

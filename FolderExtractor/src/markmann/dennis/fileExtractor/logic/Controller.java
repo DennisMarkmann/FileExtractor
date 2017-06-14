@@ -30,7 +30,7 @@ public class Controller {
      *
      * @return if the write access is locked or not.
      */
-    public static boolean applyForWriteAccess() {
+    static boolean applyForWriteAccess() {
         while (applicationIsBusy) {
             try {
                 Thread.sleep(5000);
@@ -75,7 +75,7 @@ public class Controller {
     /**
      * Returning the write access so another scan may get it and start.
      */
-    public static void returnWriteAccess() {
+    static void returnWriteAccess() {
         applicationIsBusy = false;
     }
 

@@ -141,7 +141,7 @@ public class FileRenamer {
      * @param anime to store the episode number for.
      * @param episode number to store.
      */
-    public void setEpisode(Anime anime, String episode) {
+    private void setEpisode(Anime anime, String episode) {
         if (SettingHandler.getGeneralSettings().removeVersionNumbers() && episode.contains("v")) {
             episode = episode.substring(0, episode.indexOf("v"));
         }

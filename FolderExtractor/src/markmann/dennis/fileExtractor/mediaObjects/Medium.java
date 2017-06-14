@@ -9,7 +9,7 @@ package markmann.dennis.fileExtractor.mediaObjects;
 public class Medium {
 
     protected String title = "";
-    protected String extension = "";
+    private String extension = "";
     private String originPath = "";
     private boolean keepOriginalName = false;
 

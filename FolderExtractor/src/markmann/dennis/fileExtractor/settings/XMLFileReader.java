@@ -22,7 +22,7 @@ import markmann.dennis.fileExtractor.mediaObjects.MediaType;
  * @author Dennis.Markmann
  */
 
-public class XMLFileReader {
+class XMLFileReader {
 
     private static final Logger LOGGER = LogHandler.getLogger("./Logs/FileExtractor.log");
 
@@ -79,7 +79,7 @@ public class XMLFileReader {
      * @param initial time reading the settings since program start? Only logging changed attributes if its not the first time
      *            happening.
      */
-    public void readSettingsXML(String name, Settings settings, boolean initial) {
+    void readSettingsXML(String name, Settings settings, boolean initial) {
 
         try {
 

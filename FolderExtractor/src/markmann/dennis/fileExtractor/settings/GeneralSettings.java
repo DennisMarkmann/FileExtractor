@@ -5,7 +5,6 @@ package markmann.dennis.fileExtractor.settings;
  *
  * @author Dennis.Markmann
  */
-
 public class GeneralSettings implements Settings {
 
     boolean useGui = false;

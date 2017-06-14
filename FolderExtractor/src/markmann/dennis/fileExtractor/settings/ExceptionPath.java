@@ -10,7 +10,7 @@ public class ExceptionPath {
     private String name;
     private String path;
 
-    public ExceptionPath(String name, String path) {
+    ExceptionPath(String name, String path) {
         this.setName(name);
         this.setPath(path);
     }

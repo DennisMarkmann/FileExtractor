@@ -25,7 +25,7 @@ import markmann.dennis.fileExtractor.logic.NotificationHelper;
  *
  * @author Dennis.Markmann
  */
-public class FileWriteHelper {
+class FileWriteHelper {
 
     final Document createDocument() {
         try {
