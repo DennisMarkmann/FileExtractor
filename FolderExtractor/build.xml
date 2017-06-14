@@ -6,7 +6,7 @@
 	<property name="build.dir" location="build" />
 	<property name="lib.dir" location="lib" />
 	<property name="reports.dir" location="reports" />
-	<property name="install.dir" location="install" />
+	<property name="export.dir" location="export" />
 	<property name="doc.dir" location="doc" />
 
 	<target name="init" description="Create the build folder if it doesn't exist.">
@@ -34,13 +34,13 @@
 			<fileset dir="${build.dir}" includes="**/*" />
 			<fileset dir="${doc.dir}" includes="**/*" />
 			<fileset dir="${reports.dir}" includes="**/*" />
-			<fileset dir="${install.dir}" includes="**/*" />
+			<fileset dir="${export.dir}" includes="**/*" />
 		</delete>
 	</target>
 
 	<target name="jar" depends="compile" description="Create a runnable jar file for the project and copy needed ressources.">
-		<mkdir dir="${install.dir}" />
-		<jar destfile="${install.dir}/FileExtractor.jar" filesetmanifest="mergewithoutmain">
+		<mkdir dir="${export.dir}" />
+		<jar destfile="${export.dir}/FileExtractor.jar" filesetmanifest="mergewithoutmain">
 			<manifest>
 				<attribute name="Main-Class" value="markmann.dennis.fileExtractor.logic.StartUp" />
 				<attribute name="Class-Path" value="." />
@@ -51,17 +51,17 @@
 			<zipfileset excludes="META-INF/*.SF" src="${lib.dir}/junit-4.12.jar" />
 			<zipfileset excludes="META-INF/*.SF" src="${lib.dir}/hamcrest-core-1.3.jar" />
 		</jar>
-		<copy todir="${install.dir}/Settings">
+		<copy todir="${export.dir}/Settings">
 			<fileset dir="./Settings" />
 		</copy>
-		<copy todir="${install.dir}/Icons">
+		<copy todir="${export.dir}/Icons">
 			<fileset dir="./Icons" />
 		</copy>
 	</target>
 
 	<target name="zip" depends="jar" description="Create a zip file including all files needed to run the application.">
-		<zip destfile="${install.dir}/release.zip">
-			<fileset dir="${install.dir}">
+		<zip destfile="${export.dir}/release.zip">
+			<fileset dir="${export.dir}">
 				<exclude name="*.zip" />
 			</fileset>
 		</zip>
