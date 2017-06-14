@@ -1,32 +1,34 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<project name="FileExtractor" default="test" >
+<!DOCTYPE xml>
+<project name="FileExtractor" default="test">
 
-	<property name="src.dir" location="src"/>
-	<property name="build.dir" location="build"/>
-	<property name="reports.dir" location="reports"/>
-	<property name="install.dir" location="install"/>
-	
+	<property name="src.dir" location="src" />
+	<property name="build.dir" location="build" />
+	<property name="reports.dir" location="reports" />
+	<property name="install.dir" location="install" />
+	<property name="doc.dir" location="doc" />
+
 	<target name="init" description="creates the build folder if it doesn't exist.">
-		<mkdir dir="${build.dir}"/>
+		<mkdir dir="${build.dir}" />
 	</target>
-	
-	<target name="compile" depends="init">  
-	 <javac srcdir="." destdir="${build.dir}" includeantruntime="true">
-	    <classpath>  
-	        <fileset dir="./lib/">  
-	            <include name="**/*.jar" />  
-	        </fileset>  
-	       </classpath>  
-	</javac>  
+
+	<target name="compile" depends="init">
+		<javac srcdir="." destdir="${build.dir}" includeantruntime="true">
+			<classpath>
+				<fileset dir="./lib/">
+					<include name="**/*.jar" />
+				</fileset>
+			</classpath>
+		</javac>
 	</target>
-	
-	<target name="clean">
+
+	<target name="clean" depends="init">
 		<delete>
 			<fileset dir="${build.dir}" includes="**/*" />
 		</delete>
 	</target>
-	
-	<target name="jar" description="Create a runnable jar file for the project and copies needed ressources.">
+
+	<target name="jar" depends="compile" description="Create a runnable jar file for the project and copies needed ressources.">
 		<mkdir dir="${install.dir}" />
 		<jar destfile="${install.dir}/FileExtractor.jar" filesetmanifest="mergewithoutmain">
 			<manifest>
@@ -34,7 +36,6 @@
 				<attribute name="Class-Path" value="." />
 			</manifest>
 			<fileset dir="./target/classes">
-				<exclude name="*FileExtractor.jar" />
 				<exclude name="*.zip" />
 				<exclude name="*.log" />
 				<exclude name="*.xml" />
@@ -59,23 +60,28 @@
 			</fileset>
 		</zip>
 	</target>
-	
+
 	<target name="test" depends="compile">
-		<mkdir dir="${reports.dir}"/>
+		<mkdir dir="${reports.dir}" />
 
 		<junit printsummary="yes" haltonfailure="no">
-			<classpath location="lib/junit-4.12.jar"/>
-			<classpath location="lib/hamcrest-core-1.3.jar"/>
-			<classpath location="lib/log4j-1.2.17.jar"/>
+			<classpath location="lib/junit-4.12.jar" />
+			<classpath location="lib/hamcrest-core-1.3.jar" />
+			<classpath location="lib/log4j-1.2.17.jar" />
 			<classpath location="${build.dir}" />
 
 			<formatter type="plain" />
 			<formatter type="xml" />
 			<batchtest fork="yes" todir="${reports.dir}">
 				<fileset dir="${src.dir}">
-					<include name="**/*Test*.java"/>
+					<include name="**/*Test*.java" />
 				</fileset>
 			</batchtest>
 		</junit>
 	</target>
+
+	<target name="doc" depends="compile" description="generate documentation">
+		<javadoc sourcepath="${src.dir}" destdir="${doc.dir}" />
+	</target>
+
 </project>
