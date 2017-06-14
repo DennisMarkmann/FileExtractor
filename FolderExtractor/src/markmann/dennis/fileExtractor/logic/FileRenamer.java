@@ -112,16 +112,29 @@ public class FileRenamer {
 
             if ((medium == null) && useRenaming) {
                 if (SettingHandler.getGeneralSettings().removeCorruptFiles()) {
-                    LOGGER.info("Renaming of file:'" + originalFileName + "' not successful. File deleted.");
+                    NotificationHelper.showErrorNotification(
+                            "Renaming of file:'" + originalFileName + "' not successful. File deleted.",
+                            true,
+                            null);
                     file.delete();
                 }
                 else {
-                    LOGGER.info("Renaming of file:'" + originalFileName + "' not successful. Please try to fix it manually.");
+                    NotificationHelper.showErrorNotification(
+                            "Renaming of file:'" + originalFileName + "' not successful. Please try solving the problem.",
+                            true,
+                            null);
                 }
                 continue;
             }
+            else if (medium == null) {
+                NotificationHelper.showErrorNotification(
+                        "Processing of file:'" + originalFileName + "' not successful. Please try solving the problem.",
+                        true,
+                        null);
+            }
 
             String originPath = file.getAbsolutePath().substring(0, file.getAbsolutePath().lastIndexOf(File.separator));
+
             medium.setOriginPath(originPath);
 
             if (!(originalFileName.equals(medium.getCompleteTitle())) && useRenaming) {

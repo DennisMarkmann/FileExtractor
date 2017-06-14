@@ -7,6 +7,7 @@ package markmann.dennis.fileExtractor.settings;
  */
 public class GeneralSettings implements Settings {
 
+    // dont make those fields private: needed default to read them from XML
     boolean useGui = false;
     boolean useSystemTray = true;
     boolean useTimer = true;

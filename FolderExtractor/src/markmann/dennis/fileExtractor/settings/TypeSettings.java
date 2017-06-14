@@ -12,6 +12,7 @@ import markmann.dennis.fileExtractor.mediaObjects.MediaType;
 
 public class TypeSettings implements Settings {
 
+    // dont make those fields private: needed default to read them from XML
     MediaType type = MediaType.Anime;
     String extractionPath = "ExamplePath:'C:\\Downloads\\Completed\\Media'";
     String completionPath = "ExamplePath:'C:\\Media\\New'";
