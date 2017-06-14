@@ -35,18 +35,33 @@ public class FileScanner implements Runnable {
         this.manually = manually;
     }
 
+    /**
+     * Collecting a List containing all files to process.
+     */
+    private ArrayList<File> collectFilesToProcess(File extractionFolder, FileLister fl, ArrayList<File> folderList) {
+        ArrayList<File> fileList = fl.listFilesInFolderList(folderList, true);
+        fileList = fl.listFilesForFolder(extractionFolder, fileList, false);
+        fileList = new FileFilter().addMovies().filter(fileList);
+        LOGGER.info("Number of entries to process: '" + fileList.size() + "'.");
+        Collections.sort(fileList);
+        return fileList;
+    }
+
+    /**
+     * Checks if the folder exists and is a directory. Creates a popup notification if it is not.
+     */
     private boolean isPathValid(File folder) {
-        if (folder.exists() && folder.isDirectory()) {
-            return true;
+        if (!folder.exists() || !folder.isDirectory()) {
+            NotificationHelper.showErrorNotification("Directory '" + folder.getAbsolutePath() + "' is not valid.", true, null);
+            return false;
         }
-        return false;
+        return true;
     }
 
     /**
      * Locks the write access for itself and reads the current settings. Then carries out a scan for new media to process and
      * returns the write access afterwards.
      */
-
     @Override
     public void run() {
         if (Controller.applyForWriteAccess()) {
@@ -66,12 +81,7 @@ public class FileScanner implements Runnable {
      * @param manually: used for logging purposes only.
      */
     void scan(TypeSettings settings, boolean manually) {
-        if (manually) {
-            LOGGER.info("Checking for " + settings.getType().toString() + " (manually):");
-        }
-        else {
-            LOGGER.info("Checking for " + settings.getType().toString() + ":");
-        }
+        LOGGER.info("Checking for " + settings.getType().toString() + ((manually) ? " (manually):" : ":"));
         if (SettingHandler.getGeneralSettings().useExtendedLogging()) {
             LOGGER.info(
                     "Type: '" + settings.getType() + "', ExtractionPath: '" + settings.getExtractionPath()
@@ -82,30 +92,14 @@ public class FileScanner implements Runnable {
         File extractionFolder = new File(settings.getExtractionPath());
         File completionFolder = new File(settings.getCompletionPath());
 
-        if (!this.isPathValid(extractionFolder)) {
-            NotificationHelper.showErrorNotification(
-                    "ExtractionFolder '" + extractionFolder.getAbsolutePath() + "' is not valid.",
-                    true,
-                    null);
-            return;
-        }
-        if (!this.isPathValid(completionFolder)) {
-            NotificationHelper.showErrorNotification(
-                    "CompletionFolder '" + extractionFolder.getAbsolutePath() + "' is not valid.",
-                    true,
-                    null);
+        if (!this.isPathValid(extractionFolder) || !this.isPathValid(completionFolder)) {
             return;
         }
         FileLister fl = new FileLister();
         ArrayList<File> folderList = fl.listFolderAtPath(extractionFolder);
-        ArrayList<File> fileList = fl.listFilesInFolderList(folderList, true);
+        ArrayList<File> fileList = this.collectFilesToProcess(extractionFolder, fl, folderList);
+
         ArrayList<Medium> mediaList = new ArrayList<>();
-
-        fileList = fl.listFilesForFolder(extractionFolder, fileList, false);
-        fileList = new FileFilter().addMovies().filter(fileList);
-        LOGGER.info("Number of entries to process: '" + fileList.size() + "'.");
-        Collections.sort(fileList);
-
         mediaList = new FileRenamer().scanFiles(fileList, settings.getType());
         GeneralSettings generalSettings = SettingHandler.getGeneralSettings();
 
