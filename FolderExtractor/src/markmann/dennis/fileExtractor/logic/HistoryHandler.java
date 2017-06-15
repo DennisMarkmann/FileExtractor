@@ -14,6 +14,9 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.stream.Collectors;
 
+import org.apache.log4j.Logger;
+
+import markmann.dennis.fileExtractor.logging.LogHandler;
 import markmann.dennis.fileExtractor.mediaObjects.Anime;
 import markmann.dennis.fileExtractor.mediaObjects.Medium;
 
@@ -26,6 +29,7 @@ import markmann.dennis.fileExtractor.mediaObjects.Medium;
 
 class HistoryHandler {
 
+    private static final Logger LOGGER = LogHandler.getLogger("./Logs/FileExtractor.log");
     private String historyPath = "./Logs/History.txt";
 
     /**
@@ -35,7 +39,14 @@ class HistoryHandler {
      * @param mediaList: List containing the information about the recently processed media files.
      */
     void addToHistory(ArrayList<Medium> mediaList) {
-        new File(this.historyPath).mkdir();
+        try {
+            if (new File(this.historyPath).createNewFile()) {
+                LOGGER.info("History file created successfully.");
+            }
+        }
+        catch (IOException e1) {
+            NotificationHelper.showErrorNotification("Error while trying to create '" + this.historyPath + "'.", true, e1);
+        }
         if (!mediaList.isEmpty()) {
             try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(this.historyPath, true)))) {
                 StringBuilder sb = new StringBuilder();
