@@ -47,7 +47,7 @@ public class Controller {
      * Initial scan for files to extract.
      */
     public static void initiateManualScan() {
-        new Thread(new FileScanner(true)).start();
+        new Thread(new ProcessingThread(true)).start();
     }
 
     /**
@@ -131,7 +131,7 @@ public class Controller {
 
             @Override
             public void run() {
-                new Thread(new FileScanner(false)).start();
+                new Thread(new ProcessingThread(false)).start();
             }
 
         }, 1000, timerInterval * 60000);

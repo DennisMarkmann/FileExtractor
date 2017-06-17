@@ -20,7 +20,7 @@ import markmann.dennis.fileExtractor.settings.TypeSettings;
  * @author Dennis.Markmann
  */
 
-class FileScanner implements Runnable {
+class ProcessingThread implements Runnable {
 
     private static final Logger LOGGER = LogHandler.getLogger("./Logs/FileExtractor.log");
     private boolean manually;
@@ -31,16 +31,17 @@ class FileScanner implements Runnable {
      * @param manually: constructor called manually or automatically?
      */
 
-    FileScanner(boolean manually) {
+    ProcessingThread(boolean manually) {
         this.manually = manually;
     }
 
     /**
      * Collecting a List containing all files to process.
      */
-    private ArrayList<File> collectFilesToProcess(File extractionFolder, FileLister fl, ArrayList<File> folderList) {
-        ArrayList<File> fileList = fl.listFilesInFolderList(folderList, true);
-        fileList = fl.listFilesForFolder(extractionFolder, fileList, false);
+    private ArrayList<File> collectFilesToProcess(File extractionFolder, ArrayList<File> subFolderList) {
+        FileLister fl = new FileLister();
+        ArrayList<File> fileList = fl.listFilesForFolder(extractionFolder, false);
+        fileList.addAll(fl.listFilesInFolderList(subFolderList, true));
         fileList = new FileFilter().addMovies().filter(fileList);
         LOGGER.info("Number of entries to process: '" + fileList.size() + "'.");
         Collections.sort(fileList);
@@ -67,7 +68,7 @@ class FileScanner implements Runnable {
         if (Controller.applyForWriteAccess()) {
             SettingHandler.readSettingsFromXML(false);
             for (final TypeSettings settings : SettingHandler.getTypeSettings()) {
-                this.scan(settings, this.manually);
+                this.startProcessing(settings);
             }
         }
         LOGGER.info("-----------------------------------");
@@ -78,10 +79,9 @@ class FileScanner implements Runnable {
      * Scanning for new media to process, starting all configured follow up operations.
      *
      * @param settings: settings used for the currently processed media type.
-     * @param manually: used for logging purposes only.
      */
-    private void scan(TypeSettings settings, boolean manually) {
-        LOGGER.info("Checking for " + settings.getType().toString() + ((manually) ? " (manually):" : ":"));
+    private void startProcessing(TypeSettings settings) {
+        LOGGER.info("Checking for " + settings.getType().toString() + ((this.manually) ? " (manually):" : ":"));
         if (SettingHandler.getGeneralSettings().useExtendedLogging()) {
             LOGGER.info(
                     "Type: '" + settings.getType() + "', ExtractionPath: '" + settings.getExtractionPath()
@@ -90,24 +90,24 @@ class FileScanner implements Runnable {
                             + "', CurrentlyWatchingCheck: '" + settings.useCurrentlyWatchingCheck() + "'.");
         }
         File extractionFolder = new File(settings.getExtractionPath());
-        File completionFolder = new File(settings.getCompletionPath());
-
-        if (!this.isPathValid(extractionFolder) || !this.isPathValid(completionFolder)) {
+        if (!this.isPathValid(extractionFolder)) {
             return;
         }
-        FileLister fl = new FileLister();
-        ArrayList<File> folderList = fl.listFolderAtPath(extractionFolder);
-        ArrayList<File> fileList = this.collectFilesToProcess(extractionFolder, fl, folderList);
+        ArrayList<File> subFolderList = new FileLister().listFolderAtPath(extractionFolder);
+        ArrayList<File> fileList = this.collectFilesToProcess(extractionFolder, subFolderList);
+        ArrayList<Medium> mediaList = new FileRenamer().scanFiles(fileList, settings.getType());
 
-        ArrayList<Medium> mediaList = new ArrayList<>();
-        mediaList = new FileRenamer().scanFiles(fileList, settings.getType());
         GeneralSettings generalSettings = SettingHandler.getGeneralSettings();
 
         if (generalSettings.useFileMoving()) {
+            File completionFolder = new File(settings.getCompletionPath());
+            if (!this.isPathValid(completionFolder)) {
+                return;
+            }
             new FileMover().moveFiles(mediaList, completionFolder, settings);
         }
         if (generalSettings.useCleanup()) {
-            new FileCleaner().cleanFiles(folderList);
+            new FileCleaner().cleanFiles(subFolderList);
         }
         if (generalSettings.useHistory()) {
             new HistoryHandler().addToHistory(mediaList);
