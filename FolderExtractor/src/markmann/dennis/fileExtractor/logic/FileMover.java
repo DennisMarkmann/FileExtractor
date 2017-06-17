@@ -94,8 +94,7 @@ class FileMover {
                 LOGGER.info("Moving '" + title + "' to '" + destinationPath + "'.");
             }
             catch (IOException e) {
-                LOGGER.info("Moving of media failed.", e);
-                e.printStackTrace();
+                NotificationHelper.showErrorNotification("Moving of media failed.", true, e);
             }
         }
     }

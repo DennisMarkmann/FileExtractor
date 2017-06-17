@@ -116,5 +116,4 @@ class ProcessingThread implements Runnable {
             NotificationHelper.showExtractionNotification(mediaList);
         }
     }
-
 }
