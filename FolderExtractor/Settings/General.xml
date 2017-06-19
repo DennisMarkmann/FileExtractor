@@ -8,8 +8,8 @@
     <UseRenaming>true</UseRenaming>
     <UseCleanup>true</UseCleanup>
     <UseFileMoving>true</UseFileMoving>
-    <UseHistory>false</UseHistory>
+    <UseHistory>true</UseHistory>
     <UseExtendedLogging>false</UseExtendedLogging>
     <RemoveCorruptFiles>true</RemoveCorruptFiles>
-    <RemoveVersionNumbers>false</RemoveVersionNumbers>
+    <RemoveVersionNumbers>true</RemoveVersionNumbers>
 </Settings>

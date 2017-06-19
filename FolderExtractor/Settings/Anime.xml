@@ -10,12 +10,4 @@
         <ExceptionName>Naruto Shippuuden</ExceptionName>
         <ExceptionPath>\Other\Naruto</ExceptionPath>
     </Exception>
-    <Exception>
-        <ExceptionName>Monster Hunter Stories Ride On</ExceptionName>
-        <ExceptionPath>\Other\Monster Hunter Stories Ride On</ExceptionPath>
-    </Exception>
-    <Exception>
-        <ExceptionName>Nanbaka</ExceptionName>
-        <ExceptionPath>\Other\Nanbaka</ExceptionPath>
-    </Exception>
 </Settings>

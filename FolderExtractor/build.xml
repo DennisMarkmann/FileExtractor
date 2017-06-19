@@ -9,8 +9,12 @@
 	<property name="export.dir" location="export" />
 	<property name="doc.dir" location="doc" />
 
-	<target name="init" description="Create the build folder if it doesn't exist.">
+	<target name="init" description="Creates missing folder needed to run other tasks.">
 		<mkdir dir="${build.dir}" />
+		<mkdir dir="${lib.dir}" />
+		<mkdir dir="${reports.dir}" />
+		<mkdir dir="${export.dir}" />
+		<mkdir dir="${doc.dir}" />
 	</target>
 
 	<target name="compile" depends="init" description="Compile the application.">
