@@ -10,7 +10,7 @@
 	<property name="doc.dir" location="doc" />
 
 	<target name="init" description="Creates missing folder needed to run other tasks.">
-		<mkdir dir="${build.dir}" />
+		<mkdir dir="${build.dir}/classes" />
 		<mkdir dir="${lib.dir}" />
 		<mkdir dir="${reports.dir}" />
 		<mkdir dir="${export.dir}" />
@@ -18,7 +18,7 @@
 	</target>
 
 	<target name="compile" depends="init" description="Compile the application.">
-		<javac srcdir="." destdir="${build.dir}" includeantruntime="false">
+		<javac srcdir="." destdir="${build.dir}/classes" includeantruntime="false">
 			<classpath>
 				<fileset dir="./lib/">
 					<include name="**/*.jar" />
@@ -42,14 +42,14 @@
 		</delete>
 	</target>
 
-	<target name="jar" depends="compile" description="Create a runnable jar file for the project and copy needed ressources.">
+	<target name="export" depends="compile" description="Create a runnable jar file for the project and copy needed ressources.">
 		<mkdir dir="${export.dir}" />
 		<jar destfile="${export.dir}/FileExtractor.jar" filesetmanifest="mergewithoutmain">
 			<manifest>
 				<attribute name="Main-Class" value="markmann.dennis.fileExtractor.logic.StartUp" />
 				<attribute name="Class-Path" value="." />
 			</manifest>
-			<fileset dir="${build.dir}" />
+			<fileset dir="${build.dir}/classes" />
 			<zipfileset excludes="META-INF/*.SF" src="${lib.dir}/MyLibraries.jar" />
 			<zipfileset excludes="META-INF/*.SF" src="${lib.dir}/log4j-1.2.17.jar" />
 			<zipfileset excludes="META-INF/*.SF" src="${lib.dir}/junit-4.12.jar" />
@@ -63,7 +63,7 @@
 		</copy>
 	</target>
 
-	<target name="zip" depends="jar" description="Create a zip file including all files needed to run the application.">
+	<target name="zip" depends="export" description="Create a zip file including all files needed to run the application.">
 		<zip destfile="${export.dir}/release.zip">
 			<fileset dir="${export.dir}">
 				<exclude name="*.zip" />
@@ -78,7 +78,7 @@
 			<classpath location="lib/junit-4.12.jar" />
 			<classpath location="lib/hamcrest-core-1.3.jar" />
 			<classpath location="lib/log4j-1.2.17.jar" />
-			<classpath location="${build.dir}" />
+			<classpath location="${build.dir}/classes" />
 
 			<formatter type="plain" />
 			<formatter type="xml" />
