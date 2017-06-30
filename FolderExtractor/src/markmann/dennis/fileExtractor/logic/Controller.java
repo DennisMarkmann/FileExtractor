@@ -103,7 +103,7 @@ public class Controller {
             SettingHandler.writeSettingsToXML();
         }
 
-        if (SettingHandler.getGeneralSettings().useTimer()) {
+        if (SettingHandler.getGeneralSettings().useTimer() && !SettingHandler.getGeneralSettings().startPaused()) {
             startTimer(true);
         }
         if (SettingHandler.getGeneralSettings().useSystemTray()) {

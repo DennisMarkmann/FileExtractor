@@ -85,7 +85,7 @@ class FileMover {
 
                 File destinationFolder = new File(destinationDirectory.getPath() + additionalFolder + "\\" + exceptionPath);
                 if (!destinationFolder.exists()) {
-                    destinationFolder.mkdir();
+                    destinationFolder.mkdirs();
                 }
 
                 Path destinationPath = new File(destinationFolder.toString() + "\\" + title).toPath();

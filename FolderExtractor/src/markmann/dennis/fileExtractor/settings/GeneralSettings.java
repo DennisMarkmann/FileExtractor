@@ -20,6 +20,7 @@ public class GeneralSettings implements Settings {
     boolean useExtendedLogging = false;
     boolean removeCorruptFiles = true;
     boolean removeVersionNumbers = true;
+    boolean startPaused = false;
 
     public int getTimerInterval() {
         return this.timerInterval;
@@ -39,6 +40,10 @@ public class GeneralSettings implements Settings {
 
     public void setRemoveVersionNumbers(boolean removeVersionNumbers) {
         this.removeVersionNumbers = removeVersionNumbers;
+    }
+
+    public void setStartPaused(boolean startPaused) {
+        this.startPaused = startPaused;
     }
 
     public void setTimerInterval(int timerInterval) {
@@ -79,6 +84,10 @@ public class GeneralSettings implements Settings {
 
     public void setUseTimer(boolean useTimer) {
         this.useTimer = useTimer;
+    }
+
+    public boolean startPaused() {
+        return this.startPaused;
     }
 
     public boolean useCleanup() {

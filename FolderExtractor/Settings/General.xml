@@ -12,4 +12,5 @@
     <UseExtendedLogging>false</UseExtendedLogging>
     <RemoveCorruptFiles>true</RemoveCorruptFiles>
     <RemoveVersionNumbers>true</RemoveVersionNumbers>
+    <StartPaused>false</StartPaused>
 </Settings>
