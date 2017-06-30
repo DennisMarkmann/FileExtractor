@@ -28,14 +28,13 @@ public class FileRenamer {
      * Regex for anime renaming.
      */
     public Anime handleAnimeRenaming(String fileName, Anime anime) {
-        final Pattern pattern = Pattern
-                .compile("(\\[.{1,}])?([^<]*)\\ - (.{2,6})(\\[.{4,5}])?(\\[.{2,30}])?(\\(.{2,30}\\))?\\.(.{3})");
+        final Pattern pattern = Pattern.compile("(\\[.{1,}])?([^<]*)\\ - (.{2,6})(\\[.{4,5}])?(\\[.{1,}])?\\.(.{3})");
 
         Matcher m = pattern.matcher(fileName);
         if (m.matches()) {
             String title = m.group(2).trim();
             String episode = m.group(3).trim();
-            String extension = m.group(7).trim();
+            String extension = m.group(6).trim();
 
             anime.setTitle(title);
             this.setEpisode(anime, episode);

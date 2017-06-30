@@ -28,7 +28,24 @@ public class FileRenamerTest {
     }
 
     @Test
-    public void testAnimeRenaming_WithVersionNumber() {
+    public void testAnimeRenamingExtended() {
+        String originalFineName = "[RH] Kono Subarashii Sekai ni Shukufuku wo! - 01 [Test] [Dual Audio] [9C73C70E].mkv";
+        String resultTitle = "Kono Subarashii Sekai ni Shukufuku wo!";
+        String resultEpisode = "01";
+        String resultExtension = "mkv";
+        String resultTitleComplete = "Kono Subarashii Sekai ni Shukufuku wo! - 01.mkv";
+        String resultTitleCompleteNoExt = "Kono Subarashii Sekai ni Shukufuku wo! - 01";
+
+        Anime anime = new FileRenamer().handleAnimeRenaming(originalFineName, new Anime());
+        assertEquals(resultTitle, anime.getTitle());
+        assertEquals(resultEpisode, anime.getEpisode());
+        assertEquals(resultExtension, anime.getExtension());
+        assertEquals(resultTitleComplete, anime.getCompleteTitle());
+        assertEquals(resultTitleCompleteNoExt, anime.getCompleteTitleNoExt());
+    }
+
+    @Test
+    public void testAnimeRenamingWithVersionNumber() {
         String originalFineName = "[HorribleSubs] Kono Subarashii Sekai ni Shukufuku wo! 2 - 07v2 [1080p].mkv";
         String resultTitle = "Kono Subarashii Sekai ni Shukufuku wo! 2";
         String resultEpisode = "07";
