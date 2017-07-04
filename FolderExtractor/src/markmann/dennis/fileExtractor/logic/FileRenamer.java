@@ -7,8 +7,6 @@ import java.util.regex.Pattern;
 
 import org.apache.log4j.Logger;
 
-import com.sun.xml.internal.ws.util.StringUtils;
-
 import markmann.dennis.fileExtractor.logging.LogHandler;
 import markmann.dennis.fileExtractor.mediaObjects.Anime;
 import markmann.dennis.fileExtractor.mediaObjects.MediaType;
@@ -27,6 +25,13 @@ public class FileRenamer {
     private static final Logger LOGGER = LogHandler.getLogger("./Logs/FileExtractor.log");
 
     /**
+     * Capitalize the first char of the given String.
+     */
+    private String capitalize(final String line) {
+        return Character.toUpperCase(line.charAt(0)) + line.substring(1);
+    }
+
+    /**
      * Regex for anime renaming.
      */
     public Anime handleAnimeRenaming(String fileName, Anime anime) {
@@ -34,7 +39,7 @@ public class FileRenamer {
 
         Matcher m = pattern.matcher(fileName);
         if (m.matches()) {
-            String title = StringUtils.capitalize(m.group(2).trim());
+            String title = this.capitalize(m.group(2).trim());
             String episode = m.group(3).trim();
             String extension = m.group(6).trim();
 
@@ -53,7 +58,7 @@ public class FileRenamer {
         final Pattern pattern = Pattern.compile("([^<]*)(\\ - |\\.{1})(?i)S(.{2,3})(?i)E(.{2,3})(\\.[^<]*)?\\.(.{3})");
         Matcher m = pattern.matcher(fileName);
         if (m.matches()) {
-            String title = StringUtils.capitalize(this.replaceDots(m.group(1).trim()));
+            String title = this.capitalize(this.replaceDots(m.group(1).trim()));
             String season = m.group(3).trim();
             String episode = m.group(4).trim();
             String extension = m.group(6).trim();
