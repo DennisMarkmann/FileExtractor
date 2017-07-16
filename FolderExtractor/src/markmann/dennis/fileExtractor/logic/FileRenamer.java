@@ -58,7 +58,7 @@ public class FileRenamer {
         final Pattern pattern = Pattern.compile("([^<]*)(\\ - |\\.{1})(?i)S(.{2,3})(?i)E(.{2,3})(\\.[^<]*)?\\.(.{3})");
         Matcher m = pattern.matcher(fileName);
         if (m.matches()) {
-            String title = this.capitalize(this.replaceDots(m.group(1).trim()));
+            String title = this.capitalize(this.replaceFiller(m.group(1).trim()));
             String season = m.group(3).trim();
             String episode = m.group(4).trim();
             String extension = m.group(6).trim();
@@ -75,8 +75,9 @@ public class FileRenamer {
     /**
      * Replaces all dots in the filename with space.
      */
-    private String replaceDots(String fileName) {
+    private String replaceFiller(String fileName) {
         fileName = fileName.replaceAll("\\.", " ");
+        fileName = fileName.replaceAll("_", " ");
         return fileName;
     }
 
